@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Core — Class XII Study Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=JetBrains+Mono:wght@300;400;500&family=Cormorant+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ── Reset & Root ──────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:    #e8e2d4;
+  --ink2:   #a89f8e;
+  --ink3:   #5c5449;
+  --bg:     #0f0e0b;
+  --bg2:    #161410;
+  --bg3:    #1d1a14;
+  --rule:   #2a2620;
+  --rule2:  #3a3530;
+
+  --amber:  #c9944a;
+  --amber2: #a07030;
+  --slate:  #7a9eb0;
+  --slate2: #4e7a90;
+  --terra:  #c06e50;
+  --terra2: #8f4e38;
+
+  --ease:   cubic-bezier(.16,1,.3,1);
+}
+
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── Grain overlay ─────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: .028;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ── Custom cursor ─────────────────────────── */
+#cursor {
+  position: fixed; pointer-events: none; z-index: 9999;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--ink2);
+  transform: translate(-50%, -50%);
+  transition: width .2s var(--ease), height .2s var(--ease), background .2s, opacity .2s;
+  mix-blend-mode: screen;
+}
+#cursor.big {
+  width: 40px; height: 40px;
+  background: rgba(200,180,140,.12);
+  border: 1px solid rgba(200,180,140,.3);
+}
+
+/* ── Top bar ───────────────────────────────── */
+#topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 52px;
+  border-bottom: 1px solid var(--rule);
+  background: rgba(15,14,11,.88);
+  backdrop-filter: blur(12px);
+  animation: fadeDown .8s var(--ease) both;
+}
+.tb-brand {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ink3);
+}
+.tb-right {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink3); display: flex; gap: 28px;
+}
+.tb-right span { transition: color .2s; cursor: pointer; }
+.tb-right span:hover { color: var(--ink2); }
+
+/* ── Hero ──────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 40px 80px;
+  position: relative;
+}
+
+/* Large background text */
+.bg-text {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant SC', serif;
+  font-size: clamp(120px, 22vw, 320px);
+  font-weight: 600;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(200,180,140,.04);
+  letter-spacing: .08em;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+  z-index: 0;
+}
+
+.hero-inner { position: relative; z-index: 1; }
+
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--ink3); margin-bottom: 28px;
+  animation: fadeUp .9s .1s var(--ease) both;
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: ''; display: block;
+  width: 32px; height: 1px; background: var(--rule2);
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 9vw, 108px);
+  font-weight: 300; line-height: 1.0;
+  color: var(--ink);
+  letter-spacing: -.01em;
+  margin-bottom: 6px;
+  animation: fadeUp .9s .2s var(--ease) both;
+}
+
+.hero-title em {
+  font-style: italic; font-weight: 300;
+  color: var(--ink2);
+}
+
+.hero-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(16px, 2.5vw, 22px);
+  font-weight: 300; font-style: italic;
+  color: var(--ink3);
+  margin-top: 14px; margin-bottom: 52px;
+  animation: fadeUp .9s .32s var(--ease) both;
+  letter-spacing: .02em;
+}
+
+.hero-rule {
+  width: 1px; height: 52px;
+  background: linear-gradient(to bottom, var(--rule2), transparent);
+  margin: 0 auto 52px;
+  animation: fadeUp .9s .4s var(--ease) both;
+}
+
+/* ── Section label ─────────────────────────── */
+.section-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink3); text-align: center;
+  margin-bottom: 40px;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+}
+.section-lbl::before,
+.section-lbl::after {
+  content: ''; flex: 1; max-width: 80px;
+  height: 1px; background: var(--rule2);
+}
+
+/* ── Cards grid ────────────────────────────── */
+#cards {
+  padding: 0 40px 120px;
+  max-width: 1160px; margin: 0 auto;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  animation: fadeUp .9s .45s var(--ease) both;
+}
+
+/* ── Individual card ───────────────────────── */
+.card {
+  position: relative;
+  background: var(--bg2);
+  padding: 48px 40px 44px;
+  text-decoration: none;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: background .3s var(--ease);
+}
+
+.card::before {
+  content: '';
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity .4s var(--ease);
+}
+
+.card-flamingo::before { background: radial-gradient(ellipse at 30% 0%, rgba(201,148,74,.08) 0%, transparent 60%); }
+.card-vistas::before   { background: radial-gradient(ellipse at 30% 0%, rgba(122,158,176,.08) 0%, transparent 60%); }
+.card-core::before     { background: radial-gradient(ellipse at 30% 0%, rgba(192,110,80,.08) 0%, transparent 60%); }
+
+.card:hover::before { opacity: 1; }
+.card:hover { background: var(--bg3); }
+
+/* Big number */
+.card-num {
+  position: absolute;
+  top: -20px; right: 24px;
+  font-family: 'Cormorant SC', serif;
+  font-size: 140px; font-weight: 600;
+  line-height: 1; letter-spacing: -.02em;
+  color: transparent;
+  -webkit-text-stroke: 1px;
+  opacity: .07;
+  user-select: none; pointer-events: none;
+  transition: opacity .4s var(--ease), transform .5s var(--ease);
+}
+.card-flamingo .card-num { -webkit-text-stroke-color: var(--amber); }
+.card-vistas   .card-num { -webkit-text-stroke-color: var(--slate); }
+.card-core     .card-num { -webkit-text-stroke-color: var(--terra); }
+
+.card:hover .card-num { opacity: .14; transform: scale(1.04) translateY(-4px); }
+
+/* Top accent bar */
+.card-accent {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .5s var(--ease);
+}
+.card-flamingo .card-accent { background: linear-gradient(90deg, var(--amber2), var(--amber)); }
+.card-vistas   .card-accent { background: linear-gradient(90deg, var(--slate2), var(--slate)); }
+.card-core     .card-accent { background: linear-gradient(90deg, var(--terra2), var(--terra)); }
+
+.card:hover .card-accent { transform: scaleX(1); }
+
+/* Card content */
+.card-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px; letter-spacing: .2em; text-transform: uppercase;
+  margin-bottom: 28px;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: color .2s;
+}
+.card-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  flex-shrink: 0;
+}
+.card-flamingo .card-tag { color: var(--amber2); }
+.card-vistas   .card-tag { color: var(--slate2); }
+.card-core     .card-tag { color: var(--terra2); }
+.card-flamingo .card-dot { background: var(--amber); }
+.card-vistas   .card-dot { background: var(--slate); }
+.card-core     .card-dot { background: var(--terra); }
+
+.card:hover .card-flamingo .card-tag { color: var(--amber); }
+.card:hover .card-vistas   .card-tag { color: var(--slate); }
+.card:hover .card-core     .card-tag { color: var(--terra); }
+
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px; font-weight: 400; line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 10px;
+  letter-spacing: -.01em;
+  transition: color .2s;
+}
+
+.card-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px; font-weight: 300; font-style: italic;
+  color: var(--ink3);
+  margin-bottom: 28px;
+  transition: color .2s;
+}
+
+.card-rule {
+  width: 24px; height: 1px;
+  margin-bottom: 20px;
+  transition: width .4s var(--ease);
+}
+.card-flamingo .card-rule { background: var(--amber2); }
+.card-vistas   .card-rule { background: var(--slate2); }
+.card-core     .card-rule { background: var(--terra2); }
+
+.card:hover .card-rule { width: 48px; }
+
+.card-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px; font-weight: 300; line-height: 1.75;
+  color: var(--ink2);
+  flex: 1; margin-bottom: 36px;
+}
+
+/* Contents list */
+.card-contents {
+  list-style: none; margin-bottom: 36px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.card-contents li {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: .08em;
+  color: var(--ink3);
+  display: flex; align-items: baseline; gap: 8px;
+  transition: color .2s;
+}
+.card-contents li::before {
+  content: '–'; color: var(--rule2); flex-shrink: 0;
+  transition: color .2s;
+}
+.card:hover .card-contents li { color: var(--ink2); }
+.card-flamingo:hover .card-contents li::before { color: var(--amber2); }
+.card-vistas:hover   .card-contents li::before { color: var(--slate2); }
+.card-core:hover     .card-contents li::before { color: var(--terra2); }
+
+/* CTA arrow */
+.card-cta {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: .16em; text-transform: uppercase;
+  transition: gap .3s var(--ease);
+}
+.card-flamingo .card-cta { color: var(--amber2); }
+.card-vistas   .card-cta { color: var(--slate2); }
+.card-core     .card-cta { color: var(--terra2); }
+
+.card:hover .card-cta { gap: 16px; }
+.card-flamingo:hover .card-cta { color: var(--amber); }
+.card-vistas:hover   .card-cta { color: var(--slate); }
+.card-core:hover     .card-cta { color: var(--terra); }
+
+.cta-arrow {
+  width: 20px; height: 1px;
+  position: relative; flex-shrink: 0;
+  transition: width .3s var(--ease);
+}
+.cta-arrow::before {
+  content: '';
+  position: absolute; top: -3px; right: 0;
+  width: 6px; height: 6px;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+.card-flamingo .cta-arrow { background: var(--amber2); }
+.card-vistas   .cta-arrow { background: var(--slate2); }
+.card-core     .cta-arrow { background: var(--terra2); }
+.card-flamingo:hover .cta-arrow { background: var(--amber); width: 32px; }
+.card-vistas:hover   .cta-arrow { background: var(--slate); width: 32px; }
+.card-core:hover     .cta-arrow { background: var(--terra); width: 32px; }
+
+/* ── Stats strip ───────────────────────────── */
+#stats {
+  max-width: 1160px; margin: 0 auto 100px;
+  padding: 0 40px;
+  border-top: 1px solid var(--rule);
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  animation: fadeUp .9s .6s var(--ease) both;
+}
+
+.stat {
+  padding: 32px 28px;
+  border-right: 1px solid var(--rule);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.stat:last-child { border-right: none; }
+
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 300;
+  color: var(--ink); line-height: 1;
+  letter-spacing: -.02em;
+}
+
+.stat-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink3); line-height: 1.5;
+}
+
+/* ── Quote ─────────────────────────────────── */
+#quote-section {
+  max-width: 800px; margin: 0 auto 100px;
+  padding: 0 40px;
+  text-align: center;
+  animation: fadeUp .9s .65s var(--ease) both;
+}
+
+.quote-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 80px; line-height: .5;
+  color: var(--rule2);
+  display: block; margin-bottom: 8px;
+}
+
+.quote-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 300; font-style: italic;
+  color: var(--ink2);
+  line-height: 1.6; margin-bottom: 20px;
+}
+
+.quote-attr {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ink3);
+}
+
+/* ── Footer ────────────────────────────────── */
+#footer {
+  border-top: 1px solid var(--rule);
+  padding: 28px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  animation: fadeUp .9s .7s var(--ease) both;
+}
+
+.footer-left {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink3);
+}
+
+.footer-center {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px; font-style: italic;
+  color: var(--ink3);
+  display: flex; align-items: center; gap: 10px;
+}
+.footer-center::before,
+.footer-center::after {
+  content: '✦'; font-style: normal; font-size: 8px; color: var(--rule2);
+}
+
+.footer-right {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink3);
+}
+
+/* ── Animations ────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ────────────────────────────── */
+@media (max-width: 900px) {
+  .cards-grid { grid-template-columns: 1fr; }
+  #stats { grid-template-columns: repeat(2, 1fr); }
+  #topbar { padding: 0 24px; }
+  #cards, #stats, #quote-section { padding-left: 20px; padding-right: 20px; }
+  #hero { padding: 100px 24px 60px; }
+  #footer { flex-direction: column; gap: 16px; text-align: center; }
+  .tb-right { display: none; }
+}
+
+@media (max-width: 600px) {
+  #stats { grid-template-columns: 1fr 1fr; }
+  .stat { padding: 20px 16px; }
+}
+
+/* ── Subtle parallax lines (decorative) ─────── */
+.deco-line {
+  position: absolute;
+  width: 1px; top: 0; bottom: 0;
+  background: linear-gradient(to bottom, transparent, var(--rule) 30%, var(--rule) 70%, transparent);
+  opacity: .4; pointer-events: none;
+}
+
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- Top bar -->
+<header id="topbar">
+  <div class="tb-brand">CBSE · Class XII · English Core</div>
+  <div class="tb-right">
+    <span onclick="document.getElementById('cards').scrollIntoView({behavior:'smooth'})">Notes</span>
+    <span onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})">Overview</span>
+    <span onclick="document.getElementById('quote-section').scrollIntoView({behavior:'smooth'})">About</span>
+  </div>
+</header>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="bg-text" aria-hidden="true">ENG</div>
+
+  <!-- Decorative vertical lines -->
+  <div class="deco-line" style="left:15%"></div>
+  <div class="deco-line" style="right:15%"></div>
+
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Study Notes · 2025–26</div>
+
+    <h1 class="hero-title">
+      English<br><em>Core</em>
+    </h1>
+
+    <p class="hero-subtitle">Class XII · CBSE Board Examination</p>
+
+    <div class="hero-rule"></div>
+
+    <div class="section-lbl">Three volumes — select your notes</div>
+  </div>
+</section>
+
+<!-- Cards -->
+<section id="cards">
+  <div class="cards-grid">
+
+    <!-- Flamingo -->
+    <a class="card card-flamingo" href="flamingo.html">
+      <div class="card-accent"></div>
+      <div class="card-num" aria-hidden="true">I</div>
+
+      <div class="card-tag">
+        <span class="card-dot"></span>
+        Textbook · Prose &amp; Poetry
+      </div>
+
+      <h2 class="card-title">Flamingo</h2>
+      <p class="card-sub">Eight prose chapters, six poems</p>
+
+      <div class="card-rule"></div>
+
+      <p class="card-desc">In-depth analysis of every chapter — author backgrounds, plot timelines, character grids, themes, literary devices, exam-critical facts, and likely questions.</p>
+
+      <ul class="card-contents">
+        <li>The Last Lesson · Lost Spring · Deep Water</li>
+        <li>The Rattrap · Indigo · Poets and Pancakes</li>
+        <li>The Interview · Going Places</li>
+        <li>6 Poems — Kamala Das to Adrienne Rich</li>
+      </ul>
+
+      <div class="card-cta">
+        <span>Open Notes</span>
+        <span class="cta-arrow"></span>
+      </div>
+    </a>
+
+    <!-- Vistas -->
+    <a class="card card-vistas" href="vistas.html">
+      <div class="card-accent"></div>
+      <div class="card-num" aria-hidden="true">II</div>
+
+      <div class="card-tag">
+        <span class="card-dot"></span>
+        Supplementary Reader · Prose
+      </div>
+
+      <h2 class="card-title">Vistas</h2>
+      <p class="card-sub">Six supplementary prose chapters</p>
+
+      <div class="card-rule"></div>
+
+      <p class="card-desc">Complete notes for all six Vistas chapters — from Jack Finney's escapism to Zitkala-Sa's cultural trauma. Each section includes themes, devices, and targeted exam questions.</p>
+
+      <ul class="card-contents">
+        <li>The Third Level · The Tiger King</li>
+        <li>Journey to the End of the Earth</li>
+        <li>The Enemy · On the Face of It</li>
+        <li>Memories of Childhood</li>
+      </ul>
+
+      <div class="card-cta">
+        <span>Open Notes</span>
+        <span class="cta-arrow"></span>
+      </div>
+    </a>
+
+    <!-- Core Skills -->
+    <a class="card card-core" href="core.html">
+      <div class="card-accent"></div>
+      <div class="card-num" aria-hidden="true">III</div>
+
+      <div class="card-tag">
+        <span class="card-dot"></span>
+        Writing &amp; Reading Skills
+      </div>
+
+      <h2 class="card-title">Core Skills</h2>
+      <p class="card-sub">All formats, annotated samples</p>
+
+      <div class="card-rule"></div>
+
+      <p class="card-desc">Full coverage of Sections A and B — reading strategies, note-making, summary writing, and every writing format from notices to debates. Templates, model answers, and examiner tips.</p>
+
+      <ul class="card-contents">
+        <li>Reading — Factual &amp; Discursive Passages</li>
+        <li>Note-Making, Summary · Notice · Ad · Poster</li>
+        <li>Letters — Editor, Complaint, Inquiry, Job App.</li>
+        <li>Article · Speech · Report · Debate</li>
+      </ul>
+
+      <div class="card-cta">
+        <span>Open Notes</span>
+        <span class="cta-arrow"></span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- Stats -->
+<div id="stats">
+  <div class="stat">
+    <div class="stat-num">14</div>
+    <div class="stat-lbl">Prose chapters<br>covered</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">6</div>
+    <div class="stat-lbl">Poems with<br>full analysis</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">12</div>
+    <div class="stat-lbl">Writing formats<br>with samples</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">80+</div>
+    <div class="stat-lbl">Likely exam<br>questions</div>
+  </div>
+</div>
+
+<!-- Quote -->
+<div id="quote-section">
+  <span class="quote-mark" aria-hidden="true">"</span>
+  <p class="quote-text">Education is not the filling of a pail, but the lighting of a fire.</p>
+  <p class="quote-attr">— W.B. Yeats</p>
+</div>
+
+<!-- Footer -->
+<footer id="footer">
+  <div class="footer-left">CBSE · Class XII · English Core · 2025–26</div>
+  <div class="footer-center">Study well, write clearly, think deeply</div>
+  <div class="footer-right">Three volumes · Complete syllabus</div>
+</footer>
+
+<script>
+/* ── Custom cursor ─────────────────────────── */
+const cur = document.getElementById('cursor');
+let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+let cx = mx, cy = my;
+
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+function animateCursor() {
+  cx += (mx - cx) * 0.14;
+  cy += (my - cy) * 0.14;
+  cur.style.left = cx + 'px';
+  cur.style.top  = cy + 'px';
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+
+document.querySelectorAll('a, button, span[onclick]').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('big'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+});
+
+/* ── Intersection observer — stagger stat counters ── */
+const statNums = document.querySelectorAll('.stat-num');
+const targets  = ['14','6','12','80+'];
+
+function countUp(el, target) {
+  const isPlus = target.includes('+');
+  const num = parseInt(target);
+  let start = 0;
+  const dur = 1200;
+  const step = 16;
+  const increment = num / (dur / step);
+  const timer = setInterval(() => {
+    start += increment;
+    if (start >= num) {
+      el.textContent = isPlus ? num + '+' : num;
+      clearInterval(timer);
+    } else {
+      el.textContent = Math.floor(start) + (isPlus ? '+' : '');
+    }
+  }, step);
+}
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      statNums.forEach((el, i) => countUp(el, targets[i]));
+      observer.disconnect();
+    }
+  });
+}, { threshold: .4 });
+
+document.querySelector('#stats') && observer.observe(document.querySelector('#stats'));
+
+/* ── Card hover: depth parallax on num ─────── */
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - .5;
+    const y = (e.clientY - r.top)  / r.height - .5;
+    const num = card.querySelector('.card-num');
+    if (num) num.style.transform = `scale(1.04) translateY(-4px) translate(${x * 12}px, ${y * 8}px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    const num = card.querySelector('.card-num');
+    if (num) num.style.transform = '';
+  });
+});
+</script>
+</body>
+</html>
