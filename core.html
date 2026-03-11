@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBSE Class 12 — Writing &amp; Reading Skills</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Themes ─────────────────────────────────── */
+:root {
+  --bg:    #fafafa;
+  --fg:    #1c1c1c;
+  --mid:   #525252;
+  --dim:   #9a9a9a;
+  --line:  #e2e2e2;
+  --surf:  #f2f2f2;
+  --sw:    224px;
+  --acc:   #1c1c1c;
+}
+[data-theme="dark"] {
+  --bg:    #141414; --fg:    #d6d6d6; --mid:   #8a8a8a;
+  --dim:   #4a4a4a; --line:  #282828; --surf:  #1d1d1d;
+}
+[data-theme="gruvbox"] {
+  --bg:    #282828; --fg:    #ebdbb2; --mid:   #a89984;
+  --dim:   #665c54; --line:  #3c3836; --surf:  #32302f;
+}
+[data-theme="gruvbox-light"] {
+  --bg:    #f9f5d7; --fg:    #3c3836; --mid:   #7c6f64;
+  --dim:   #b8a99a; --line:  #d5c4a1; --surf:  #f0e8c2;
+}
+[data-theme="nord"] {
+  --bg:    #2e3440; --fg:    #d8dee9; --mid:   #7b88a1;
+  --dim:   #4c566a; --line:  #3b4252; --surf:  #353c4a;
+}
+[data-theme="solarized"] {
+  --bg:    #fdf6e3; --fg:    #586e75; --mid:   #839496;
+  --dim:   #b8c2bd; --line:  #e8e2cc; --surf:  #eee8d5;
+}
+[data-theme="solarized-dark"] {
+  --bg:    #002b36; --fg:    #93a1a1; --mid:   #657b83;
+  --dim:   #284e59; --line:  #0d3c47; --surf:  #073642;
+}
+[data-theme="dracula"] {
+  --bg:    #282a36; --fg:    #f8f8f2; --mid:   #9299b8;
+  --dim:   #44475a; --line:  #383a4a; --surf:  #313341;
+}
+[data-theme="one-dark"] {
+  --bg:    #1e2127; --fg:    #abb2bf; --mid:   #7a8194;
+  --dim:   #3e4451; --line:  #292d35; --surf:  #252930;
+}
+
+/* ── Base ───────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--bg); color: var(--fg);
+  display: flex; min-height: 100vh;
+  font-size: 15px; line-height: 1.7;
+  transition: background .2s, color .2s;
+}
+
+/* ── Sidebar ─────────────────────────────────── */
+#sidebar {
+  position: fixed; top: 0; left: 0;
+  width: var(--sw); height: 100vh;
+  background: var(--bg); border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; overflow-y: auto;
+  z-index: 100; transition: transform .22s ease;
+}
+.sb-head { padding: 22px 16px 16px; border-bottom: 1px solid var(--line); }
+.sb-label { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--dim); margin-bottom: 7px; }
+.sb-head h2 { font-size: 13px; font-weight: 400; color: var(--fg); line-height: 1.4; }
+.sb-sec { padding: 8px 0 6px; border-bottom: 1px solid var(--line); }
+.sb-sec-lbl { font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: .15em; text-transform: uppercase; color: var(--dim); padding: 0 16px 5px; display: block; }
+.nav-a { display: block; padding: 4px 16px; font-size: 12px; color: var(--mid); cursor: pointer; border-left: 1.5px solid transparent; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .1s, background .1s, border-color .1s; }
+.nav-a small { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); display: block; margin-top: 1px; white-space: normal; }
+.nav-a:hover { color: var(--fg); background: var(--surf); }
+.nav-a.on { color: var(--fg); border-left-color: var(--fg); }
+.theme-panel { padding: 12px 16px 20px; margin-top: auto; border-top: 1px solid var(--line); }
+.ld-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.ld-row span { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); }
+.tog { width: 28px; height: 15px; border-radius: 15px; background: var(--line); cursor: pointer; position: relative; border: none; padding: 0; flex-shrink: 0; transition: background .18s; }
+.tog.on { background: var(--mid); }
+.tog::after { content: ''; position: absolute; top: 2px; left: 2px; width: 11px; height: 11px; border-radius: 50%; background: var(--bg); transition: transform .18s; }
+.tog.on::after { transform: translateX(13px); }
+.sc-list { display: flex; flex-direction: column; }
+.sc-btn { display: flex; align-items: center; justify-content: space-between; padding: 3px 5px; border: none; background: none; border-radius: 2px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--dim); transition: color .1s, background .1s; }
+.sc-btn:hover { color: var(--mid); background: var(--surf); }
+.sc-btn.on { color: var(--fg); background: var(--surf); }
+.sc-check { opacity: 0; font-size: 9px; }
+.sc-btn.on .sc-check { opacity: 1; }
+
+/* ── Progress ─────────────────────────────────── */
+#prog { position: fixed; top: 0; left: var(--sw); right: 0; height: 1px; background: var(--dim); transform-origin: left; transform: scaleX(0); z-index: 300; transition: transform .07s linear; }
+
+/* ── Topbar ───────────────────────────────────── */
+#topbar { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: 0 40px; height: 42px; display: flex; align-items: center; justify-content: space-between; z-index: 50; transition: background .2s; }
+.tb-l { display: flex; align-items: center; gap: 10px; }
+.breadcrumb { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--dim); }
+#menu-btn { display: none; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 26px; height: 26px; cursor: pointer; background: none; border: none; }
+#menu-btn span { display: block; width: 14px; height: 1px; background: var(--dim); }
+#si { width: 130px; padding: 3px 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--surf); border: 1px solid var(--line); border-radius: 2px; color: var(--fg); outline: none; transition: width .15s, border-color .1s; }
+#si:focus { width: 170px; border-color: var(--dim); }
+#si::placeholder { color: var(--dim); }
+#sc { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); margin-left: 4px; }
+
+/* ── Layout ───────────────────────────────────── */
+#main { margin-left: var(--sw); flex: 1; min-width: 0; }
+#content { padding: 52px 56px 110px; max-width: 720px; }
+
+/* ── Hero ─────────────────────────────────────── */
+.hero { margin-bottom: 52px; padding-bottom: 36px; border-bottom: 1px solid var(--line); }
+.hero-eye { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--dim); margin-bottom: 14px; }
+.hero h1 { font-size: 28px; font-weight: 300; line-height: 1.2; color: var(--fg); margin-bottom: 10px; }
+.hero h1 em { font-style: italic; font-weight: 300; }
+.hero .deck { font-size: 14px; color: var(--mid); line-height: 1.75; font-weight: 300; }
+.toc { margin-top: 24px; }
+.toc-row { display: flex; align-items: baseline; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.toc-row:last-child { border-bottom: none; }
+.toc-row:hover .toc-t { color: var(--fg); }
+.toc-n { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); min-width: 28px; }
+.toc-t { font-size: 13px; color: var(--mid); flex: 1; transition: color .1s; }
+.toc-a { font-size: 11px; color: var(--dim); font-style: italic; }
+
+/* ── Chapter ──────────────────────────────────── */
+.chapter { margin-bottom: 80px; scroll-margin-top: 52px; }
+.ch-head { margin-bottom: 24px; }
+.ch-n { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--dim); margin-bottom: 5px; }
+.ch-t { font-size: 22px; font-weight: 400; color: var(--fg); line-height: 1.25; margin-bottom: 2px; }
+.ch-a { font-size: 12px; color: var(--dim); font-style: italic; margin-bottom: 12px; }
+.ch-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.tag { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; padding: 1px 6px; border: 1px solid var(--line); color: var(--dim); }
+hr.rule { border: none; border-top: 1px solid var(--line); margin: 22px 0; }
+
+/* ── Sections ─────────────────────────────────── */
+.sec { margin-bottom: 28px; }
+.sec-t { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin-bottom: 14px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+p { font-size: 14px; color: var(--mid); line-height: 1.85; margin-bottom: 10px; font-weight: 300; }
+p strong { color: var(--fg); font-weight: 500; }
+p em { font-style: italic; }
+
+/* ── Lists ────────────────────────────────────── */
+ul.nl, ol.nl { padding: 0; list-style: none; }
+ul.nl li, ol.nl li { font-size: 14px; color: var(--mid); line-height: 1.8; font-weight: 300; padding: 6px 0 6px 16px; position: relative; border-bottom: 1px solid var(--line); }
+ul.nl li:last-child, ol.nl li:last-child { border-bottom: none; }
+ul.nl li::before { content: '–'; position: absolute; left: 0; color: var(--line); }
+ol.nl { counter-reset: c; }
+ol.nl li { counter-increment: c; }
+ol.nl li::before { content: counter(c); position: absolute; left: 0; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); top: 8px; }
+ul.nl li strong, ol.nl li strong { color: var(--fg); font-weight: 500; }
+
+/* ── Marks bar ────────────────────────────────── */
+.marks-strip {
+  display: flex; gap: 1px; margin: 0 0 22px; overflow: hidden;
+  border: 1px solid var(--line);
+}
+.ms-item {
+  flex: 1; padding: 9px 10px; background: var(--surf);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; color: var(--dim); line-height: 1.5;
+  border-right: 1px solid var(--line);
+}
+.ms-item:last-child { border-right: none; }
+.ms-item strong { display: block; font-size: 15px; color: var(--fg); font-weight: 500; margin-bottom: 1px; }
+
+/* ── Format Template Box ─────────────────────── */
+.fmt-box {
+  border: 1px solid var(--line); margin: 18px 0; overflow: hidden;
+}
+.fmt-box-head {
+  padding: 5px 12px; background: var(--surf);
+  font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--dim);
+  border-bottom: 1px solid var(--line);
+}
+.fmt-body {
+  padding: 14px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px; color: var(--mid); line-height: 2.1;
+  background: var(--bg);
+}
+.fmt-body .fline { display: block; }
+.fmt-body .fkey { color: var(--fg); font-weight: 500; }
+.fmt-body .fdim { color: var(--dim); }
+.fmt-body .fval { color: var(--mid); font-style: italic; }
+.fmt-body .findent { padding-left: 24px; }
+.fmt-body .findent2 { padding-left: 48px; }
+.fmt-body .fgap { display: block; height: 8px; }
+.fmt-body .fdiv { display: block; border-top: 1px dashed var(--line); margin: 8px 0; }
+
+/* ── Sample Answer Box ───────────────────────── */
+.sample-box {
+  border: 1px solid var(--line); margin: 18px 0; overflow: hidden;
+}
+.sample-head {
+  padding: 5px 12px; background: var(--surf);
+  font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--dim);
+  border-bottom: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.sample-head span { font-size: 8px; color: var(--dim); }
+.sample-body {
+  padding: 18px 20px; font-size: 13.5px; color: var(--mid);
+  line-height: 1.85; font-weight: 300; background: var(--bg);
+}
+.sample-body .sline { display: block; margin-bottom: 2px; }
+.sample-body .scenter { text-align: center; display: block; }
+.sample-body .sright { text-align: right; display: block; }
+.sample-body .sgap { display: block; height: 8px; }
+.sample-body .sdiv { display: block; border-top: 1px dashed var(--line); margin: 10px 0; }
+.sample-body .sbold { color: var(--fg); font-weight: 500; }
+.sample-body .shead { text-align: center; display: block; color: var(--fg); font-weight: 500; font-size: 14px; }
+.sample-body .ssub { text-align: center; display: block; color: var(--mid); font-size: 13px; font-style: italic; }
+.sample-body .slabel { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); display: block; margin-bottom: 2px; }
+.sample-body .sindent { padding-left: 22px; display: block; }
+.sample-body .sbig { font-size: 16px; font-weight: 500; color: var(--fg); display: block; text-align: center; }
+.ann {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim);
+  background: var(--surf); padding: 1px 5px; margin-left: 5px;
+  border: 1px solid var(--line); white-space: nowrap; cursor: default;
+  vertical-align: middle;
+}
+
+/* ── Tip box ─────────────────────────────────── */
+.tip-box { margin: 18px 0; border: 1px solid var(--line); overflow: hidden; }
+.tip-head { padding: 5px 12px; background: var(--surf); font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); border-bottom: 1px solid var(--line); }
+.tip-body { padding: 0; }
+.tip-row { display: flex; gap: 0; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--mid); font-weight: 300; }
+.tip-row:last-child { border-bottom: none; }
+.tip-icon { padding: 8px 12px; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); flex-shrink: 0; min-width: 52px; border-right: 1px solid var(--line); display: flex; align-items: center; }
+.tip-text { padding: 8px 12px; line-height: 1.65; }
+.tip-text strong { color: var(--fg); font-weight: 500; }
+
+/* ── Fact/Key Points box ─────────────────────── */
+.fb { margin: 18px 0; border: 1px solid var(--line); overflow: hidden; }
+.fb-h { padding: 5px 12px; background: var(--surf); font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); border-bottom: 1px solid var(--line); }
+.fb-b li { font-size: 13px; color: var(--mid); line-height: 1.7; padding: 5px 12px; border-bottom: 1px solid var(--line); list-style: none; font-weight: 300; }
+.fb-b li:last-child { border-bottom: none; }
+.fb-b li strong { color: var(--fg); font-weight: 500; }
+
+/* ── Exam questions ───────────────────────────── */
+.eq-block { margin: 22px 0; }
+.eq { display: flex; gap: 12px; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--mid); line-height: 1.65; font-weight: 300; }
+.eq:last-child { border-bottom: none; }
+.eq-n { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); flex-shrink: 0; min-width: 18px; }
+
+/* ── Compare table ────────────────────────────── */
+.ct { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 12px 0; }
+.ct th { padding: 6px 10px; text-align: left; background: var(--surf); font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); border: 1px solid var(--line); }
+.ct td { padding: 8px 10px; border: 1px solid var(--line); color: var(--mid); line-height: 1.55; vertical-align: top; font-weight: 300; }
+.ct td strong { color: var(--fg); font-weight: 500; }
+.ct tr:nth-child(even) td { background: var(--surf); }
+
+/* ── Blockquote ───────────────────────────────── */
+blockquote { margin: 20px 0; padding: 0 0 0 16px; border-left: 1px solid var(--line); font-style: italic; font-size: 14px; font-weight: 300; color: var(--mid); line-height: 1.8; }
+blockquote cite { display: block; margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 9px; color: var(--dim); }
+
+/* ── Divider ──────────────────────────────────── */
+.div { margin: 56px 0; display: flex; align-items: center; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 8.5px; color: var(--line); letter-spacing: .08em; text-transform: uppercase; }
+.div::before, .div::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+/* ── Search highlight ─────────────────────────── */
+mark { background: none; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; color: inherit; }
+mark.cur { background: var(--surf); }
+.hl { background: var(--surf); }
+
+/* ── Highlight bar ────────────────────────────── */
+#hlb { display: none; position: fixed; z-index: 600; background: var(--fg); padding: 5px 8px; gap: 6px; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,.2); }
+.hlb-btn { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(255,255,255,.5); background: none; border: 1px solid rgba(255,255,255,.12); padding: 2px 7px; cursor: pointer; transition: color .1s; }
+.hlb-btn:hover { color: rgba(255,255,255,.9); border-color: rgba(255,255,255,.3); }
+.hsep { width: 1px; height: 12px; background: rgba(255,255,255,.1); }
+
+/* ── Annotation panel ─────────────────────────── */
+#ap { position: fixed; right: 0; top: 0; bottom: 0; width: 252px; background: var(--bg); border-left: 1px solid var(--line); padding: 20px 16px; overflow-y: auto; z-index: 90; transform: translateX(100%); display: flex; flex-direction: column; gap: 8px; transition: transform .2s ease; }
+#ap.open { transform: translateX(0); }
+#ap h3 { font-size: 14px; font-weight: 400; color: var(--fg); padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.ai { padding: 9px 11px; border: 1px solid var(--line); font-size: 12px; }
+.ai-q { font-style: italic; color: var(--dim); font-size: 10.5px; margin-bottom: 4px; }
+.ai-n { color: var(--mid); line-height: 1.55; font-weight: 300; }
+.ai-m { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); margin-top: 4px; display: flex; justify-content: space-between; }
+.ai-d { background: none; border: none; color: var(--dim); cursor: pointer; }
+.ai-d:hover { color: var(--fg); }
+#a-empty { font-size: 12px; color: var(--dim); font-style: italic; }
+.apop { position: fixed; z-index: 700; background: var(--bg); border: 1px solid var(--line); padding: 9px 11px; width: 210px; box-shadow: 0 3px 14px rgba(0,0,0,.12); }
+.apop textarea { width: 100%; min-height: 60px; padding: 4px 6px; background: var(--surf); border: 1px solid var(--line); color: var(--fg); font-family: 'Source Serif 4', serif; font-size: 12px; resize: vertical; outline: none; }
+.apop-btns { display: flex; gap: 4px; margin-top: 5px; }
+.apop-btns button { padding: 3px 9px; font-size: 10px; cursor: pointer; font-family: 'JetBrains Mono', monospace; border-radius: 1px; }
+.b-save { background: var(--fg); color: var(--bg); border: 1px solid var(--fg); }
+.b-cancel { background: none; color: var(--dim); border: 1px solid var(--line); }
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width: 680px) {
+  :root { --sw: 0px; }
+  #sidebar { width: 224px; transform: translateX(-224px); }
+  #sidebar.open { transform: translateX(0); }
+  #main { margin-left: 0; }
+  #content { padding: 32px 18px 80px; }
+  #topbar { padding: 0 14px 0 8px; }
+  #menu-btn { display: flex; }
+  .marks-strip { flex-wrap: wrap; }
+}
+@media print {
+  #sidebar, #topbar, #hlb, #ap, #prog { display: none !important; }
+  #main { margin-left: 0; }
+  #content { padding: 12px; max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<div id="hlb">
+  <button class="hlb-btn" data-c="hl">highlight</button>
+  <div class="hsep"></div>
+  <button class="hlb-btn" id="hln">+ note</button>
+  <div class="hsep"></div>
+  <button class="hlb-btn" id="hx">clear</button>
+</div>
+
+<nav id="sidebar">
+  <div class="sb-head">
+    <div class="sb-label">CBSE · Class XII · English Core</div>
+    <h2>Writing &amp; Reading<br>Study Notes</h2>
+  </div>
+
+  <div class="sb-sec">
+    <span class="sb-sec-lbl">Section A — Reading</span>
+    <a class="nav-a" onclick="go('r1')">Unseen Passage — Factual <small>Multiple Choice + Short Answer</small></a>
+    <a class="nav-a" onclick="go('r2')">Unseen Passage — Discursive <small>Note-Making &amp; Summary</small></a>
+  </div>
+
+  <div class="sb-sec">
+    <span class="sb-sec-lbl">Section B — Writing (Short)</span>
+    <a class="nav-a" onclick="go('w1')">Notice Writing <small>4 marks</small></a>
+    <a class="nav-a" onclick="go('w2')">Advertisement Writing <small>4 marks</small></a>
+    <a class="nav-a" onclick="go('w3')">Poster Making <small>4 marks</small></a>
+  </div>
+
+  <div class="sb-sec">
+    <span class="sb-sec-lbl">Section B — Writing (Long)</span>
+    <a class="nav-a" onclick="go('w4')">Letter to the Editor <small>6 marks</small></a>
+    <a class="nav-a" onclick="go('w5')">Letter of Complaint <small>6 marks</small></a>
+    <a class="nav-a" onclick="go('w6')">Letter of Inquiry <small>6 marks</small></a>
+    <a class="nav-a" onclick="go('w7')">Job Application &amp; Bio-data <small>6 marks</small></a>
+    <a class="nav-a" onclick="go('w8')">Article Writing <small>6 marks</small></a>
+    <a class="nav-a" onclick="go('w9')">Speech Writing <small>6 marks</small></a>
+    <a class="nav-a" onclick="go('w10')">Report Writing <small>6 marks</small></a>
+    <a class="nav-a" onclick="go('w11')">Debate Writing <small>6 marks</small></a>
+  </div>
+
+  <div class="sb-sec">
+    <span class="sb-sec-lbl">Tools</span>
+    <a class="nav-a" onclick="toggleAP()">Annotations</a>
+    <a class="nav-a" onclick="clearHL()">Clear highlights</a>
+    <a class="nav-a" onclick="window.print()">Print / PDF</a>
+  </div>
+
+  <div class="theme-panel">
+    <div class="sb-label">Appearance</div>
+    <div class="ld-row"><span>Light / Dark</span><button class="tog" id="ld" onclick="toggleDark()"></button></div>
+    <div class="sc-list">
+      <button class="sc-btn on" data-s="default"        onclick="setS('default')">Default <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="gruvbox"        onclick="setS('gruvbox')">Gruvbox <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="gruvbox-light"  onclick="setS('gruvbox-light')">Gruvbox Light <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="nord"           onclick="setS('nord')">Nord <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="solarized"      onclick="setS('solarized')">Solarized <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="solarized-dark" onclick="setS('solarized-dark')">Solarized Dark <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="dracula"        onclick="setS('dracula')">Dracula <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="one-dark"       onclick="setS('one-dark')">One Dark <span class="sc-check">✓</span></button>
+    </div>
+  </div>
+</nav>
+
+<div id="ap">
+  <h3>Annotations</h3>
+  <div id="a-empty">Select text and click "+ note" to add an annotation.</div>
+  <div id="a-list"></div>
+</div>
+
+<div id="main">
+  <div id="topbar">
+    <div class="tb-l">
+      <button id="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')"><span></span><span></span><span></span></button>
+      <span class="breadcrumb">English Core · Writing &amp; Reading Skills</span>
+    </div>
+    <div class="tb-r">
+      <input id="si" type="text" placeholder="Search…" oninput="doSearch(this.value)">
+      <span id="sc"></span>
+    </div>
+  </div>
+
+  <div id="content">
+    <div class="hero">
+      <div class="hero-eye">CBSE Class XII · English Core</div>
+      <h1>Writing &amp; Reading Skills<br><em>All Formats — Notes &amp; Samples</em></h1>
+      <p class="deck">Complete coverage of Section A (Reading: unseen passages, note-making, summary) and Section B (Writing: notice, advertisement, poster, letters, article, speech, report, debate). Every format comes with a template, annotated sample, marking tips, and common errors to avoid.</p>
+      <div class="toc">
+        <div class="toc-row" onclick="go('r1')"><span class="toc-n">R–1</span><span class="toc-t">Unseen Passage — Factual</span><span class="toc-a">10 marks</span></div>
+        <div class="toc-row" onclick="go('r2')"><span class="toc-n">R–2</span><span class="toc-t">Unseen Passage — Discursive + Note-Making &amp; Summary</span><span class="toc-a">10 marks</span></div>
+        <div class="toc-row" onclick="go('w1')"><span class="toc-n">W–1</span><span class="toc-t">Notice Writing</span><span class="toc-a">4 marks</span></div>
+        <div class="toc-row" onclick="go('w2')"><span class="toc-n">W–2</span><span class="toc-t">Advertisement Writing</span><span class="toc-a">4 marks</span></div>
+        <div class="toc-row" onclick="go('w3')"><span class="toc-n">W–3</span><span class="toc-t">Poster Making</span><span class="toc-a">4 marks</span></div>
+        <div class="toc-row" onclick="go('w4')"><span class="toc-n">W–4</span><span class="toc-t">Letter to the Editor</span><span class="toc-a">6 marks</span></div>
+        <div class="toc-row" onclick="go('w5')"><span class="toc-n">W–5</span><span class="toc-t">Letter of Complaint</span><span class="toc-a">6 marks</span></div>
+        <div class="toc-row" onclick="go('w6')"><span class="toc-n">W–6</span><span class="toc-t">Letter of Inquiry</span><span class="toc-a">6 marks</span></div>
+        <div class="toc-row" onclick="go('w7')"><span class="toc-n">W–7</span><span class="toc-t">Job Application &amp; Bio-data / Résumé</span><span class="toc-a">6 marks</span></div>
+        <div class="toc-row" onclick="go('w8')"><span class="toc-n">W–8</span><span class="toc-t">Article Writing</span><span class="toc-a">6 marks</span></div>
+        <div class="toc-row" onclick="go('w9')"><span class="toc-n">W–9</span><span class="toc-t">Speech Writing</span><span class="toc-a">6 marks</span></div>
+        <div class="toc-row" onclick="go('w10')"><span class="toc-n">W–10</span><span class="toc-t">Report Writing</span><span class="toc-a">6 marks</span></div>
+        <div class="toc-row" onclick="go('w11')"><span class="toc-n">W–11</span><span class="toc-t">Debate Writing</span><span class="toc-a">6 marks</span></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════ READING ═══════════════════════════ -->
+    <div class="div">Section A — Reading Skills</div>
+
+    <!-- R1 -->
+    <div class="chapter" id="r1">
+      <div class="ch-head">
+        <div class="ch-n">Reading · Passage Type 01</div>
+        <div class="ch-t">Unseen Passage — Factual</div>
+        <div class="ch-tags"><span class="tag">10 Marks</span><span class="tag">400–450 words</span><span class="tag">Passage + MCQ + Short Answer</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="marks-strip">
+        <div class="ms-item"><strong>10</strong>Total Marks</div>
+        <div class="ms-item"><strong>400–450</strong>Passage words</div>
+        <div class="ms-item"><strong>4–6</strong>MCQs / VSA</div>
+        <div class="ms-item"><strong>2–3</strong>Short answers</div>
+        <div class="ms-item"><strong>1</strong>Vocabulary Q</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">What is a Factual Passage?</div>
+        <p>A factual (non-literary) passage presents <strong>information, facts, data, or descriptions</strong> — typically from newspapers, journals, science writing, government reports, or informational essays. The language is plain and precise. Questions test literal comprehension, inference, and vocabulary in context. Unlike discursive passages, factual passages do not present arguments — they inform.</p>
+        <p><strong>Common topics:</strong> environment, health, technology, history, social issues, science, geography, economics.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Question Types and How to Attempt</div>
+        <ul class="nl">
+          <li><strong>Multiple Choice Questions (MCQs)</strong> — read the question first, then scan the passage for the relevant section. All options may be partially correct; choose the one best supported by the text.</li>
+          <li><strong>Very Short Answer (VSA / 1 mark)</strong> — locate the answer directly. Write in a <em>complete sentence</em>, not just a word. Marks are given for accuracy.</li>
+          <li><strong>Short Answer (2 marks)</strong> — answer in 2–3 sentences. Include two distinct points. Do not copy full sentences from the passage; paraphrase.</li>
+          <li><strong>Vocabulary in Context</strong> — find the word in context, understand its use, then choose the synonym/antonym from options given. Never guess from the options alone.</li>
+          <li><strong>Title / Heading</strong> — if asked, give a brief title (3–6 words) that captures the <em>central idea</em>, not just the topic. Avoid vague titles like "A passage about pollution."</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Step-by-Step Strategy</div>
+        <ol class="nl">
+          <li><strong>Read questions first</strong> (30 seconds) — know what you're looking for before you read the passage.</li>
+          <li><strong>Skim the passage</strong> — get the gist in one quick read. Identify topic, scope, and paragraph breakdown.</li>
+          <li><strong>Answer MCQs</strong> — go back to specific lines for each question. Underline key phrases in the margin.</li>
+          <li><strong>Write short answers in full sentences</strong> — even "1-mark" answers earn better marks when framed as sentences.</li>
+          <li><strong>Vocabulary last</strong> — use context (the sentence before and after) to determine meaning, not your general knowledge alone.</li>
+        </ol>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-head">Examiner's Checklist — Common Mistakes</div>
+        <div class="tip-body">
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Copying lines verbatim.</strong> Examiners deduct marks if you simply reproduce a sentence from the passage as your "answer." Always rephrase.</div></div>
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Answering beyond the text.</strong> Never import your general knowledge into factual passage answers. Stick strictly to what the passage says.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Refer to specific paragraphs or lines</strong> when forming your answer. Precision signals careful reading.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Check word limits for short answers.</strong> Two-mark answers should be 20–40 words; no more. Padding with irrelevant material loses marks.</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Sample Passage with Annotated Questions</div>
+        <div class="sample-box">
+          <div class="sample-head">Sample Passage — Factual <span>~420 words</span></div>
+          <div class="sample-body">
+            <span class="sline">India is home to over <strong>one-fifth of the world's population</strong>, yet it draws only about <strong>4% of the world's freshwater</strong> resources annually. This dramatic imbalance is at the heart of the country's growing water crisis. According to a 2023 NITI Aayog report, nearly 600 million people in India face "high to extreme" water stress, and approximately 200,000 people die each year due to inadequate access to safe water.</span>
+            <span class="sgap"></span>
+            <span class="sline">The causes are multiple and interlinked. Rapid urbanisation has placed enormous strain on existing water infrastructure. Cities like Bengaluru, Chennai, and Delhi regularly experience water shortages in summer months, forcing residents to rely on expensive private tankers. Meanwhile, agriculture — which accounts for about <strong>80% of India's freshwater consumption</strong> — continues to use flood irrigation, one of the most wasteful methods possible. Subsidised electricity has historically encouraged farmers to pump groundwater freely, depleting aquifers far faster than they can be recharged.</span>
+            <span class="sgap"></span>
+            <span class="sline">Climate change is compounding the problem. The monsoon, on which India is overwhelmingly dependent, has become more erratic. When it does rain, much of the water runs off as flood rather than percolating into the ground. Glaciers that feed India's northern rivers — the Ganga, Yamuna, and their tributaries — are retreating at an alarming rate, threatening long-term water supplies for hundreds of millions.</span>
+            <span class="sgap"></span>
+            <span class="sline">Solutions exist. Drip irrigation can cut agricultural water use by 30–60%. Rainwater harvesting, once common across India, is being revived in states like Tamil Nadu, where rooftop harvesting is now legally mandatory in Chennai. Wastewater treatment and recycling, practised at scale in Israel and Singapore, remain underdeveloped in India. Policy reforms — ending electricity subsidies that incentivise over-pumping, pricing water more accurately, and legislating aquifer management — are politically difficult but essential.</span>
+            <span class="sgap"></span>
+            <span class="sline">The crisis is not inevitable. India has addressed large-scale challenges before. What is required is the same combination of policy will, community participation, and technological investment that enabled the Green Revolution. The cost of inaction — social unrest, economic disruption, ecosystem collapse — is far higher than the cost of reform. Water security is not just an environmental issue. It is a matter of national survival.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Sample Questions with Model Answers</div>
+
+        <div class="fb">
+          <div class="fb-h">Q1 (MCQ) — What percentage of India's freshwater resources does the country draw annually?</div>
+          <ul class="fb-b">
+            <li>(a) 20%  (b) 10%  <strong>(c) 4%</strong>  (d) 1%</li>
+            <li style="font-style:italic">Answer: (c) — directly stated in the first paragraph. Strategy: locate "freshwater" in passage; answer is in line 2.</li>
+          </ul>
+        </div>
+
+        <div class="fb">
+          <div class="fb-h">Q2 (2 marks) — What are the two main causes of India's water crisis mentioned in the passage?</div>
+          <ul class="fb-b">
+            <li><strong>Model Answer:</strong> The two main causes are <em>rapid urbanisation</em>, which strains existing water infrastructure, and <em>wasteful agricultural irrigation practices</em>, particularly flood irrigation which consumes 80% of India's freshwater. (29 words)</li>
+            <li style="font-style:italic">Examiner's note: Award 1 mark per correctly identified and briefly explained cause. Vague answers like "climate change and water use" earn partial credit only.</li>
+          </ul>
+        </div>
+
+        <div class="fb">
+          <div class="fb-h">Q3 (2 marks) — Suggest two solutions mentioned in the passage to address the water crisis.</div>
+          <ul class="fb-b">
+            <li><strong>Model Answer:</strong> The passage recommends <em>drip irrigation</em>, which can reduce agricultural water use by 30–60%, and <em>rainwater harvesting</em>, which states like Tamil Nadu have already mandated for rooftops in Chennai. (31 words)</li>
+          </ul>
+        </div>
+
+        <div class="fb">
+          <div class="fb-h">Q4 (Vocabulary, 1 mark) — Find a word in paragraph 3 that means "becoming worse / increasing in severity."</div>
+          <ul class="fb-b">
+            <li><strong>Answer: "compounding"</strong> — in "Climate change is compounding the problem." The context is key: climate change is adding to existing causes, making things worse.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="div">R–2</div>
+
+    <!-- R2 -->
+    <div class="chapter" id="r2">
+      <div class="ch-head">
+        <div class="ch-n">Reading · Passage Type 02</div>
+        <div class="ch-t">Discursive Passage + Note-Making &amp; Summary</div>
+        <div class="ch-tags"><span class="tag">10 Marks</span><span class="tag">400–450 words</span><span class="tag">Note-making 5 + Summary 5</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="marks-strip">
+        <div class="ms-item"><strong>10</strong>Total Marks</div>
+        <div class="ms-item"><strong>5</strong>Note-Making</div>
+        <div class="ms-item"><strong>5</strong>Summary</div>
+        <div class="ms-item"><strong>50–80</strong>Summary words</div>
+        <div class="ms-item"><strong>Abbrev.</strong>3–4 required</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">What is a Discursive Passage?</div>
+        <p>A discursive passage presents a <strong>viewpoint, argument, or discussion</strong> on a topic — it analyses, persuades, or explores multiple sides of an issue. Unlike factual passages, they include opinion and reasoning. For this passage type, CBSE asks you to do <strong>note-making</strong> (organising the passage into a structured outline) and write a <strong>summary</strong> (condensing the passage in your own words).</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Note-Making — Format and Rules</div>
+        <p>Notes are a <strong>structured outline</strong> of the passage. Think of it like a tree: main points are the trunk, sub-points are branches. You must use <strong>abbreviations</strong> (at least 3–4 of your own) and provide a key.</p>
+
+        <div class="fmt-box">
+          <div class="fmt-box-head">Note-Making Standard Format</div>
+          <div class="fmt-body">
+            <span class="fline"><span class="fkey">Title:</span> <span class="fval">[Short, informative title for the whole passage]</span></span>
+            <span class="fgap"></span>
+            <span class="fline"><span class="fkey">1.</span> <span class="fval">[Main Point 1 — first major idea]</span></span>
+            <span class="fline findent"><span class="fkey">1.1</span> <span class="fval">[Sub-point]</span></span>
+            <span class="fline findent"><span class="fkey">1.2</span> <span class="fval">[Sub-point]</span></span>
+            <span class="fgap"></span>
+            <span class="fline"><span class="fkey">2.</span> <span class="fval">[Main Point 2]</span></span>
+            <span class="fline findent"><span class="fkey">2.1</span> <span class="fval">[Sub-point]</span></span>
+            <span class="fline findent"><span class="fkey">2.2</span> <span class="fval">[Sub-point]</span></span>
+            <span class="fline findent2"><span class="fkey">2.2.1</span> <span class="fval">[Sub-sub-point if needed]</span></span>
+            <span class="fgap"></span>
+            <span class="fline"><span class="fkey">3.</span> <span class="fval">[Main Point 3]</span></span>
+            <span class="fline findent"><span class="fkey">3.1</span> <span class="fval">[Sub-point]</span></span>
+            <span class="fdiv"></span>
+            <span class="fline"><span class="fkey">Abbreviations Used:</span></span>
+            <span class="fline findent"><span class="fval">e.g. — e.g. (for example)  |  govt. — government  |  env. — environment  |  imp. — important</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Note-Making — Rules and Marks Allocation</div>
+        <ul class="fb-b">
+          <li><strong>Title (1 mark)</strong> — must be short and informative. Avoid starting with "The importance of…" — just name the topic precisely.</li>
+          <li><strong>Notes (3 marks)</strong> — 3 main headings with relevant sub-points. At least 2 sub-points per main heading. Must use abbreviations.</li>
+          <li><strong>Abbreviations key (1 mark)</strong> — list all abbreviations you used with their full forms. Create your own; don't just use standard ones.</li>
+          <li>Notes must be in <strong>incomplete form</strong> — no full sentences. Drop articles (a, the), conjunctions, and verbs where possible.</li>
+          <li>Information must be <strong>accurate</strong> — do not invent points not in the passage.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Sample Note-Making</div>
+        <p style="font-size:12.5px;color:var(--dim);font-style:italic">Based on the water crisis passage from R–1 (for demonstration of format):</p>
+
+        <div class="sample-box">
+          <div class="sample-head">Sample Notes — India's Water Crisis <span>full marks answer</span></div>
+          <div class="sample-body">
+            <span class="slabel">Title</span>
+            <span class="sline sbold">India's Growing Water Crisis: Causes and Solutions</span>
+            <span class="sgap"></span>
+            <span class="sline"><span class="sbold">1. Scale of crisis</span></span>
+            <span class="sline sindent">1.1 India = 1/5 world pop. but only 4% freshwater</span>
+            <span class="sline sindent">1.2 ~600 mn. face high–extreme water stress <span class="ann">abbrev. used: mn. = million</span></span>
+            <span class="sline sindent">1.3 ~2 lakh deaths/yr due to unsafe water <span class="ann">abbrev.: yr. = year</span></span>
+            <span class="sgap"></span>
+            <span class="sline"><span class="sbold">2. Causes</span></span>
+            <span class="sline sindent">2.1 Rapid urbanisation → strain on infra. <span class="ann">abbrev.: infra. = infrastructure</span></span>
+            <span class="sline sindent">2.2 Agri. consumes 80% freshwater</span>
+            <span class="sline sindent" style="padding-left:44px">2.2.1 Flood irrigation — most wasteful method</span>
+            <span class="sline sindent" style="padding-left:44px">2.2.2 Subsidised electricity → over-pumping of grdwtr. <span class="ann">abbrev.: grdwtr. = groundwater</span></span>
+            <span class="sline sindent">2.3 Climate change</span>
+            <span class="sline sindent" style="padding-left:44px">2.3.1 Erratic monsoon → more runoff, less percolation</span>
+            <span class="sline sindent" style="padding-left:44px">2.3.2 Retreating glaciers threaten n. rivers <span class="ann">abbrev.: n. = northern</span></span>
+            <span class="sgap"></span>
+            <span class="sline"><span class="sbold">3. Solutions</span></span>
+            <span class="sline sindent">3.1 Drip irrig. — cuts water use by 30–60%</span>
+            <span class="sline sindent">3.2 Rainwater harvesting — mandatory in Chennai</span>
+            <span class="sline sindent">3.3 Wastewater treatment &amp; recycling</span>
+            <span class="sline sindent">3.4 Policy reforms: end subsidies, price water accurately, legislate aquifer mgmt. <span class="ann">abbrev.: mgmt. = management</span></span>
+            <span class="sdiv"></span>
+            <span class="slabel">Abbreviations Used</span>
+            <span class="sline">mn. — million | yr. — year | infra. — infrastructure | grdwtr. — groundwater | irrig. — irrigation | n. — northern | agri. — agriculture | mgmt. — management</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Summary Writing — Rules</div>
+        <p>A summary is a <strong>condensed rewriting of the passage in your own words</strong>. It must be in continuous prose (not notes), in the <strong>third person</strong>, and within the word limit of <strong>50–80 words</strong> (approx. one-third of the passage length).</p>
+        <ul class="nl">
+          <li><strong>Use your notes</strong> as a base — the notes already give you the main points; the summary is those points written as connected sentences.</li>
+          <li><strong>No direct quotes</strong> from the passage — everything must be in your own words.</li>
+          <li><strong>No new information</strong> — do not add anything beyond what is in the passage.</li>
+          <li><strong>Logical flow</strong> — use connecting words: "furthermore," "however," "consequently," "as a result," "in addition."</li>
+          <li><strong>Third person, past or present tense</strong> — avoid first-person pronouns.</li>
+        </ul>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample Summary <span>~75 words — full marks</span></div>
+        <div class="sample-body">
+          <span class="sline">India faces a severe water crisis, with a large population having access to only 4% of the world's freshwater. The crisis stems from rapid urbanisation, wasteful agricultural practices consuming 80% of available water, and the disruption of rainfall patterns due to climate change. Solutions such as drip irrigation, rainwater harvesting, and wastewater recycling are available, but sustained progress also demands policy reforms including the removal of electricity subsidies that encourage reckless groundwater extraction.</span>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-head">Summary — Common Mistakes</div>
+        <div class="tip-body">
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Exceeding word limit.</strong> Summaries over 80 words are penalised. Count your words; be ruthless with cutting adjectives and examples.</div></div>
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Using incomplete sentences.</strong> Summary is prose — not notes. Every sentence must be grammatically complete.</div></div>
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Including statistics or examples from the passage verbatim.</strong> Paraphrase "approximately 200,000 people die" as "a large number of deaths" or similar.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Cover all three main points</strong> identified in your notes. Missing a major section loses marks in both accuracy and completeness.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════ WRITING SHORT ═════════════════════════ -->
+    <div class="div">Section B — Short Writing Formats</div>
+
+    <!-- W1 Notice -->
+    <div class="chapter" id="w1">
+      <div class="ch-head">
+        <div class="ch-n">Writing · Format 01</div>
+        <div class="ch-t">Notice Writing</div>
+        <div class="ch-tags"><span class="tag">4 Marks</span><span class="tag">50 words max</span><span class="tag">Formal</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="marks-strip">
+        <div class="ms-item"><strong>4</strong>Total Marks</div>
+        <div class="ms-item"><strong>1</strong>Format</div>
+        <div class="ms-item"><strong>2</strong>Content</div>
+        <div class="ms-item"><strong>1</strong>Expression</div>
+        <div class="ms-item"><strong>50</strong>Max words</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Purpose and Context</div>
+        <p>A notice is an <strong>official written announcement</strong> issued by an organisation, institution, or authority to inform a specific group of people about an event, decision, rule, or requirement. School notices are the most common type in CBSE exams — they are issued by a Head Boy/Girl, School Captain, or Secretary of a school body.</p>
+      </div>
+
+      <div class="fmt-box">
+        <div class="fmt-box-head">Notice — Standard Format</div>
+        <div class="fmt-body">
+          <span class="fline fkey scenter" style="text-align:center;display:block">[NAME OF SCHOOL / ORGANISATION]</span>
+          <span class="fgap"></span>
+          <span class="fline fkey" style="text-align:center;display:block">NOTICE</span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Date:</span> <span class="fval">DD Month YYYY</span></span>
+          <span class="fgap"></span>
+          <span class="fline fkey" style="text-align:center;display:block">[HEADING IN CAPITALS — brief, specific]</span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fval">Body text: What, Who, When, Where, Why. All essential details in concise sentences. No padding.</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">[Name of issuing authority]</span></span>
+          <span class="fline"><span class="fkey">[Designation]</span></span>
+        </div>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Notice — The 5W Checklist (every notice must cover these)</div>
+        <ul class="fb-b">
+          <li><strong>What</strong> — What is the event/announcement?</li>
+          <li><strong>Who</strong> — Who is this notice for? (Target audience)</li>
+          <li><strong>When</strong> — Date and time of the event</li>
+          <li><strong>Where</strong> — Venue / location</li>
+          <li><strong>Why / How</strong> — Purpose or instruction (e.g., how to register, what to bring)</li>
+        </ul>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample Notice — Full Marks Answer</div>
+        <div class="sample-body">
+          <span class="scenter sbold">DELHI PUBLIC SCHOOL, ROHINI</span> <span class="ann">School name — do not leave blank</span>
+          <span class="sgap"></span>
+          <span class="scenter sbold">NOTICE</span> <span class="ann">Word 'NOTICE' in caps, centred</span>
+          <span class="sgap"></span>
+          <span class="sline"><span class="sbold">Date:</span> 12 March 2025</span> <span class="ann">Full date, not DD/MM/YY</span>
+          <span class="sgap"></span>
+          <span class="scenter sbold">INTER-HOUSE ELOCUTION COMPETITION</span> <span class="ann">Heading in caps, specific</span>
+          <span class="sgap"></span>
+          <span class="sline">All students of Classes IX to XII are hereby informed that the Annual Inter-House Elocution Competition will be held on <strong>20 March 2025 (Wednesday) at 10:00 a.m.</strong> in the <strong>School Auditorium.</strong> The theme for this year is <em>Technology: Blessing or Curse.</em> Interested participants must register their names with their respective Class Teachers by <strong>15 March 2025.</strong></span> <span class="ann">5W fully covered in &lt;50 words</span>
+          <span class="sgap"></span>
+          <span class="sline"><span class="sbold">Ritu Sharma</span></span>
+          <span class="sline">Cultural Secretary</span> <span class="ann">Name + designation, not just a signature</span>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-head">Notice — Do's and Don'ts</div>
+        <div class="tip-body">
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Box the notice</strong> with a border — CBSE awards a format mark for this. Draw a neat rectangle around the entire notice.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Keep within 50 words.</strong> The notice body must be brief. Use no decorative language. Every word must be functional.</div></div>
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Never write "Dear Students"</strong> — a notice is not a letter. It begins directly with the body text after the heading.</div></div>
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>No first person</strong> — never write "I am happy to inform you." Use third-person passive: "Students are informed that…"</div></div>
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Never use a salutation or closing.</strong> No "Yours faithfully" — notices are not letters.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="div">W–2</div>
+
+    <!-- W2 Advertisement -->
+    <div class="chapter" id="w2">
+      <div class="ch-head">
+        <div class="ch-n">Writing · Format 02</div>
+        <div class="ch-t">Advertisement Writing</div>
+        <div class="ch-tags"><span class="tag">4 Marks</span><span class="tag">Classified Ad</span><span class="tag">Commercial / Matrimonial / Lost &amp; Found / For Sale</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="marks-strip">
+        <div class="ms-item"><strong>4</strong>Total Marks</div>
+        <div class="ms-item"><strong>1</strong>Format</div>
+        <div class="ms-item"><strong>2</strong>Content</div>
+        <div class="ms-item"><strong>1</strong>Expression</div>
+        <div class="ms-item"><strong>50</strong>Max words</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Types of Classified Advertisements</div>
+        <table class="ct">
+          <tr><th>Type</th><th>Purpose</th><th>Key Info to Include</th></tr>
+          <tr><td><strong>For Sale / To Let</strong></td><td>Selling property, goods, vehicles</td><td>Item, condition, price, contact</td></tr>
+          <tr><td><strong>Situation Vacant</strong></td><td>Employer advertising a job</td><td>Post, qualifications, salary, how to apply</td></tr>
+          <tr><td><strong>Situation Wanted</strong></td><td>Job seeker advertising skills</td><td>Qualification, experience, contact</td></tr>
+          <tr><td><strong>Lost &amp; Found</strong></td><td>Reporting lost/found items</td><td>Item, where/when, contact, reward</td></tr>
+          <tr><td><strong>Matrimonial</strong></td><td>Seeking a life partner</td><td>Age, qualification, profession, caste (if req.), contact</td></tr>
+          <tr><td><strong>PG / Accommodation</strong></td><td>Seeking or offering room/boarding</td><td>Location, facilities, rent, contact</td></tr>
+        </table>
+      </div>
+
+      <div class="fmt-box">
+        <div class="fmt-box-head">Classified Ad — Standard Format (box it)</div>
+        <div class="fmt-body">
+          <span class="fline fkey" style="text-align:center;display:block">[CATEGORY IN CAPS: e.g., FOR SALE / SITUATION VACANT]</span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fval">All key details in telegram-style: short phrases, abbreviations acceptable (sq.ft., yrs., p.m., etc.). No full sentences needed. No "I am looking for…" — just list the facts directly.</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Contact:</span> <span class="fval">[Name / Phone / Email / Address]</span></span>
+        </div>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample 1 — Situation Vacant</div>
+        <div class="sample-body">
+          <span class="scenter sbold">SITUATION VACANT</span>
+          <span class="sgap"></span>
+          <span class="sline">Required: <span class="sbold">Experienced Science Teacher</span> for CBSE school, Delhi. Qualifications: M.Sc. + B.Ed., minimum 3 years' teaching exp. Salary: ₹45,000–₹55,000 p.m. <span class="ann">p.m. = per month — abbreviation is fine</span> Interested candidates may send CV to: <span class="sbold">principalkvdelhi@gmail.com</span> latest by 25 March 2025. Only shortlisted candidates will be called for interview.</span>
+        </div>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample 2 — Lost and Found</div>
+        <div class="sample-body">
+          <span class="scenter sbold">LOST</span>
+          <span class="sgap"></span>
+          <span class="sline">Lost: <span class="sbold">Brown leather wallet</span> containing approx. ₹2,000 cash, Aadhaar card, and student ID card. Lost near <span class="sbold">Connaught Place Metro Station, Gate 5</span> on 10 March 2025 (evening). <span class="ann">When and where — always</span> Finder kindly contact: <span class="sbold">Amit Verma, 9XXXXXXXXX.</span> Suitable reward will be given. No questions asked.</span>
+        </div>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample 3 — To Let (PG Accommodation)</div>
+        <div class="sample-body">
+          <span class="scenter sbold">TO LET — PG ACCOMMODATION</span>
+          <span class="sgap"></span>
+          <span class="sline">Spacious, well-furnished <span class="sbold">single room available</span> for working women / female students. Location: <span class="sbold">Lajpat Nagar, New Delhi</span> (5 min walk from metro). Facilities: Wi-Fi, AC, attached bath, 24-hr water. Meals optional. Rent: <span class="sbold">₹9,000 p.m.</span> Contact: Mrs. Sunita Nair: 9XXXXXXXXX.</span>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-head">Advertisement — Do's and Don'ts</div>
+        <div class="tip-body">
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Draw a box.</strong> A classified ad must be enclosed in a drawn border. This is worth a format mark.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Use telegraphic language:</strong> short, punchy, no unnecessary words. "3BHK flat" not "A flat with three bedrooms, a hall and a kitchen."</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Always include contact information.</strong> An ad without a contact is functionless and loses a mark.</div></div>
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Avoid first-person sentences</strong> like "I am selling my scooter." Write: "Honda Activa 5G, 2020 model, for sale."</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="div">W–3</div>
+
+    <!-- W3 Poster -->
+    <div class="chapter" id="w3">
+      <div class="ch-head">
+        <div class="ch-n">Writing · Format 03</div>
+        <div class="ch-t">Poster Making</div>
+        <div class="ch-tags"><span class="tag">4 Marks</span><span class="tag">Visual + Textual</span><span class="tag">Awareness / Event / Campaign</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="marks-strip">
+        <div class="ms-item"><strong>4</strong>Total Marks</div>
+        <div class="ms-item"><strong>1</strong>Format</div>
+        <div class="ms-item"><strong>2</strong>Content/Creativity</div>
+        <div class="ms-item"><strong>1</strong>Slogan/Expression</div>
+        <div class="ms-item"><strong>60</strong>Max words</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">About Posters</div>
+        <p>A poster is a <strong>visual communication tool</strong> designed to convey a message quickly and memorably. In CBSE exams, posters typically fall into two categories: <strong>awareness/campaign posters</strong> (about social issues like environment, health, road safety) and <strong>event posters</strong> (announcing a programme, competition, or exhibition). You cannot draw elaborate graphics in an exam, so the poster's impact comes from <strong>layout, headings, slogans, and concise text</strong>.</p>
+      </div>
+
+      <div class="fmt-box">
+        <div class="fmt-box-head">Poster — Standard Format (always in a box)</div>
+        <div class="fmt-body">
+          <span class="fline" style="text-align:center;display:block"><span class="fkey">[ISSUING ORGANISATION — top]</span></span>
+          <span class="fgap"></span>
+          <span class="fline" style="text-align:center;display:block"><span class="fkey fdim">[Optional: small visual or symbol placeholder — describe it briefly]</span></span>
+          <span class="fgap"></span>
+          <span class="fline" style="text-align:center;display:block"><span class="fkey">[MAIN HEADLINE — large, bold, 3–6 words]</span></span>
+          <span class="fgap"></span>
+          <span class="fline" style="text-align:center;display:block"><span class="fval">[2–3 key bullet points or short lines of information]</span></span>
+          <span class="fgap"></span>
+          <span class="fline" style="text-align:center;display:block"><span class="fkey">[CATCHY SLOGAN — italic or underlined]</span></span>
+          <span class="fgap"></span>
+          <span class="fline" style="text-align:center;display:block"><span class="fval">[Date / Venue / Contact — bottom]</span></span>
+        </div>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample Poster — Awareness (Save Water Campaign)</div>
+        <div class="sample-body">
+          <span class="scenter" style="font-size:10px;color:var(--dim)">Issued by: Delhi Jal Board &amp; Ministry of Water Resources</span>
+          <span class="sgap"></span>
+          <span class="scenter" style="font-size:10px;color:var(--dim);font-style:italic">[Image: A cracked, dry earth with a single water droplet]</span> <span class="ann">Brief description of visual — acceptable</span>
+          <span class="sgap"></span>
+          <span class="sbig">WATER IS LIFE.</span>
+          <span class="ssub">DON'T LET IT SLIP AWAY.</span>
+          <span class="sgap"></span>
+          <span class="scenter">✦  Turn off the tap while brushing your teeth.</span>
+          <span class="scenter">✦  Fix leaking pipes immediately.</span>
+          <span class="scenter">✦  Harvest rainwater — every drop counts.</span>
+          <span class="scenter">✦  Report water wastage: helpline <strong>1800-XXX-XXXX</strong></span>
+          <span class="sgap"></span>
+          <span class="scenter" style="font-style:italic;font-size:15px;color:var(--fg)">"Save Water Today — Secure Tomorrow."</span> <span class="ann">Slogan — memorable, original</span>
+          <span class="sgap"></span>
+          <span class="scenter" style="font-size:11px;color:var(--dim)">World Water Day — 22 March 2025 | www.jalshakti.gov.in</span>
+        </div>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample Poster — Event (Book Fair)</div>
+        <div class="sample-body">
+          <span class="scenter" style="font-size:10px;color:var(--dim)">Kendriya Vidyalaya, Sector 8, Dwarka</span>
+          <span class="sgap"></span>
+          <span class="sbig">ANNUAL BOOK FAIR 2025</span>
+          <span class="ssub">— Where Every Page Tells a Story —</span>
+          <span class="sgap"></span>
+          <span class="scenter"><strong>Dates:</strong> 18–22 March 2025 (10 a.m. – 5 p.m.)</span>
+          <span class="scenter"><strong>Venue:</strong> School Multipurpose Hall</span>
+          <span class="scenter"><strong>For:</strong> Students, Parents &amp; Book Lovers</span>
+          <span class="sgap"></span>
+          <span class="scenter">★ 200+ publishers  ★ Up to 30% discount  ★ Author Meets</span>
+          <span class="scenter">★ Quiz and Poetry competitions for students</span>
+          <span class="sgap"></span>
+          <span class="scenter" style="font-style:italic;color:var(--fg)">"A reader today — a leader tomorrow."</span>
+          <span class="sgap"></span>
+          <span class="scenter" style="font-size:10px;color:var(--dim)">Entry Free | All are welcome</span>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-head">Poster — Key Tips</div>
+        <div class="tip-body">
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Include a slogan.</strong> The slogan is often worth 1 mark on its own. It must be original, concise, and memorable.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Use visual organisation:</strong> centre important text, use ★ ✦ ● as visual dividers in a written exam to suggest design hierarchy.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Describe your intended visual briefly</strong> in square brackets — examiners appreciate awareness of the visual medium even when drawing is not expected.</div></div>
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Don't write paragraphs.</strong> A poster uses bullets, short lines, and fragments — never prose paragraphs.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════ WRITING LONG ══════════════════════════ -->
+    <div class="div">Section B — Long Writing Formats (Letters)</div>
+
+    <!-- W4 Letter to Editor -->
+    <div class="chapter" id="w4">
+      <div class="ch-head">
+        <div class="ch-n">Writing · Format 04</div>
+        <div class="ch-t">Letter to the Editor</div>
+        <div class="ch-tags"><span class="tag">6 Marks</span><span class="tag">120–150 words</span><span class="tag">Formal Letter</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="marks-strip">
+        <div class="ms-item"><strong>6</strong>Total Marks</div>
+        <div class="ms-item"><strong>1</strong>Format</div>
+        <div class="ms-item"><strong>3</strong>Content</div>
+        <div class="ms-item"><strong>2</strong>Expression</div>
+        <div class="ms-item"><strong>120–150</strong>Words</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Purpose and Tone</div>
+        <p>A letter to the editor is written to a newspaper to <strong>highlight a public issue, voice concern, suggest a solution, or respond to a previous article</strong>. The tone is formal, civic-minded, and measured — never aggressive or slangy. You are a concerned citizen drawing public attention to a problem.</p>
+      </div>
+
+      <div class="fmt-box">
+        <div class="fmt-box-head">Letter to the Editor — Standard Format</div>
+        <div class="fmt-body">
+          <span class="fline"><span class="fkey">Sender's Address</span></span>
+          <span class="fline findent"><span class="fval">House No. / Street</span></span>
+          <span class="fline findent"><span class="fval">City — Pin Code</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Date:</span> <span class="fval">DD Month YYYY</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">The Editor</span></span>
+          <span class="fline"><span class="fval">[Name of Newspaper/Magazine]</span></span>
+          <span class="fline"><span class="fval">[City]</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Subject:</span> <span class="fval">[Concise subject line — 5–8 words]</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Sir / Madam,</span></span>
+          <span class="fgap"></span>
+          <span class="fline findent"><span class="fval">Para 1 — Introduce the issue, state your purpose.</span></span>
+          <span class="fline findent"><span class="fval">Para 2 — Describe the problem with details/evidence.</span></span>
+          <span class="fline findent"><span class="fval">Para 3 — Suggest solutions / call for action from authorities.</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Yours faithfully,</span></span>
+          <span class="fline"><span class="fval">[Your Full Name]</span></span>
+        </div>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample — Letter to the Editor (Waterlogging in Colony)</div>
+        <div class="sample-body">
+          <span class="sline">12-B, Sector 14</span>
+          <span class="sline">Gurgaon — 122 001</span>
+          <span class="sgap"></span>
+          <span class="sline">15 March 2025</span>
+          <span class="sgap"></span>
+          <span class="sline">The Editor</span>
+          <span class="sline"><em>The Hindustan Times</em></span>
+          <span class="sline">New Delhi</span>
+          <span class="sgap"></span>
+          <span class="sline"><span class="sbold">Subject: Waterlogging in Sector 14 — An Urgent Appeal to Authorities</span></span>
+          <span class="sgap"></span>
+          <span class="sline">Sir,</span>
+          <span class="sgap"></span>
+          <span class="sline">Through the columns of your esteemed newspaper, I wish to draw the attention of the Municipal Corporation of Gurgaon to the severe waterlogging problem that has plagued Sector 14 for the past three monsoon seasons.</span>
+          <span class="sgap"></span>
+          <span class="sline">The drainage system in our locality is completely choked, causing knee-deep water to stagnate on the main road and in residential lanes for days after every rainfall. The situation is not only a daily inconvenience for residents but also a serious health hazard — mosquito breeding and the risk of waterborne disease are significant concerns. Despite multiple complaints to the local ward office, no action has been taken.</span>
+          <span class="sgap"></span>
+          <span class="sline">I urge the concerned authorities to inspect the drainage infrastructure immediately and undertake desilting before the onset of the 2025 monsoon. Public funds are collected through taxes; it is the duty of the administration to ensure basic civic amenities are functional.</span>
+          <span class="sgap"></span>
+          <span class="sline">Yours faithfully,</span>
+          <span class="sline"><span class="sbold">Priya Menon</span></span>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-head">Letter to Editor — Key Points</div>
+        <div class="tip-body">
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Opening phrase:</strong> "Through the columns of your esteemed newspaper…" — a conventional, mark-safe opening.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Three clear paragraphs:</strong> Problem → Details/Evidence → Solution/Request. Stick to this structure.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Close with "Yours faithfully"</strong> (not "Yours sincerely" — that is for personal letters where you know the recipient by name).</div></div>
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Never use aggressive or emotional language.</strong> "I am disgusted by the pathetic negligence" — too personal. Stay civic and measured.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="div">W–5</div>
+
+    <!-- W5 Complaint Letter -->
+    <div class="chapter" id="w5">
+      <div class="ch-head">
+        <div class="ch-n">Writing · Format 05</div>
+        <div class="ch-t">Letter of Complaint</div>
+        <div class="ch-tags"><span class="tag">6 Marks</span><span class="tag">120–150 words</span><span class="tag">Formal — Business Letter</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">Purpose</div>
+        <p>A complaint letter is written to a <strong>company, service provider, shopkeeper, or authority</strong> to report a deficiency, defective product, poor service, or unsatisfactory experience, and to seek a specific remedy. It is a business letter — the format differs slightly from a letter to the editor.</p>
+      </div>
+
+      <div class="fmt-box">
+        <div class="fmt-box-head">Complaint Letter — Standard Format</div>
+        <div class="fmt-body">
+          <span class="fline"><span class="fkey">Sender's Address</span></span>
+          <span class="fline findent"><span class="fval">Street / Locality</span></span>
+          <span class="fline findent"><span class="fval">City — Pin Code</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Date:</span> <span class="fval">DD Month YYYY</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">The Manager / The Customer Care Head</span></span>
+          <span class="fline"><span class="fval">[Company / Organisation Name]</span></span>
+          <span class="fline"><span class="fval">[Address]</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Subject:</span> <span class="fval">Complaint regarding [specific issue]</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Sir / Madam,</span></span>
+          <span class="fgap"></span>
+          <span class="fline findent"><span class="fval">Para 1 — State the purchase/service, date, order number if applicable.</span></span>
+          <span class="fline findent"><span class="fval">Para 2 — Describe the problem/defect specifically.</span></span>
+          <span class="fline findent"><span class="fval">Para 3 — State what you expect: refund, replacement, repair. Give a deadline.</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Yours faithfully,</span></span>
+          <span class="fline"><span class="fval">[Name]</span></span>
+        </div>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample — Complaint about Defective Mobile Phone</div>
+        <div class="sample-body">
+          <span class="sline">45, Model Town</span>
+          <span class="sline">Ludhiana — 141 002</span>
+          <span class="sgap"></span>
+          <span class="sline">18 March 2025</span>
+          <span class="sgap"></span>
+          <span class="sline">The Customer Care Manager</span>
+          <span class="sline">SmartTech Electronics Pvt. Ltd.</span>
+          <span class="sline">MG Road, Ludhiana</span>
+          <span class="sgap"></span>
+          <span class="sline"><span class="sbold">Subject: Complaint Regarding Defective Mobile Phone (Order No. ST-2025-4421)</span></span>
+          <span class="sgap"></span>
+          <span class="sline">Sir,</span>
+          <span class="sgap"></span>
+          <span class="sline">I purchased a <span class="sbold">SmartTech Pro 12 mobile phone</span> (Order No. ST-2025-4421) from your store on 28 February 2025, paying the full amount of ₹28,500.</span>
+          <span class="sgap"></span>
+          <span class="sline">Within ten days of purchase, the device began exhibiting serious faults: the battery drains completely within two hours of a full charge, the rear camera fails to focus, and the phone restarts spontaneously. I visited your service centre twice but was informed each time that the problem could not be replicated — which is clearly incorrect.</span>
+          <span class="sgap"></span>
+          <span class="sline">I request you to either <span class="sbold">replace the defective unit</span> with a new, working device or issue a <span class="sbold">full refund</span> within 10 days of receiving this letter, failing which I shall be compelled to approach the Consumer Forum for redressal.</span>
+          <span class="sgap"></span>
+          <span class="sline">Yours faithfully,</span>
+          <span class="sline"><span class="sbold">Harjeet Singh</span></span>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-head">Complaint Letter — Key Tips</div>
+        <div class="tip-body">
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Be specific:</strong> mention order numbers, dates, model names, amounts. Vague complaints like "the product was bad" lose content marks.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>State a clear remedy and a deadline.</strong> The complaint must end with a specific request, not just a vague expression of dissatisfaction.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Mention consequences politely:</strong> "…failing which I shall be compelled to approach the Consumer Forum" — firm but professional.</div></div>
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Don't be rude or use threats.</strong> Aggressive language weakens your position and costs expression marks.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="div">W–6</div>
+
+    <!-- W6 Inquiry Letter -->
+    <div class="chapter" id="w6">
+      <div class="ch-head">
+        <div class="ch-n">Writing · Format 06</div>
+        <div class="ch-t">Letter of Inquiry</div>
+        <div class="ch-tags"><span class="tag">6 Marks</span><span class="tag">100–130 words</span><span class="tag">Formal — Business/Official</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">Purpose</div>
+        <p>An inquiry letter seeks <strong>information about a course, product, service, event, or facility</strong>. You write to an institution, company, or organisation asking specific questions. The tone is polite and businesslike. Common contexts: enquiring about a coaching institute's courses, hostel facilities, a holiday package, or a product's specifications.</p>
+      </div>
+
+      <div class="fmt-box">
+        <div class="fmt-box-head">Inquiry Letter — Format (same as complaint letter; content differs)</div>
+        <div class="fmt-body">
+          <span class="fline"><span class="fkey">Sender's Address + Date</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">The Director / The Manager</span> <span class="fval">[of the institution you are enquiring about]</span></span>
+          <span class="fline"><span class="fval">[Organisation Name + Address]</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Subject:</span> <span class="fval">Enquiry regarding [course/product/service]</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Sir / Madam,</span></span>
+          <span class="fgap"></span>
+          <span class="fline findent"><span class="fval">Para 1 — Who you are, how you heard of the organisation, why you're writing.</span></span>
+          <span class="fline findent"><span class="fval">Para 2 — Specific questions (numbered is fine): fees, duration, eligibility, facilities, etc.</span></span>
+          <span class="fline findent"><span class="fval">Para 3 — Request for a brochure / reply / appointment. Thank them.</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Yours faithfully / Yours sincerely,</span></span>
+          <span class="fline fdim"><span class="fval">Use "Yours sincerely" if you know the person's name; "Yours faithfully" if you don't.</span></span>
+        </div>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample — Inquiry about Spoken English Course</div>
+        <div class="sample-body">
+          <span class="sline">34, Anand Vihar</span>
+          <span class="sline">New Delhi — 110 092</span>
+          <span class="sgap"></span>
+          <span class="sline">20 March 2025</span>
+          <span class="sgap"></span>
+          <span class="sline">The Director</span>
+          <span class="sline">Linguacraft Institute of Communication</span>
+          <span class="sline">Connaught Place, New Delhi</span>
+          <span class="sgap"></span>
+          <span class="sline"><span class="sbold">Subject: Enquiry Regarding Spoken English and Communication Skills Course</span></span>
+          <span class="sgap"></span>
+          <span class="sline">Sir/Madam,</span>
+          <span class="sgap"></span>
+          <span class="sline">I am a Class XII student appearing for my board examinations this year. I came across an advertisement for your Spoken English and Communication Skills course in <em>The Times of India</em> and would like to seek further information before enrolling.</span>
+          <span class="sgap"></span>
+          <span class="sline">I would be grateful if you could clarify the following:</span>
+          <span class="sline" style="padding-left:16px">1. The duration and batch timings of the course;</span>
+          <span class="sline" style="padding-left:16px">2. Total fees and payment schedule;</span>
+          <span class="sline" style="padding-left:16px">3. Qualification and experience of faculty members;</span>
+          <span class="sline" style="padding-left:16px">4. Whether a beginner-level batch is available for students with limited prior exposure.</span>
+          <span class="sgap"></span>
+          <span class="sline">I would appreciate it if you could send me a detailed brochure and prospectus at the above address at your earliest convenience.</span>
+          <span class="sgap"></span>
+          <span class="sline">Yours faithfully,</span>
+          <span class="sline"><span class="sbold">Sanya Kapoor</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="div">W–7</div>
+
+    <!-- W7 Job Application + Bio-data -->
+    <div class="chapter" id="w7">
+      <div class="ch-head">
+        <div class="ch-n">Writing · Format 07</div>
+        <div class="ch-t">Job Application Letter &amp; Bio-data / Résumé</div>
+        <div class="ch-tags"><span class="tag">6 Marks</span><span class="tag">Application + Bio-data</span><span class="tag">Formal</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="marks-strip">
+        <div class="ms-item"><strong>6</strong>Total Marks</div>
+        <div class="ms-item"><strong>1</strong>Letter format</div>
+        <div class="ms-item"><strong>1</strong>Bio-data format</div>
+        <div class="ms-item"><strong>2</strong>Content</div>
+        <div class="ms-item"><strong>2</strong>Expression</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Structure of the Answer</div>
+        <p>This question requires you to write <strong>two things</strong>: (1) a covering letter applying for a post, and (2) a bio-data/résumé attached to that letter. Both must be written. The letter is concise; the bio-data is structured.</p>
+      </div>
+
+      <div class="fmt-box">
+        <div class="fmt-box-head">Application Letter Format</div>
+        <div class="fmt-body">
+          <span class="fline"><span class="fkey">Sender's Address + Date</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">The Hiring Manager / HR Head</span></span>
+          <span class="fline"><span class="fval">[Company Name + Address]</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Subject:</span> <span class="fval">Application for the post of [Job Title]</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Sir / Madam,</span></span>
+          <span class="fgap"></span>
+          <span class="fline findent"><span class="fval">Para 1 — Source of the job ad; name the post; express interest.</span></span>
+          <span class="fline findent"><span class="fval">Para 2 — Briefly highlight your qualifications, skills, and experience relevant to the post.</span></span>
+          <span class="fline findent"><span class="fval">Para 3 — State that bio-data is enclosed; request an interview; express confidence.</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Yours faithfully,</span></span>
+          <span class="fline"><span class="fval">[Name]</span></span>
+          <span class="fline fdim"><span class="fval">Encl.: Bio-data</span></span>
+        </div>
+      </div>
+
+      <div class="fmt-box">
+        <div class="fmt-box-head">Bio-data / Résumé Format</div>
+        <div class="fmt-body">
+          <span class="fline fkey" style="text-align:center;display:block">BIO-DATA</span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Name:</span>           <span class="fval">[Full name]</span></span>
+          <span class="fline"><span class="fkey">Father's Name:</span>  <span class="fval">[Name]</span></span>
+          <span class="fline"><span class="fkey">Date of Birth:</span>  <span class="fval">[DD Month YYYY]</span></span>
+          <span class="fline"><span class="fkey">Address:</span>        <span class="fval">[Full address]</span></span>
+          <span class="fline"><span class="fkey">Phone / Email:</span>  <span class="fval">[Contact details]</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Academic Qualifications:</span></span>
+          <span class="fline findent"><span class="fval">Degree / Class — Board / University — Year — % Marks</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Work Experience:</span> <span class="fval">[If any; or write "Fresher" with internships]</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Skills:</span>          <span class="fval">[Computer proficiency, languages, relevant skills]</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Hobbies/Interests:</span> <span class="fval">[Optional but adds character]</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">References:</span>     <span class="fval">[2 professional/academic referees — or "Available on request"]</span></span>
+          <span class="fdiv"></span>
+          <span class="fline"><span class="fkey">Declaration:</span> <span class="fval">I hereby declare that all the above information is correct to the best of my knowledge.</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fval">Date:</span>  <span class="fkey">Signature:</span> <span class="fval">[Name]</span></span>
+        </div>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample Application Letter</div>
+        <div class="sample-body">
+          <span class="sline">78, Vasant Kunj</span>
+          <span class="sline">New Delhi — 110 070</span>
+          <span class="sgap"></span>
+          <span class="sline">22 March 2025</span>
+          <span class="sgap"></span>
+          <span class="sline">The Human Resource Manager</span>
+          <span class="sline">TechBridge Solutions Pvt. Ltd.</span>
+          <span class="sline">Nehru Place, New Delhi</span>
+          <span class="sgap"></span>
+          <span class="sline"><span class="sbold">Subject: Application for the Post of Junior Content Writer</span></span>
+          <span class="sgap"></span>
+          <span class="sline">Sir/Madam,</span>
+          <span class="sgap"></span>
+          <span class="sline">With reference to your advertisement in <em>The Hindu</em> dated 18 March 2025, I wish to apply for the post of <span class="sbold">Junior Content Writer</span> in your esteemed organisation.</span>
+          <span class="sgap"></span>
+          <span class="sline">I have recently completed my Class XII examination from Delhi Public School, Vasant Kunj, with a score of 92% in English Core. I have a strong command of written English, experience in creative and academic writing, and proficiency in MS Office and basic content management tools. I am a regular contributor to my school's newsletter and won the All-Delhi Young Writers' Award in 2024.</span>
+          <span class="sgap"></span>
+          <span class="sline">I am confident that my skills and enthusiasm make me a suitable candidate for the role. My bio-data is enclosed for your consideration. I would welcome the opportunity to attend an interview at your convenience.</span>
+          <span class="sgap"></span>
+          <span class="sline">Yours faithfully,</span>
+          <span class="sline"><span class="sbold">Ananya Joshi</span></span>
+          <span class="sline" style="font-size:11px;color:var(--dim)">Encl.: Bio-data</span>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-head">Application + Bio-data — Tips</div>
+        <div class="tip-body">
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Write the Declaration</strong> in the bio-data. It is a standard part of the format and earns a mark.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Tailor the application letter</strong> to the specific job. Mention skills relevant to the post — don't write a generic "I am a hardworking student."</div></div>
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Don't repeat the bio-data in the letter.</strong> The letter highlights; the bio-data details. Avoid saying "As mentioned in my bio-data, I scored…" at length.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>"Encl.: Bio-data"</strong> must appear below the signature of the letter. This is a standard professional convention.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════ WRITING LONG (Article, Speech, Report, Debate) ═══════════════════════════ -->
+    <div class="div">Section B — Article, Speech, Report, Debate</div>
+
+    <!-- W8 Article -->
+    <div class="chapter" id="w8">
+      <div class="ch-head">
+        <div class="ch-n">Writing · Format 08</div>
+        <div class="ch-t">Article Writing</div>
+        <div class="ch-tags"><span class="tag">6 Marks</span><span class="tag">150–200 words</span><span class="tag">Magazine / School Journal</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="marks-strip">
+        <div class="ms-item"><strong>6</strong>Total Marks</div>
+        <div class="ms-item"><strong>1</strong>Format</div>
+        <div class="ms-item"><strong>3</strong>Content</div>
+        <div class="ms-item"><strong>2</strong>Expression</div>
+        <div class="ms-item"><strong>150–200</strong>Words</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Purpose and Style</div>
+        <p>An article is a <strong>piece of discursive writing</strong> for a school magazine, newspaper, or journal. It presents the writer's views on a topic in an organised, engaging way. Unlike a report (which is factual and objective), an article can include the writer's opinions, analysis, and recommendations. The style is readable, the tone is either formal or semi-formal depending on the topic, and the writing must have a clear thesis and logical development.</p>
+      </div>
+
+      <div class="fmt-box">
+        <div class="fmt-box-head">Article — Standard Format</div>
+        <div class="fmt-body">
+          <span class="fline fkey" style="text-align:center;display:block">[TITLE — Catchy, informative, 4–7 words]</span>
+          <span class="fline fval" style="text-align:center;display:block">[Sub-heading — optional but adds marks]</span>
+          <span class="fgap"></span>
+          <span class="fline fval" style="text-align:right;display:block">By [Your Name]</span>
+          <span class="fgap"></span>
+          <span class="fline findent"><span class="fval">Para 1 — Introduction: Hook + introduce the topic. (1–2 sentences of context; rhetorical question, striking fact, or vivid image to open.)</span></span>
+          <span class="fgap"></span>
+          <span class="fline findent"><span class="fval">Para 2 — Body Point 1: Problem / aspect 1 with evidence or example.</span></span>
+          <span class="fgap"></span>
+          <span class="fline findent"><span class="fval">Para 3 — Body Point 2: Another aspect, a contrasting view, or a deepening analysis.</span></span>
+          <span class="fgap"></span>
+          <span class="fline findent"><span class="fval">Para 4 — Solutions / Call to Action / Conclusion: End with a strong statement or recommendation.</span></span>
+        </div>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample Article — Social Media and Mental Health</div>
+        <div class="sample-body">
+          <span class="shead">THE SILENT EPIDEMIC: SOCIAL MEDIA AND TEENAGE MENTAL HEALTH</span>
+          <span class="ssub">Is the scroll costing us our peace of mind?</span> <span class="ann">Sub-heading adds appeal</span>
+          <span class="sgap"></span>
+          <span class="sline" style="text-align:right;font-style:italic;font-size:12px">By Aditya Sharma, Class XII-A</span>
+          <span class="sgap"></span>
+          <span class="sline">We are the first generation to grow up entirely online — and perhaps the most anxious. With over 200 million Indian teenagers now active on social media platforms, the question of what this constant connectivity is doing to young minds is one that can no longer be deferred.</span> <span class="ann">Opening hook — statistics + question</span>
+          <span class="sgap"></span>
+          <span class="sline">The problem is not social media itself, but the mechanics designed into it. Platforms are engineered for addiction — the endless scroll, the dopamine hit of a "like," the curated images of perfect lives that make ordinary existence feel inadequate. Studies consistently show a correlation between heavy social media use and increased rates of anxiety, depression, and low self-esteem among adolescents. Cyberbullying, once contained to school corridors, now follows children into their bedrooms.</span>
+          <span class="sgap"></span>
+          <span class="sline">Yet blanket bans are neither realistic nor fair. Social media provides community for isolated teenagers, a platform for creativity, and access to information that previous generations could only dream of. The problem is not the tool but its unregulated, unconscious use.</span>
+          <span class="sgap"></span>
+          <span class="sline">What we need is digital literacy — taught in schools, modelled by parents, and enforced by regulation. Platforms must be held accountable for algorithmically amplifying harmful content. And teenagers must be empowered to use technology with intention, not compulsion. Our wellbeing is not a side-effect of progress — it is the point of it.</span> <span class="ann">Conclusion: strong call to action</span>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-head">Article — Examiner's Marking Priorities</div>
+        <div class="tip-body">
+          <div class="tip-row"><div class="tip-icon">3 marks</div><div class="tip-text"><strong>Content:</strong> Is there a clear thesis? Are all aspects of the topic covered? Are ideas developed with examples or evidence?</div></div>
+          <div class="tip-row"><div class="tip-icon">2 marks</div><div class="tip-text"><strong>Expression:</strong> Is the language varied and appropriate? Are sentences well-constructed? Is vocabulary precise and interesting?</div></div>
+          <div class="tip-row"><div class="tip-icon">1 mark</div><div class="tip-text"><strong>Format:</strong> Is the title present? Is the author's name given? Is the article in paragraphs?</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Use a strong opening.</strong> Begin with a fact, question, anecdote, or striking image — never with "In today's world…" (overused).</div></div>
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Avoid bullet points in an article.</strong> Articles are in prose paragraphs, not lists. Bullets are for reports and posters.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="div">W–9</div>
+
+    <!-- W9 Speech -->
+    <div class="chapter" id="w9">
+      <div class="ch-head">
+        <div class="ch-n">Writing · Format 09</div>
+        <div class="ch-t">Speech Writing</div>
+        <div class="ch-tags"><span class="tag">6 Marks</span><span class="tag">150–200 words</span><span class="tag">Oral address — written form</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">How a Speech Differs from an Article</div>
+        <table class="ct">
+          <tr><th>Article</th><th>Speech</th></tr>
+          <tr><td>Written for a reader</td><td>Written for a <strong>live audience</strong></td></tr>
+          <tr><td>No direct address to audience</td><td>Must address audience: <strong>"Respected Principal, dear friends…"</strong></td></tr>
+          <tr><td>Third-person tone possible</td><td>First-person, conversational tone</td></tr>
+          <tr><td>No self-introduction</td><td>Introduce yourself: <strong>"I, Rahul Mehta of Class XII, …"</strong></td></tr>
+          <tr><td>Formal close</td><td>Close with thanks: <strong>"I thank you for your patient listening."</strong></td></tr>
+          <tr><td>No rhetorical devices required</td><td>Rhetorical questions, repetition, direct appeal earn marks</td></tr>
+        </table>
+      </div>
+
+      <div class="fmt-box">
+        <div class="fmt-box-head">Speech — Standard Format</div>
+        <div class="fmt-body">
+          <span class="fline fkey" style="text-align:center;display:block">[TITLE — same as Article]</span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Greeting:</span> <span class="fval">Respected Principal, Vice-Principal, teachers, and my dear fellow students — Good morning / afternoon.</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Self-introduction:</span> <span class="fval">I, [Name], a student of Class XII, have the honour of speaking today on the topic of [topic].</span></span>
+          <span class="fgap"></span>
+          <span class="fline findent"><span class="fval">Para 1 — Introduction of topic: provocative hook or striking opening.</span></span>
+          <span class="fline findent"><span class="fval">Para 2 — Body: main points, evidence, examples, rhetorical questions to engage audience.</span></span>
+          <span class="fline findent"><span class="fval">Para 3 — Conclusion + call to action.</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Closing:</span> <span class="fval">Thank you for your patient hearing. [Name]</span></span>
+        </div>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample Speech — The Importance of Reading Books</div>
+        <div class="sample-body">
+          <span class="shead">IN PRAISE OF BOOKS: WHY WE MUST READ IN THE AGE OF SCREENS</span>
+          <span class="sgap"></span>
+          <span class="sline">Respected Principal, dear teachers, and my fellow students — a very good morning to you all.</span>
+          <span class="sgap"></span>
+          <span class="sline">I, Meera Iyer, of Class XII-B, have the privilege today of speaking on a topic close to my heart: the irreplaceable value of reading books.</span>
+          <span class="sgap"></span>
+          <span class="sline">We live in an age of ten-second videos and endless feeds. But have we stopped to ask: what are we actually learning? Books do something no reel can — they slow us down, force us to think, and transport us into lives we would never otherwise inhabit. A person who reads widely is, in a real sense, older than their years. They have lived a hundred lives before their own has properly begun.</span>
+          <span class="sgap"></span>
+          <span class="sline">Reading also builds the skill that no exam can fully test but every career demands: the ability to think in structured, sustained, and nuanced ways. Our attention spans are shrinking; our tolerance for complexity is decreasing. Books are the antidote.</span>
+          <span class="sgap"></span>
+          <span class="sline">My dear friends, I urge you: read one book this month. Not for your marks. Not for your teachers. Read it for yourself — and discover the person you might become.</span>
+          <span class="sgap"></span>
+          <span class="sline">Thank you for your patient hearing.</span>
+          <span class="sline" style="text-align:right;font-style:italic;font-size:12px">— Meera Iyer</span>
+        </div>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Key Rhetorical Devices for Speeches (earn expression marks)</div>
+        <ul class="fb-b">
+          <li><strong>Rhetorical question:</strong> "Have we stopped to ask…?" — involves the audience, creates a reflective pause.</li>
+          <li><strong>Anaphora (repetition):</strong> "Not for your marks. Not for your teachers. Read it for yourself." — rhythmic and powerful.</li>
+          <li><strong>Direct address:</strong> "My dear friends…" — bridges the speaker-audience gap; makes the speech feel live.</li>
+          <li><strong>Antithesis:</strong> "Before we lose what we never thought to value…" — contrast creates impact.</li>
+          <li><strong>Emotive language:</strong> Appeals to pride, fear, hope — engages feelings, not just intellect.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="div">W–10</div>
+
+    <!-- W10 Report -->
+    <div class="chapter" id="w10">
+      <div class="ch-head">
+        <div class="ch-n">Writing · Format 10</div>
+        <div class="ch-t">Report Writing</div>
+        <div class="ch-tags"><span class="tag">6 Marks</span><span class="tag">150–200 words</span><span class="tag">Newspaper Report OR Official/Factual Report</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="marks-strip">
+        <div class="ms-item"><strong>6</strong>Total Marks</div>
+        <div class="ms-item"><strong>1</strong>Format</div>
+        <div class="ms-item"><strong>3</strong>Content</div>
+        <div class="ms-item"><strong>2</strong>Expression</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Two Types of Reports in CBSE Class XII</div>
+        <table class="ct">
+          <tr><th>Feature</th><th>Newspaper Report</th><th>Official / School Report</th></tr>
+          <tr><td>Audience</td><td>General public / readers</td><td>Principal / authorities</td></tr>
+          <tr><td>Person</td><td>Third person, past tense</td><td>Third person, past tense</td></tr>
+          <tr><td>Byline</td><td>By [Reporter Name], [City], [Date]</td><td>Submitted by [Name], [Designation]</td></tr>
+          <tr><td>Style</td><td>Inverted pyramid: most important first</td><td>Factual, sequential, sober</td></tr>
+          <tr><td>Headline</td><td>Bold, attention-grabbing</td><td>Descriptive, formal</td></tr>
+          <tr><td>Quotations</td><td>Expected (from witnesses/officials)</td><td>Optional</td></tr>
+        </table>
+      </div>
+
+      <div class="fmt-box">
+        <div class="fmt-box-head">Newspaper Report Format</div>
+        <div class="fmt-body">
+          <span class="fline fkey" style="text-align:center;display:block">[HEADLINE — Bold, active, 5–8 words]</span>
+          <span class="fline fval" style="text-align:center;display:block">[Sub-headline — optional]</span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fval">By [Reporter Name] | [City] | [Date]</span></span>
+          <span class="fdiv"></span>
+          <span class="fline findent"><span class="fval">Para 1 (Lead) — WHO did WHAT, WHERE, WHEN. The essential facts in 2–3 sentences. This paragraph should stand alone as a complete summary.</span></span>
+          <span class="fgap"></span>
+          <span class="fline findent"><span class="fval">Para 2 — Details: HOW it happened, background, context.</span></span>
+          <span class="fgap"></span>
+          <span class="fline findent"><span class="fval">Para 3 — Quotes from official / eyewitness + consequence/outcome.</span></span>
+          <span class="fgap"></span>
+          <span class="fline findent"><span class="fval">Para 4 (optional) — Further action, future plans, human impact.</span></span>
+        </div>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample Newspaper Report — Annual Sports Day</div>
+        <div class="sample-body">
+          <span class="shead">SUNRISE PUBLIC SCHOOL HOSTS SPECTACULAR ANNUAL SPORTS DAY</span>
+          <span class="ssub">Students display exemplary sportsmanship; records broken in athletics</span>
+          <span class="sgap"></span>
+          <span class="sline" style="font-size:11px;color:var(--dim)">By Our Correspondent | New Delhi | 15 March 2025</span>
+          <span class="sdiv"></span>
+          <span class="sline">Sunrise Public School, Rohini, celebrated its 25th Annual Sports Day on 14 March 2025 at the school's main grounds. The event was inaugurated by Mr. Rajesh Kumar, Deputy Commissioner of the North-West District, in the presence of the school principal, teachers, parents, and approximately 800 students.</span>
+          <span class="sgap"></span>
+          <span class="sline">The day witnessed a series of track and field events across six age categories. Class XII student Priya Rawat shattered the school record in the 400-metre sprint, completing the run in 58.3 seconds. Inter-house relay, long jump, and tug-of-war events were fiercely contested, with the Green House emerging overall champions for the third consecutive year.</span>
+          <span class="sgap"></span>
+          <span class="sline">Speaking on the occasion, Principal Mrs. Sunita Sharma remarked: "Sports teach children what classrooms cannot — resilience, teamwork, and the grace to lose." Prizes were distributed by the Chief Guest in the valedictory function.</span>
+          <span class="sgap"></span>
+          <span class="sline">The event concluded with a cultural programme and march-past, leaving parents and students with memories of a well-organised and joyous occasion.</span>
+        </div>
+      </div>
+
+      <div class="fmt-box">
+        <div class="fmt-box-head">Official / School Report Format</div>
+        <div class="fmt-body">
+          <span class="fline fkey" style="text-align:center;display:block">REPORT</span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Title:</span>   <span class="fval">Report on [Event / Issue]</span></span>
+          <span class="fline"><span class="fkey">Submitted by:</span> <span class="fval">[Name, Designation / Class]</span></span>
+          <span class="fline"><span class="fkey">Submitted to:</span>  <span class="fval">[The Principal / Head of Department]</span></span>
+          <span class="fline"><span class="fkey">Date:</span>   <span class="fval">DD Month YYYY</span></span>
+          <span class="fdiv"></span>
+          <span class="fline findent"><span class="fval">Section 1 — Objective / Purpose of the report.</span></span>
+          <span class="fline findent"><span class="fval">Section 2 — Findings / Observations / What happened.</span></span>
+          <span class="fline findent"><span class="fval">Section 3 — Conclusion / Recommendations.</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Signature:</span> <span class="fval">[Name]</span></span>
+        </div>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample Official Report — Tree Plantation Drive</div>
+        <div class="sample-body">
+          <span class="scenter sbold">REPORT</span>
+          <span class="sgap"></span>
+          <span class="sline"><span class="sbold">Title:</span> Report on Tree Plantation Drive — Eco Club Initiative</span>
+          <span class="sline"><span class="sbold">Submitted by:</span> Vikram Sen, President, Eco Club, Class XII-C</span>
+          <span class="sline"><span class="sbold">Submitted to:</span> The Principal, Kendriya Vidyalaya No. 2, Jaipur</span>
+          <span class="sline"><span class="sbold">Date:</span> 16 March 2025</span>
+          <span class="sdiv"></span>
+          <span class="sline"><span class="sbold">Objective:</span> This report presents the proceedings and outcomes of the Tree Plantation Drive organised by the Eco Club on 5 March 2025.</span>
+          <span class="sgap"></span>
+          <span class="sline"><span class="sbold">Observations:</span> The drive took place in the school's rear grounds from 9:00 a.m. to 12:00 noon. A total of 45 students participated voluntarily. 80 saplings — comprising neem, peepal, and gulmohar — were planted with the guidance of two horticulturists from the Municipal Nursery. Each sapling was labelled with the name of the student responsible for its upkeep. The event concluded with a talk by environmental educator Ms. Preeti Sood on urban biodiversity.</span>
+          <span class="sgap"></span>
+          <span class="sline"><span class="sbold">Recommendations:</span> It is recommended that a follow-up session be organised in September to monitor the growth of saplings and replace those that have not survived. The Eco Club proposes making this an annual event.</span>
+          <span class="sgap"></span>
+          <span class="sline"><span class="sbold">Vikram Sen</span></span>
+          <span class="sline" style="font-size:11px">President, Eco Club</span>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-head">Report Writing — Key Distinctions</div>
+        <div class="tip-body">
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Always write in the third person, past tense:</strong> "The event was held…" not "We held an event…"</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>For newspaper reports: lead paragraph is crucial.</strong> If an examiner reads only the first paragraph, they should know the entire story. Most important facts first.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Include one direct quote</strong> in a newspaper report (from an official or witness) — this earns a content mark and makes the report credible.</div></div>
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Never write opinion in a report.</strong> Reports are factual and objective. "The event was amazing" — wrong. "The event was attended by 500 students" — correct.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="div">W–11</div>
+
+    <!-- W11 Debate -->
+    <div class="chapter" id="w11">
+      <div class="ch-head">
+        <div class="ch-n">Writing · Format 11</div>
+        <div class="ch-t">Debate Writing</div>
+        <div class="ch-tags"><span class="tag">6 Marks</span><span class="tag">150–200 words</span><span class="tag">For or Against a motion</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="marks-strip">
+        <div class="ms-item"><strong>6</strong>Total Marks</div>
+        <div class="ms-item"><strong>1</strong>Format</div>
+        <div class="ms-item"><strong>3</strong>Arguments / Content</div>
+        <div class="ms-item"><strong>2</strong>Expression</div>
+        <div class="ms-item"><strong>150–200</strong>Words</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Debate vs. Speech — Differences</div>
+        <table class="ct">
+          <tr><th>Feature</th><th>Speech</th><th>Debate</th></tr>
+          <tr><td>Stance</td><td>Can be balanced / exploratory</td><td>Must be either <strong>for</strong> or <strong>against</strong> — no middle ground</td></tr>
+          <tr><td>Opponent</td><td>None</td><td>Must <strong>anticipate and refute opposing arguments</strong></td></tr>
+          <tr><td>Opening</td><td>"Good morning, I would like to speak on…"</td><td>"I stand before you to speak <strong>in favour of / against</strong> the motion that…"</td></tr>
+          <tr><td>Arguments</td><td>Present and explain</td><td>Present + <strong>counter the other side</strong></td></tr>
+          <tr><td>Conclusion</td><td>Inspirational / forward-looking</td><td>Restate motion + urge audience to support your side</td></tr>
+        </table>
+      </div>
+
+      <div class="fmt-box">
+        <div class="fmt-box-head">Debate — Standard Format</div>
+        <div class="fmt-body">
+          <span class="fline fkey" style="text-align:center;display:block">[TITLE — the motion]</span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Greeting:</span> <span class="fval">Respected chair, honourable judges, teachers, and my dear fellow students…</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Opening:</span> <span class="fval">I, [Name], stand to speak <em>in favour of / against</em> the motion: "[exact motion as given]."</span></span>
+          <span class="fgap"></span>
+          <span class="fline findent"><span class="fval">Para 1 — State your position clearly. Give your first and strongest argument.</span></span>
+          <span class="fline findent"><span class="fval">Para 2 — Second argument with supporting evidence/example.</span></span>
+          <span class="fline findent"><span class="fval">Para 3 — Address and REFUTE the opposing side: "My opponents may argue… however, this ignores the fact that…"</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Conclusion:</span> <span class="fval">Restate position + appeal to audience: "I urge you all to vote in favour of / against this motion."</span></span>
+          <span class="fgap"></span>
+          <span class="fline"><span class="fkey">Thank you.</span></span>
+        </div>
+      </div>
+
+      <div class="sample-box">
+        <div class="sample-head">Sample Debate — Against: "Examinations should be abolished"</div>
+        <div class="sample-body">
+          <span class="shead">MOTION: "EXAMINATIONS SHOULD BE ABOLISHED"</span>
+          <span class="ssub">(Speaking against the motion)</span>
+          <span class="sgap"></span>
+          <span class="sline">Respected chair, honourable judges, teachers, and my dear friends — good morning to you all.</span>
+          <span class="sgap"></span>
+          <span class="sline">I, Kavitha Rajan of Class XII, stand firmly <span class="sbold">against</span> the motion that "Examinations should be abolished." The motion sounds appealing — who among us has not wished, mid-February, that exams would simply disappear? But to abolish examinations is to confuse the instrument of evaluation with the discomfort it causes, and that is a dangerous confusion.</span>
+          <span class="sgap"></span>
+          <span class="sline">Examinations serve a vital function: they standardise evaluation across millions of students, ensuring that a certificate from any school in the country carries a common, verifiable measure of achievement. In a country as large and diverse as India, how else do we ensure fair access to higher education without a common benchmark? Remove the benchmark, and you remove one of the few genuinely meritocratic ladders available to students from disadvantaged backgrounds.</span>
+          <span class="sgap"></span>
+          <span class="sline">The opponents of examinations cite stress and rote learning. I agree: these are real problems. But the solution is <span class="sbold">better examination design</span> — not abolition. Replace recall-based testing with application, analysis, and skill-based assessment. Reform, not removal.</span>
+          <span class="sgap"></span>
+          <span class="sline">Those who would abolish examinations would, in the name of reducing stress, dismantle the most powerful equaliser in our education system. I urge this house to vote <span class="sbold">against</span> the motion.</span>
+          <span class="sgap"></span>
+          <span class="sline">Thank you.</span>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-head">Debate — The Marks-Winning Formula</div>
+        <div class="tip-body">
+          <div class="tip-row"><div class="tip-icon">must</div><div class="tip-text"><strong>State your side clearly in the first sentence of the body:</strong> "I stand to speak <em>in favour of / against</em> the motion…" — missing this costs a format mark.</div></div>
+          <div class="tip-row"><div class="tip-icon">must</div><div class="tip-text"><strong>Refute the opposing view.</strong> A debate without refutation is an essay. Use: "My opponents may argue… but this ignores…" or "While it is true that… it is equally true that…"</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Use rhetorical questions and direct appeals</strong> — they differentiate a debate from an article in tone and earn expression marks.</div></div>
+          <div class="tip-row"><div class="tip-icon">do</div><div class="tip-text"><strong>Close with a clear vote appeal:</strong> "I urge this house to vote in favour of / against the motion." — this is the standard, mark-safe closing for a debate.</div></div>
+          <div class="tip-row"><div class="tip-icon">avoid</div><div class="tip-text"><strong>Never present "both sides" as if you are undecided.</strong> You have been assigned a side. Equivocating ("on one hand… on the other…" without resolution) loses marks.</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Quick Reference: All Formats at a Glance</div>
+        <table class="ct">
+          <tr><th>Format</th><th>Marks</th><th>Words</th><th>Person</th><th>Signature Line</th><th>Box?</th></tr>
+          <tr><td><strong>Notice</strong></td><td>4</td><td>50</td><td>3rd</td><td>Name + Designation</td><td>Yes ✓</td></tr>
+          <tr><td><strong>Advertisement</strong></td><td>4</td><td>50</td><td>3rd/Telegraphic</td><td>Contact info</td><td>Yes ✓</td></tr>
+          <tr><td><strong>Poster</strong></td><td>4</td><td>60</td><td>2nd (imperative)</td><td>Issuer + date</td><td>Yes ✓</td></tr>
+          <tr><td><strong>Letter to Editor</strong></td><td>6</td><td>120–150</td><td>1st</td><td>Yours faithfully</td><td>No</td></tr>
+          <tr><td><strong>Complaint Letter</strong></td><td>6</td><td>120–150</td><td>1st</td><td>Yours faithfully</td><td>No</td></tr>
+          <tr><td><strong>Inquiry Letter</strong></td><td>6</td><td>120–130</td><td>1st</td><td>Yours faithfully/sincerely</td><td>No</td></tr>
+          <tr><td><strong>Job Application</strong></td><td>6</td><td>Letter + CV</td><td>1st + 3rd</td><td>Encl.: Bio-data</td><td>No</td></tr>
+          <tr><td><strong>Article</strong></td><td>6</td><td>150–200</td><td>1st/3rd</td><td>By [Name]</td><td>No</td></tr>
+          <tr><td><strong>Speech</strong></td><td>6</td><td>150–200</td><td>1st</td><td>Thank you + Name</td><td>No</td></tr>
+          <tr><td><strong>Newspaper Report</strong></td><td>6</td><td>150–200</td><td>3rd</td><td>Byline at top</td><td>No</td></tr>
+          <tr><td><strong>Official Report</strong></td><td>6</td><td>150–200</td><td>3rd</td><td>Name + Designation</td><td>No</td></tr>
+          <tr><td><strong>Debate</strong></td><td>6</td><td>150–200</td><td>1st</td><td>Thank you + Name</td><td>No</td></tr>
+        </table>
+      </div>
+
+    </div>
+
+    <div class="div">end</div>
+    <p style="font-size:10px;color:var(--dim);text-align:center;padding-bottom:24px;letter-spacing:.08em;">CBSE Class XII · English Core · Writing &amp; Reading Skills</p>
+
+  </div>
+</div>
+
+<script>
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+  document.getElementById('prog').style.transform = `scaleX(${pct})`;
+  updateNav();
+}, { passive: true });
+
+function go(id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+
+function updateNav() {
+  let cur = '';
+  document.querySelectorAll('.chapter').forEach(c => { if (c.getBoundingClientRect().top <= 80) cur = c.id; });
+  document.querySelectorAll('.nav-a[onclick]').forEach(a => {
+    a.classList.toggle('on', cur && a.getAttribute('onclick').includes(cur));
+  });
+}
+
+let sel = null;
+const hlb = document.getElementById('hlb');
+document.getElementById('content').addEventListener('mouseup', () => {
+  const s = window.getSelection();
+  if (!s || s.isCollapsed || !s.rangeCount) return;
+  const r = s.getRangeAt(0);
+  if (r.toString().trim().length < 2) return;
+  sel = r.cloneRange();
+  const rect = r.getBoundingClientRect();
+  hlb.style.display = 'flex';
+  hlb.style.left = Math.max(8, rect.left + rect.width/2 - 88) + 'px';
+  hlb.style.top = (rect.top + window.scrollY - 44) + 'px';
+});
+document.addEventListener('mousedown', e => { if (!hlb.contains(e.target)) hlb.style.display = ''; });
+document.querySelectorAll('.hlb-btn[data-c]').forEach(b => b.addEventListener('click', () => applyHL()));
+function applyHL() {
+  if (!sel) return;
+  const span = document.createElement('span'); span.className = 'hl';
+  try { sel.surroundContents(span); }
+  catch { const f = sel.extractContents(); span.appendChild(f); sel.insertNode(span); }
+  window.getSelection().removeAllRanges();
+  hlb.style.display = ''; sel = null;
+}
+document.getElementById('hx').addEventListener('click', () => { hlb.style.display = ''; sel = null; window.getSelection().removeAllRanges(); });
+function clearHL() {
+  document.querySelectorAll('.hl').forEach(el => {
+    while (el.firstChild) el.parentNode.insertBefore(el.firstChild, el);
+    el.remove();
+  });
+}
+
+let anns = JSON.parse(localStorage.getItem('wr_ann') || '[]');
+let apOpen = false;
+document.getElementById('hln').addEventListener('click', () => {
+  if (!sel) return;
+  const txt = sel.toString().trim().slice(0, 100);
+  const rect = sel.getBoundingClientRect();
+  hlb.style.display = ''; window.getSelection().removeAllRanges(); sel = null;
+  const d = document.createElement('div'); d.className = 'apop';
+  d.style.cssText = `top:${rect.bottom + window.scrollY + 10}px;left:${Math.max(8, Math.min(rect.left, window.innerWidth-240))}px`;
+  d.innerHTML = `<div style="font-size:10.5px;color:var(--dim);font-style:italic;margin-bottom:6px">"${txt.slice(0,80)}${txt.length>80?'…':''}"</div><textarea id="ann-ta" placeholder="Your note…"></textarea><div class="apop-btns"><button class="b-save" onclick="saveAnn('${CSS.escape(txt)}',this)">Save</button><button class="b-cancel" onclick="this.closest('.apop').remove()">Cancel</button></div>`;
+  document.body.appendChild(d); d.querySelector('textarea').focus();
+});
+function saveAnn(txt, btn) {
+  const n = document.getElementById('ann-ta').value.trim(); if (!n) return;
+  anns.push({ id: Date.now(), txt: txt.slice(0,80), note: n, date: new Date().toLocaleDateString() });
+  localStorage.setItem('wr_ann', JSON.stringify(anns));
+  btn.closest('.apop').remove(); renderAnns(); if (!apOpen) toggleAP();
+}
+function renderAnns() {
+  const list = document.getElementById('a-list'); const empty = document.getElementById('a-empty');
+  empty.style.display = anns.length ? 'none' : '';
+  list.innerHTML = anns.map(a => `<div class="ai"><div class="ai-q">"${a.txt}…"</div><div class="ai-n">${a.note}</div><div class="ai-m"><span>${a.date}</span><button class="ai-d" onclick="delAnn(${a.id})">remove</button></div></div>`).join('');
+}
+function delAnn(id) { anns = anns.filter(a => a.id !== id); localStorage.setItem('wr_ann', JSON.stringify(anns)); renderAnns(); }
+function toggleAP() {
+  apOpen = !apOpen; const p = document.getElementById('ap');
+  p.classList.toggle('open', apOpen); if (apOpen) renderAnns();
+}
+
+let sr = [], si2 = 0;
+function doSearch(q) {
+  document.querySelectorAll('mark.sh').forEach(m => m.replaceWith(m.textContent));
+  sr = []; si2 = 0; document.getElementById('sc').textContent = '';
+  if (!q || q.length < 2) return;
+  const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi');
+  const nodes = [];
+  const walk = document.createTreeWalker(document.getElementById('content'), NodeFilter.SHOW_TEXT);
+  let n;
+  while (n = walk.nextNode()) {
+    if (['SCRIPT','STYLE'].includes(n.parentElement.tagName)) continue;
+    if (re.test(n.textContent)) nodes.push(n); re.lastIndex = 0;
+  }
+  nodes.forEach(node => {
+    const frag = document.createDocumentFragment(); let last = 0, m;
+    re.lastIndex = 0;
+    while ((m = re.exec(node.textContent)) !== null) {
+      frag.appendChild(document.createTextNode(node.textContent.slice(last, m.index)));
+      const mk = document.createElement('mark'); mk.className = 'sh'; mk.textContent = m[0];
+      frag.appendChild(mk); sr.push(mk); last = m.index + m[0].length;
+    }
+    frag.appendChild(document.createTextNode(node.textContent.slice(last)));
+    node.parentNode.replaceChild(frag, node);
+  });
+  document.getElementById('sc').textContent = sr.length || '';
+  if (sr.length) scrollToR();
+}
+document.getElementById('si').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && sr.length) { si2 = (si2+1)%sr.length; scrollToR(); }
+});
+function scrollToR() { sr.forEach((m,i) => m.classList.toggle('cur', i===si2)); sr[si2]?.scrollIntoView({ behavior:'smooth', block:'center' }); }
+
+const DARKS = ['dark','gruvbox','nord','solarized-dark','dracula','one-dark'];
+const L2D = { 'default':'dark', 'gruvbox-light':'gruvbox', 'solarized':'solarized-dark' };
+const D2L = { 'dark':'default', 'gruvbox':'gruvbox-light', 'solarized-dark':'solarized' };
+let scheme = localStorage.getItem('wr_scheme') || 'default';
+function applyS(s) {
+  scheme = s;
+  document.documentElement.setAttribute('data-theme', s === 'default' ? '' : s);
+  if (s === 'default') document.documentElement.removeAttribute('data-theme');
+  document.getElementById('ld').classList.toggle('on', DARKS.includes(s));
+  document.querySelectorAll('.sc-btn').forEach(b => b.classList.toggle('on', b.dataset.s === s));
+  localStorage.setItem('wr_scheme', s);
+}
+function setS(s) { applyS(s); }
+function toggleDark() { applyS(DARKS.includes(scheme) ? (D2L[scheme] || 'default') : (L2D[scheme] || 'dark')); }
+applyS(scheme); renderAnns(); updateNav();
+</script>
+</body>
+</html>

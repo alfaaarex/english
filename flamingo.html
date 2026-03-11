@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBSE Class 12 — Flamingo Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Themes ─────────────────────────────────── */
+:root {
+  --bg:    #fafafa;
+  --fg:    #1c1c1c;
+  --mid:   #525252;
+  --dim:   #9a9a9a;
+  --line:  #e2e2e2;
+  --surf:  #f2f2f2;
+  --sw:    220px;
+}
+[data-theme="dark"] {
+  --bg:    #141414;
+  --fg:    #d6d6d6;
+  --mid:   #8a8a8a;
+  --dim:   #4a4a4a;
+  --line:  #282828;
+  --surf:  #1d1d1d;
+}
+[data-theme="gruvbox"] {
+  --bg:    #282828;
+  --fg:    #ebdbb2;
+  --mid:   #a89984;
+  --dim:   #665c54;
+  --line:  #3c3836;
+  --surf:  #32302f;
+}
+[data-theme="gruvbox-light"] {
+  --bg:    #f9f5d7;
+  --fg:    #3c3836;
+  --mid:   #7c6f64;
+  --dim:   #b8a99a;
+  --line:  #d5c4a1;
+  --surf:  #f0e8c2;
+}
+[data-theme="nord"] {
+  --bg:    #2e3440;
+  --fg:    #d8dee9;
+  --mid:   #7b88a1;
+  --dim:   #4c566a;
+  --line:  #3b4252;
+  --surf:  #353c4a;
+}
+[data-theme="solarized"] {
+  --bg:    #fdf6e3;
+  --fg:    #586e75;
+  --mid:   #839496;
+  --dim:   #b8c2bd;
+  --line:  #e8e2cc;
+  --surf:  #eee8d5;
+}
+[data-theme="solarized-dark"] {
+  --bg:    #002b36;
+  --fg:    #93a1a1;
+  --mid:   #657b83;
+  --dim:   #284e59;
+  --line:  #0d3c47;
+  --surf:  #073642;
+}
+[data-theme="dracula"] {
+  --bg:    #282a36;
+  --fg:    #f8f8f2;
+  --mid:   #9299b8;
+  --dim:   #44475a;
+  --line:  #383a4a;
+  --surf:  #313341;
+}
+[data-theme="one-dark"] {
+  --bg:    #1e2127;
+  --fg:    #abb2bf;
+  --mid:   #7a8194;
+  --dim:   #3e4451;
+  --line:  #292d35;
+  --surf:  #252930;
+}
+
+/* ── Base ───────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--bg); color: var(--fg);
+  display: flex; min-height: 100vh;
+  font-size: 15px; line-height: 1.7;
+  transition: background .2s, color .2s;
+}
+
+/* ── Sidebar ─────────────────────────────────── */
+#sidebar {
+  position: fixed; top: 0; left: 0;
+  width: var(--sw); height: 100vh;
+  background: var(--bg); border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; overflow-y: auto;
+  z-index: 100; transition: transform .22s ease;
+}
+.sb-head { padding: 22px 16px 16px; border-bottom: 1px solid var(--line); }
+.sb-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 7px;
+}
+.sb-head h2 { font-size: 13px; font-weight: 400; color: var(--fg); line-height: 1.4; }
+.sb-sec { padding: 8px 0 6px; border-bottom: 1px solid var(--line); }
+.sb-sec-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--dim); padding: 0 16px 5px; display: block;
+}
+.nav-a {
+  display: block; padding: 4px 16px;
+  font-size: 12px; color: var(--mid); cursor: pointer;
+  border-left: 1.5px solid transparent;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: color .1s, background .1s, border-color .1s;
+}
+.nav-a small { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); display: block; margin-top: 1px; white-space: normal; }
+.nav-a:hover { color: var(--fg); background: var(--surf); }
+.nav-a.on  { color: var(--fg); border-left-color: var(--fg); }
+
+/* Appearance panel */
+.theme-panel { padding: 12px 16px 20px; margin-top: auto; border-top: 1px solid var(--line); }
+.ld-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.ld-row span { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); }
+.tog {
+  width: 28px; height: 15px; border-radius: 15px;
+  background: var(--line); cursor: pointer; position: relative;
+  border: none; padding: 0; flex-shrink: 0; transition: background .18s;
+}
+.tog.on { background: var(--mid); }
+.tog::after {
+  content: ''; position: absolute; top: 2px; left: 2px;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--bg); transition: transform .18s;
+}
+.tog.on::after { transform: translateX(13px); }
+.sc-list { display: flex; flex-direction: column; }
+.sc-btn {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 3px 5px; border: none; background: none; border-radius: 2px;
+  cursor: pointer; font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; color: var(--dim); transition: color .1s, background .1s;
+}
+.sc-btn:hover { color: var(--mid); background: var(--surf); }
+.sc-btn.on { color: var(--fg); background: var(--surf); }
+.sc-check { opacity: 0; font-size: 9px; }
+.sc-btn.on .sc-check { opacity: 1; }
+
+/* ── Progress ─────────────────────────────────── */
+#prog {
+  position: fixed; top: 0; left: var(--sw); right: 0; height: 1px;
+  background: var(--dim); transform-origin: left; transform: scaleX(0);
+  z-index: 300; transition: transform .07s linear;
+}
+
+/* ── Topbar ───────────────────────────────────── */
+#topbar {
+  position: sticky; top: 0; background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  padding: 0 40px; height: 42px;
+  display: flex; align-items: center; justify-content: space-between;
+  z-index: 50; transition: background .2s;
+}
+.tb-l { display: flex; align-items: center; gap: 10px; }
+.breadcrumb { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--dim); }
+#menu-btn {
+  display: none; flex-direction: column; align-items: center;
+  justify-content: center; gap: 3px; width: 26px; height: 26px;
+  cursor: pointer; background: none; border: none;
+}
+#menu-btn span { display: block; width: 14px; height: 1px; background: var(--dim); }
+#si {
+  width: 130px; padding: 3px 8px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  background: var(--surf); border: 1px solid var(--line);
+  border-radius: 2px; color: var(--fg); outline: none;
+  transition: width .15s, border-color .1s;
+}
+#si:focus { width: 170px; border-color: var(--dim); }
+#si::placeholder { color: var(--dim); }
+#sc { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); margin-left: 4px; }
+
+/* ── Layout ───────────────────────────────────── */
+#main { margin-left: var(--sw); flex: 1; min-width: 0; }
+#content { padding: 52px 56px 110px; max-width: 700px; }
+
+/* ── Hero ─────────────────────────────────────── */
+.hero { margin-bottom: 52px; padding-bottom: 36px; border-bottom: 1px solid var(--line); }
+.hero-eye { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--dim); margin-bottom: 14px; }
+.hero h1 { font-size: 28px; font-weight: 300; line-height: 1.2; color: var(--fg); margin-bottom: 10px; }
+.hero h1 em { font-style: italic; font-weight: 300; }
+.hero .deck { font-size: 14px; color: var(--mid); line-height: 1.75; font-weight: 300; }
+.toc { margin-top: 24px; }
+.toc-row { display: flex; align-items: baseline; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.toc-row:last-child { border-bottom: none; }
+.toc-row:hover .toc-t { color: var(--fg); }
+.toc-n { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); min-width: 18px; }
+.toc-t { font-size: 13px; color: var(--mid); flex: 1; transition: color .1s; }
+.toc-a { font-size: 11px; color: var(--dim); font-style: italic; }
+
+/* ── Chapter ──────────────────────────────────── */
+.chapter { margin-bottom: 80px; scroll-margin-top: 52px; }
+.ch-head { margin-bottom: 24px; }
+.ch-n { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--dim); margin-bottom: 5px; }
+.ch-t { font-size: 22px; font-weight: 400; color: var(--fg); line-height: 1.25; margin-bottom: 2px; }
+.ch-a { font-size: 12px; color: var(--dim); font-style: italic; margin-bottom: 12px; }
+.ch-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.tag { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; padding: 1px 6px; border: 1px solid var(--line); color: var(--dim); }
+hr.rule { border: none; border-top: 1px solid var(--line); margin: 22px 0; }
+
+/* ── Sections ─────────────────────────────────── */
+.sec { margin-bottom: 28px; }
+.sec-t {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 14px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--line);
+}
+p { font-size: 14px; color: var(--mid); line-height: 1.85; margin-bottom: 10px; font-weight: 300; }
+p strong { color: var(--fg); font-weight: 500; }
+p em { font-style: italic; }
+
+/* ── Blockquote ───────────────────────────────── */
+blockquote {
+  margin: 20px 0; padding: 0 0 0 16px;
+  border-left: 1px solid var(--line);
+  font-style: italic; font-size: 14px; font-weight: 300;
+  color: var(--mid); line-height: 1.8;
+}
+blockquote cite {
+  display: block; margin-top: 8px;
+  font-family: 'JetBrains Mono', monospace; font-style: normal;
+  font-size: 9px; color: var(--dim);
+}
+
+/* ── Lists ────────────────────────────────────── */
+ul.nl, ol.nl { padding: 0; list-style: none; }
+ul.nl li, ol.nl li {
+  font-size: 14px; color: var(--mid); line-height: 1.8; font-weight: 300;
+  padding: 6px 0 6px 16px; position: relative;
+  border-bottom: 1px solid var(--line);
+}
+ul.nl li:last-child, ol.nl li:last-child { border-bottom: none; }
+ul.nl li::before { content: '–'; position: absolute; left: 0; color: var(--line); }
+ol.nl { counter-reset: c; }
+ol.nl li { counter-increment: c; }
+ol.nl li::before { content: counter(c); position: absolute; left: 0; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); top: 8px; }
+ul.nl li strong, ol.nl li strong { color: var(--fg); font-weight: 500; }
+
+/* ── Timeline ─────────────────────────────────── */
+.tl { border-left: 1px solid var(--line); padding-left: 18px; }
+.tl-i { position: relative; margin-bottom: 18px; }
+.tl-i::before { content: ''; position: absolute; left: -22px; top: 6px; width: 5px; height: 5px; background: var(--bg); border: 1px solid var(--line); }
+.tl-lbl { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-bottom: 3px; }
+.tl-i p { margin-bottom: 0; }
+
+/* ── Character grid ───────────────────────────── */
+.cg { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); gap: 1px; background: var(--line); overflow: hidden; }
+.cc { padding: 12px 14px; background: var(--bg); }
+.cc-n { font-size: 13px; font-weight: 500; color: var(--fg); margin-bottom: 3px; }
+.cc-d { font-size: 12px; color: var(--mid); line-height: 1.6; font-weight: 300; }
+
+/* ── Fact box ─────────────────────────────────── */
+.fb { margin: 18px 0; border: 1px solid var(--line); overflow: hidden; }
+.fb-h { padding: 5px 12px; background: var(--surf); font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); border-bottom: 1px solid var(--line); }
+.fb-b li { font-size: 13px; color: var(--mid); line-height: 1.7; padding: 5px 12px; border-bottom: 1px solid var(--line); list-style: none; font-weight: 300; }
+.fb-b li:last-child { border-bottom: none; }
+.fb-b li strong { color: var(--fg); font-weight: 500; }
+
+/* ── Exam questions ───────────────────────────── */
+.eq-block { margin: 22px 0; }
+.eq { display: flex; gap: 12px; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--mid); line-height: 1.65; font-weight: 300; }
+.eq:last-child { border-bottom: none; }
+.eq-n { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); flex-shrink: 0; min-width: 18px; }
+
+/* ── Compare table ────────────────────────────── */
+.ct { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 12px 0; }
+.ct th { padding: 6px 10px; text-align: left; background: var(--surf); font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); border: 1px solid var(--line); }
+.ct td { padding: 8px 10px; border: 1px solid var(--line); color: var(--mid); line-height: 1.55; vertical-align: top; font-weight: 300; }
+.ct td strong { color: var(--fg); font-weight: 500; }
+
+/* ── Divider ──────────────────────────────────── */
+.div { margin: 56px 0; display: flex; align-items: center; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 8.5px; color: var(--line); letter-spacing: .08em; text-transform: uppercase; }
+.div::before, .div::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+/* ── Search ───────────────────────────────────── */
+mark { background: none; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; color: inherit; }
+mark.cur { background: var(--surf); }
+
+/* ── Highlight ────────────────────────────────── */
+.hl { background: var(--surf); }
+
+/* ── Highlight bar ────────────────────────────── */
+#hlb {
+  display: none; position: fixed; z-index: 600;
+  background: var(--fg); padding: 5px 8px; gap: 6px; align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,.2);
+}
+.hlb-btn {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: rgba(255,255,255,.5); background: none;
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 2px 7px; cursor: pointer; transition: color .1s;
+}
+.hlb-btn:hover { color: rgba(255,255,255,.9); border-color: rgba(255,255,255,.3); }
+.hsep { width: 1px; height: 12px; background: rgba(255,255,255,.1); }
+
+/* ── Annotation panel ─────────────────────────── */
+#ap {
+  position: fixed; right: 0; top: 0; bottom: 0; width: 252px;
+  background: var(--bg); border-left: 1px solid var(--line);
+  padding: 20px 16px; overflow-y: auto; z-index: 90;
+  transform: translateX(100%); display: flex; flex-direction: column; gap: 8px;
+  transition: transform .2s ease;
+}
+#ap.open { transform: translateX(0); }
+#ap h3 { font-size: 14px; font-weight: 400; color: var(--fg); padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.ai { padding: 9px 11px; border: 1px solid var(--line); font-size: 12px; }
+.ai-q { font-style: italic; color: var(--dim); font-size: 10.5px; margin-bottom: 4px; }
+.ai-n { color: var(--mid); line-height: 1.55; font-weight: 300; }
+.ai-m { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); margin-top: 4px; display: flex; justify-content: space-between; }
+.ai-d { background: none; border: none; color: var(--dim); cursor: pointer; }
+.ai-d:hover { color: var(--fg); }
+#a-empty { font-size: 12px; color: var(--dim); font-style: italic; }
+
+/* Annotation popup */
+.apop { position: fixed; z-index: 700; background: var(--bg); border: 1px solid var(--line); padding: 9px 11px; width: 210px; box-shadow: 0 3px 14px rgba(0,0,0,.12); }
+.apop textarea { width: 100%; min-height: 60px; padding: 4px 6px; background: var(--surf); border: 1px solid var(--line); color: var(--fg); font-family: 'Source Serif 4', serif; font-size: 12px; resize: vertical; outline: none; }
+.apop-btns { display: flex; gap: 4px; margin-top: 5px; }
+.apop-btns button { padding: 3px 9px; font-size: 10px; cursor: pointer; font-family: 'JetBrains Mono', monospace; border-radius: 1px; }
+.b-save { background: var(--fg); color: var(--bg); border: 1px solid var(--fg); }
+.b-cancel { background: none; color: var(--dim); border: 1px solid var(--line); }
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width: 680px) {
+  :root { --sw: 0px; }
+  #sidebar { width: 220px; transform: translateX(-220px); }
+  #sidebar.open { transform: translateX(0); }
+  #main { margin-left: 0; }
+  #content { padding: 32px 18px 80px; }
+  #topbar { padding: 0 14px 0 8px; }
+  #menu-btn { display: flex; }
+  .cg { grid-template-columns: 1fr; }
+}
+@media print {
+  #sidebar, #topbar, #hlb, #ap, #prog { display: none !important; }
+  #main { margin-left: 0; }
+  #content { padding: 12px; max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- Highlight bar -->
+<div id="hlb">
+  <button class="hlb-btn" data-c="hl">highlight</button>
+  <div class="hsep"></div>
+  <button class="hlb-btn" id="hln">+ note</button>
+  <div class="hsep"></div>
+  <button class="hlb-btn" id="hx">clear</button>
+</div>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <div class="sb-head">
+    <div class="sb-label">CBSE · Class XII · Flamingo</div>
+    <h2>English Core<br>Study Notes</h2>
+  </div>
+
+  <div class="sb-sec">
+    <span class="sb-sec-lbl">Prose</span>
+    <a class="nav-a" onclick="go('p1')">The Last Lesson <small>Alphonse Daudet</small></a>
+    <a class="nav-a" onclick="go('p2')">Lost Spring <small>Anees Jung</small></a>
+    <a class="nav-a" onclick="go('p3')">Deep Water <small>William O. Douglas</small></a>
+    <a class="nav-a" onclick="go('p4')">The Rattrap <small>Selma Lagerlöf</small></a>
+    <a class="nav-a" onclick="go('p5')">Indigo <small>Louis Fischer</small></a>
+    <a class="nav-a" onclick="go('p6')">Poets and Pancakes <small>Asokamitran</small></a>
+    <a class="nav-a" onclick="go('p7')">The Interview <small>Silvester / Eco</small></a>
+    <a class="nav-a" onclick="go('p8')">Going Places <small>A.R. Barton</small></a>
+  </div>
+
+  <div class="sb-sec">
+    <span class="sb-sec-lbl">Poetry</span>
+    <a class="nav-a" onclick="go('po1')">My Mother at Sixty-six <small>Kamala Das</small></a>
+    <a class="nav-a" onclick="go('po2')">An Elementary School Classroom in a Slum <small>Stephen Spender</small></a>
+    <a class="nav-a" onclick="go('po3')">Keeping Quiet <small>Pablo Neruda</small></a>
+    <a class="nav-a" onclick="go('po4')">A Thing of Beauty <small>John Keats</small></a>
+    <a class="nav-a" onclick="go('po5')">A Roadside Stand <small>Robert Frost</small></a>
+    <a class="nav-a" onclick="go('po6')">Aunt Jennifer's Tigers <small>Adrienne Rich</small></a>
+  </div>
+
+  <div class="sb-sec">
+    <span class="sb-sec-lbl">Tools</span>
+    <a class="nav-a" onclick="toggleAP()">Annotations</a>
+    <a class="nav-a" onclick="clearHL()">Clear highlights</a>
+    <a class="nav-a" onclick="window.print()">Print / PDF</a>
+  </div>
+
+  <div class="theme-panel">
+    <div class="sb-label">Appearance</div>
+    <div class="ld-row">
+      <span>Light / Dark</span>
+      <button class="tog" id="ld" onclick="toggleDark()"></button>
+    </div>
+    <div class="sc-list">
+      <button class="sc-btn on" data-s="default"        onclick="setS('default')">Default <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="gruvbox"        onclick="setS('gruvbox')">Gruvbox <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="gruvbox-light"  onclick="setS('gruvbox-light')">Gruvbox Light <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="nord"           onclick="setS('nord')">Nord <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="solarized"      onclick="setS('solarized')">Solarized <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="solarized-dark" onclick="setS('solarized-dark')">Solarized Dark <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="dracula"        onclick="setS('dracula')">Dracula <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="one-dark"       onclick="setS('one-dark')">One Dark <span class="sc-check">✓</span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- Annotations panel -->
+<div id="ap">
+  <h3>Annotations</h3>
+  <div id="a-empty">Select text and click "+ note" to add an annotation.</div>
+  <div id="a-list"></div>
+</div>
+
+<!-- Main -->
+<div id="main">
+  <div id="topbar">
+    <div class="tb-l">
+      <button id="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+      <span class="breadcrumb">Flamingo · Prose &amp; Poetry</span>
+    </div>
+    <div class="tb-r">
+      <input id="si" type="text" placeholder="Search…" oninput="doSearch(this.value)">
+      <span id="sc"></span>
+    </div>
+  </div>
+
+  <div id="content">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-eye">CBSE Class XII · English Core</div>
+      <h1>Complete Study Notes<br><em>Flamingo — Prose &amp; Poetry</em></h1>
+      <p class="deck">All eight prose chapters and six poems. In-depth analysis, characters, themes, literary devices, and exam-focused questions.</p>
+      <div class="toc">
+        <div class="toc-row" onclick="go('p1')"><span class="toc-n">P1</span><span class="toc-t">The Last Lesson</span><span class="toc-a">Alphonse Daudet</span></div>
+        <div class="toc-row" onclick="go('p2')"><span class="toc-n">P2</span><span class="toc-t">Lost Spring</span><span class="toc-a">Anees Jung</span></div>
+        <div class="toc-row" onclick="go('p3')"><span class="toc-n">P3</span><span class="toc-t">Deep Water</span><span class="toc-a">William O. Douglas</span></div>
+        <div class="toc-row" onclick="go('p4')"><span class="toc-n">P4</span><span class="toc-t">The Rattrap</span><span class="toc-a">Selma Lagerlöf</span></div>
+        <div class="toc-row" onclick="go('p5')"><span class="toc-n">P5</span><span class="toc-t">Indigo</span><span class="toc-a">Louis Fischer</span></div>
+        <div class="toc-row" onclick="go('p6')"><span class="toc-n">P6</span><span class="toc-t">Poets and Pancakes</span><span class="toc-a">Asokamitran</span></div>
+        <div class="toc-row" onclick="go('p7')"><span class="toc-n">P7</span><span class="toc-t">The Interview</span><span class="toc-a">Christopher Silvester &amp; Umberto Eco</span></div>
+        <div class="toc-row" onclick="go('p8')"><span class="toc-n">P8</span><span class="toc-t">Going Places</span><span class="toc-a">A.R. Barton</span></div>
+        <div class="toc-row" onclick="go('po1')"><span class="toc-n">Poem 1</span><span class="toc-t">My Mother at Sixty-six</span><span class="toc-a">Kamala Das</span></div>
+        <div class="toc-row" onclick="go('po2')"><span class="toc-n">Poem 2</span><span class="toc-t">An Elementary School Classroom in a Slum</span><span class="toc-a">Stephen Spender</span></div>
+        <div class="toc-row" onclick="go('po3')"><span class="toc-n">Poem 3</span><span class="toc-t">Keeping Quiet</span><span class="toc-a">Pablo Neruda</span></div>
+        <div class="toc-row" onclick="go('po4')"><span class="toc-n">Poem 4</span><span class="toc-t">A Thing of Beauty</span><span class="toc-a">John Keats</span></div>
+        <div class="toc-row" onclick="go('po5')"><span class="toc-n">Poem 5</span><span class="toc-t">A Roadside Stand</span><span class="toc-a">Robert Frost</span></div>
+        <div class="toc-row" onclick="go('po6')"><span class="toc-n">Poem 6</span><span class="toc-t">Aunt Jennifer's Tigers</span><span class="toc-a">Adrienne Rich</span></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════ PROSE ══════════════════════════════ -->
+
+    <!-- P1 -->
+    <div class="chapter" id="p1">
+      <div class="ch-head">
+        <div class="ch-n">Prose · Chapter 01</div>
+        <div class="ch-t">The Last Lesson</div>
+        <div class="ch-a">by Alphonse Daudet</div>
+        <div class="ch-tags"><span class="tag">Short Story</span><span class="tag">Patriotism</span><span class="tag">Language &amp; Identity</span><span class="tag">Imperialism</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Author</div>
+        <p>Alphonse Daudet (1840–1897) was a French novelist and short-story writer known for his vivid depictions of Provençal life and gentle irony. "The Last Lesson" is set in the aftermath of the Franco-Prussian War (1870–71), in which France ceded Alsace and Lorraine to Prussia. The story is a compressed meditation on loss, language, and what it means to belong to a culture when that culture is forcibly suppressed.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Plot Summary</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Franz's Routine</div><p>Franz, a young student in Alsace, is late for school and dreading the grammar lesson he has not prepared. He considers skipping school entirely to enjoy the warm morning.</p></div>
+          <div class="tl-i"><div class="tl-lbl">An Unusual Atmosphere</div><p>On the way he notices the blacksmith's apprentices reading a bulletin at the notice board. The school is uncharacteristically quiet. The villagers — including the ex-mayor, ex-postman, and other elders — are seated at the back of the classroom.</p></div>
+          <div class="tl-i"><div class="tl-lbl">M. Hamel's Announcement</div><p>The teacher, M. Hamel, is dressed in his fine Sunday coat — the one he wore only on inspection days and prize-giving days. He announces that this is the <strong>last French lesson</strong>: Berlin has ordered that only German be taught in the schools of Alsace and Lorraine from now on.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Franz's Regret</div><p>Franz is overwhelmed with remorse. Everything he had found dull — his grammar, his books, his teacher — now seems precious. He finds he understands the lesson perfectly, as though he has never been so attentive.</p></div>
+          <div class="tl-i"><div class="tl-lbl">M. Hamel's Final Address</div><p>M. Hamel speaks movingly about the French language — calling it the most beautiful, clearest, and most logical language in the world. He also blames the people of Alsace (and himself) for putting off learning. When the church clock strikes noon and the Prussian trumpets are heard, M. Hamel writes "Vive La France!" on the board, then dismisses the class with a gesture, too overcome to speak.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Characters</div>
+        <div class="cg">
+          <div class="cc"><div class="cc-n">Franz</div><div class="cc-d">The narrator. A young, careless student who undergoes a sudden transformation of feeling. He discovers the value of his language and culture only at the moment of losing them — the story's central irony.</div></div>
+          <div class="cc"><div class="cc-n">M. Hamel</div><div class="cc-d">The French teacher, devoted and dignified. In his final lesson he becomes a symbol of cultural resistance. His self-reproach is significant — he acknowledges his own past complacency.</div></div>
+          <div class="cc"><div class="cc-n">The Villagers</div><div class="cc-d">Old Hauser, ex-mayor, ex-postman — they come to pay their respects to French as a dying institution. They represent collective guilt and collective mourning.</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>Language as identity.</strong> The loss of French is presented as the loss of self. M. Hamel calls French a "key" — those who keep their language hold the key to their prison. Language is not just communication; it is the vessel of memory, culture, and nationhood.</li>
+          <li><strong>Imperialism and cultural suppression.</strong> The Prussian order to replace French with German is a classic colonial/imperial strategy: destroy the native language to erase cultural identity. The story was widely read as an allegory of French national feeling.</li>
+          <li><strong>Regret and procrastination.</strong> Franz's sudden valuation of what he neglected is the human tendency to appreciate things only when they are lost. M. Hamel extends this to the entire community.</li>
+          <li><strong>Patriotism.</strong> The quiet, dignified grief of teacher, student, and villagers is a form of patriotism — not martial, but deeply personal.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Literary Devices</div>
+        <ul class="nl">
+          <li><strong>Irony</strong> — Franz, who dreaded the lesson, suddenly finds himself understanding it. The very last lesson becomes the most meaningful.</li>
+          <li><strong>Symbolism</strong> — M. Hamel's fine coat symbolises the solemnity of the occasion. The pigeons cooing outside symbolise France's spirit, which cannot be suppressed. The blackboard's final words "Vive La France!" are a symbolic act of resistance.</li>
+          <li><strong>First-person narration</strong> — intimate and child-like, making the loss feel immediate and personal.</li>
+          <li><strong>Imagery</strong> — the sunlight on the desks, the warm outdoor day Franz wanted to enjoy, contrasted with the weighted silence indoors.</li>
+          <li><strong>Pathetic fallacy</strong> — the warm, sunny day outside contrasts cruelly with the cold finality inside the classroom.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>War referred to: <strong>Franco-Prussian War (1870–71)</strong>.</li>
+          <li>Region: <strong>Alsace-Lorraine</strong> (now part of France; then ceded to Prussia).</li>
+          <li>M. Hamel's special attire: <strong>green coat, frilled shirt, embroidered black silk cap</strong> — worn on inspection/prize days.</li>
+          <li>M. Hamel called French: <strong>"the most beautiful language in the world — the most logical and the most clear."</strong></li>
+          <li>Final words on the board: <strong>"Vive La France!"</strong></li>
+          <li>Old Hauser's primer: he brings his <strong>old ABC primer</strong> and reads with the youngest children.</li>
+          <li>M. Hamel's self-blame: he admits he too put off teaching French and sent students to water his flowers.</li>
+          <li>The pigeons' cooing: a subtle symbol — even birds seem to mourn in French.</li>
+        </ul>
+      </div>
+
+      <blockquote>"My children, this is the last lesson I shall give you. The order has come from Berlin to teach only German in the schools of Alsace and Lorraine."<cite>— M. Hamel</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>What changes did Franz notice in school on the day of the last lesson?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>What was the significance of M. Hamel's special dress on the last day?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>How does the story explore the theme of language as identity?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>Who were the people sitting at the back of the classroom and why had they come?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>What did M. Hamel mean when he said a language is a "key to the prison"?</span></div>
+        <div class="eq"><span class="eq-n">Q6</span><span>How does Franz's attitude change throughout the story? What does his transformation signify?</span></div>
+      </div>
+    </div>
+
+    <div class="div">02</div>
+
+    <!-- P2 -->
+    <div class="chapter" id="p2">
+      <div class="ch-head">
+        <div class="ch-n">Prose · Chapter 02</div>
+        <div class="ch-t">Lost Spring</div>
+        <div class="ch-a">by Anees Jung</div>
+        <div class="ch-tags"><span class="tag">Non-Fiction</span><span class="tag">Poverty</span><span class="tag">Child Labour</span><span class="tag">Social Justice</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Author</div>
+        <p>Anees Jung is an Indian journalist, author, and child-rights activist. The chapter is drawn from her book <em>Lost Spring: Stories of Stolen Childhood</em> (1997). It is divided into two sections: <strong>"Sometimes I find a rupee in the garbage"</strong> — about Saheb, a ragpicker in Delhi — and <strong>"I want to drive a car"</strong> — about Mukesh, a child from Firozabad's bangle-making community. Both sections are journalistic and compassionate, blending observation with quiet indignation.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Section 1 — Saheb-e-Alam</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Who is Saheb?</div><p>Saheb-e-Alam (meaning <em>lord of the universe</em> — an irony) is a ragpicker of about 10–12 years, one of many Bangladeshi migrants who came to Delhi. His family left Dhaka when floods swallowed their home. They drifted to Delhi's streets.</p></div>
+          <div class="tl-i"><div class="tl-lbl">His Dream</div><p>Saheb wanders the garbage heaps of affluent south Delhi each morning. He dreams of going to school. When the author jokingly promises to open a school "someday," Saheb turns up eagerly at her gate every morning.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Teahouse Job</div><p>Saheb eventually finds a job at a local tea stall. He earns 800 rupees a month and all his meals. Yet the author observes that the "carefree look" has gone. He is no longer his own master — he carries a steel canister for his employer and has lost the only freedom he had: of roaming at will.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Section 2 — Mukesh</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Firozabad</div><p>Firozabad is famous for its bangle industry. Thousands of children work in glass furnaces in darkness, risking blindness from the glass dust and fumes. Generations are trapped in this trade by poverty and the stranglehold of middlemen, moneylenders, and bureaucrats.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Mukesh's Dream</div><p>Mukesh is a boy from a bangle-making family. Unlike most children there, he dares to dream of becoming a <strong>motor mechanic</strong>. He wants to drive a car. His is an act of individual courage against collective fatalism.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Trap</div><p>The author calls Firozabad a <em>web</em>: the debt, the sahukars (moneylenders), the middlemen, the police, the politicians — all conspire to keep the children in the furnaces. Any attempt to form a cooperative is crushed. The children have never known anything else, so they don't know what they are missing.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Characters</div>
+        <div class="cg">
+          <div class="cc"><div class="cc-n">Saheb-e-Alam</div><div class="cc-d">A Bangladeshi migrant ragpicker. His name, "lord of the universe," ironically contrasts with his reality. His freedom — even while scavenging — is lost when he takes a "real" job.</div></div>
+          <div class="cc"><div class="cc-n">Mukesh</div><div class="cc-d">A boy from Firozabad's bangle-making community who dares to dream beyond his inherited fate. His dream of being a motor mechanic symbolises individual agency against systemic oppression.</div></div>
+          <div class="cc"><div class="cc-n">Mukesh's Father / Grandfather</div><div class="cc-d">Representative of generations trapped in the same trade. The father's eyes are filled with "cataracts" — both literally from the glasswork, and metaphorically, from hopelessness.</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>Poverty as a cycle.</strong> Neither Saheb nor Mukesh can break free easily. Structural forces — debt, caste, corruption — perpetuate poverty across generations.</li>
+          <li><strong>Irony of names and titles.</strong> "Saheb-e-Alam" means lord of the universe; "Lost Spring" echoes lost childhood. These ironies are deliberate and cutting.</li>
+          <li><strong>Loss of childhood.</strong> "Spring" metaphorically refers to youth, and it is stolen by labour. The "garbage" these children sift through is also the garbage of a society that fails them.</li>
+          <li><strong>Freedom vs. security.</strong> Saheb's job provides food and money but strips his freedom. This is a comment on wage labour — even legitimate work can enslave.</li>
+          <li><strong>The power of dreams.</strong> Mukesh's dream is fragile but defiant. It is the only thing the system cannot take from him. Whether he achieves it or not, the dream itself is an act of resistance.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Saheb's full name: <strong>Saheb-e-Alam</strong> — meaning "lord of the universe."</li>
+          <li>Saheb's origin: <strong>Bangladesh (Dhaka)</strong>; his family fled after floods destroyed their fields.</li>
+          <li>Saheb's wage at tea stall: <strong>800 rupees/month + meals</strong>.</li>
+          <li>City of bangles: <strong>Firozabad</strong>, Uttar Pradesh.</li>
+          <li>Mukesh's dream: to become a <strong>motor mechanic</strong> and drive a car.</li>
+          <li>The "web" trapping children: <strong>sahukars, middlemen, policemen, keepers of law, politicians</strong>.</li>
+          <li>Hazard of bangle-making: <strong>blindness</strong> from furnace glare and glass dust.</li>
+          <li>Author's book: <em><strong>Lost Spring: Stories of Stolen Childhood</strong></em>.</li>
+        </ul>
+      </div>
+
+      <blockquote>"Saheb is no longer his own master."<cite>— Anees Jung, on Saheb taking the tea-stall job</cite></blockquote>
+      <blockquote>"I want to drive a car."<cite>— Mukesh, his defiant dream</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>What is ironic about the name "Saheb-e-Alam"? How does his life reflect this irony?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>Why does the author say Saheb is "no longer his own master" after taking the tea-stall job?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>Describe the "web" that traps the bangle-makers of Firozabad.</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>What does Mukesh's dream signify in the context of systemic poverty?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>How does Anees Jung use the title "Lost Spring" symbolically?</span></div>
+        <div class="eq"><span class="eq-n">Q6</span><span>Compare the situations of Saheb and Mukesh as victims of poverty.</span></div>
+      </div>
+    </div>
+
+    <div class="div">03</div>
+
+    <!-- P3 -->
+    <div class="chapter" id="p3">
+      <div class="ch-head">
+        <div class="ch-n">Prose · Chapter 03</div>
+        <div class="ch-t">Deep Water</div>
+        <div class="ch-a">by William O. Douglas</div>
+        <div class="ch-tags"><span class="tag">Autobiography</span><span class="tag">Fear &amp; Courage</span><span class="tag">Self-Conquest</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Author</div>
+        <p>William Orville Douglas (1898–1980) was an Associate Justice of the United States Supreme Court — the longest-serving Justice in history (36 years). He was also an avid outdoorsman and author. This autobiographical essay is excerpted from his memoir <em>Of Men and Mountains</em> (1950). It narrates his childhood trauma of near-drowning and his determined adult effort to conquer his phobia through professional instruction.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Plot Summary</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">The YMCA Pool Incident (Age 10–11)</div><p>A big boy at the Yakima YMCA pool dunks Douglas — a non-swimmer — into the 9-foot deep end as a prank. Douglas sinks, tries to jump off the bottom, fails repeatedly, and nearly drowns. His lungs fill with water. He falls into unconsciousness with a green, frightening sensation. He survives but is left with a deep terror of water.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Childhood Fear Confirmed</div><p>Years earlier, as a 3–4 year old, his father had taken him to the California beach. Waves knocked him down and swept over him. The feeling of suffocation left a residual fear that the YMCA incident reactivated and entrenched.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Impact of the Phobia</div><p>The terror keeps him from canoeing, fishing, swimming — activities he loves. He tries to overcome it rationally but fails. He decides to hire a swimming instructor.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Professional Training</div><p>His instructor begins with a series — first on a rope and pulley, then swimming in segments: legs, breathing, full stroke. Each element is practised for weeks. By October he can swim a hundred yards.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Residual Terror — And Its Defeat</div><p>Even after formal training, traces of fear persist in deep water. He swims Lake Wentworth in New Hampshire, and Warm Lake, and each time confronts and defeats the residual panic. Finally, standing in the water, he pronounces himself free. He reflects on what he has gained: the fullness of life that comes from conquering fear rather than running from it.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>Conquering fear through determination.</strong> Douglas's story is not about natural bravery but about deliberate, methodical effort. Courage is not the absence of fear — it is the decision to face it.</li>
+          <li><strong>The fullness of life vs. its terror.</strong> The essay ends with a reflection: only those who have known death (or near-death) can know the full sweetness of life. Fear withheld Douglas from the life he wanted; conquering it expanded his world.</li>
+          <li><strong>Mind over body.</strong> The training is partly physical but fundamentally psychological. It is the mind's terror — not the body's inability — that had paralysed Douglas.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Literary Devices</div>
+        <ul class="nl">
+          <li><strong>Detailed sensory imagery</strong> — the green, suffocating sensation underwater; the paralysis of limbs; the roaring in the ears. Douglas renders near-drowning viscerally.</li>
+          <li><strong>Metaphor</strong> — water as a symbol of fear, death, and ultimately renewal. Douglas "defeats" the element that once almost destroyed him.</li>
+          <li><strong>Suspense and pacing</strong> — the YMCA incident is narrated slowly, almost in slow motion, to convey the distorted time-sense of panic.</li>
+          <li><strong>First-person introspection</strong> — the essay blends action with psychological analysis, making it both a narrative and a philosophical meditation.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Douglas's age at YMCA incident: <strong>ten or eleven</strong>.</li>
+          <li>YMCA pool depth: <strong>9 feet</strong> (deep end).</li>
+          <li>The big boy: his identity is never given — he tossed Douglas in "just for fun."</li>
+          <li>First fear of water: <strong>California beach</strong> (age 3–4), when waves knocked him down.</li>
+          <li>Douglas's book: <em><strong>Of Men and Mountains</strong></em> (1950).</li>
+          <li>Place of final conquest: <strong>Lake Wentworth, New Hampshire</strong> and <strong>Warm Lake</strong>.</li>
+          <li>Training technique: <strong>rope and pulley</strong> system, then segment practice over several months.</li>
+          <li>Quote from Roosevelt that Douglas echoes: <strong>"All we have to fear is fear itself."</strong></li>
+        </ul>
+      </div>
+
+      <blockquote>"I was now the master of water."<cite>— William O. Douglas, after overcoming his phobia</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>Describe Douglas's experience at the YMCA pool. How did it affect his life?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>How did Douglas's swimming instructor help him overcome his fear step by step?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>"All we have to fear is fear itself." How does this statement apply to Douglas's experience?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>What does the story teach us about overcoming phobias? What is the role of willpower?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>How does Douglas describe his sensation of drowning? Why is the description so detailed?</span></div>
+      </div>
+    </div>
+
+    <div class="div">04</div>
+
+    <!-- P4 -->
+    <div class="chapter" id="p4">
+      <div class="ch-head">
+        <div class="ch-n">Prose · Chapter 04</div>
+        <div class="ch-t">The Rattrap</div>
+        <div class="ch-a">by Selma Lagerlöf</div>
+        <div class="ch-tags"><span class="tag">Short Story</span><span class="tag">Redemption</span><span class="tag">Human Goodness</span><span class="tag">Allegory</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Author</div>
+        <p>Selma Lagerlöf (1858–1940) was a Swedish author and the first woman to win the Nobel Prize in Literature (1909). She is celebrated for her mythological storytelling rooted in Swedish landscape and folklore. "The Rattrap" blends a realistic social portrait of a vagabond with a philosophical parable about the capacity of human kindness to redeem even the most degraded soul.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Plot Summary</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">The Peddler</div><p>An unnamed vagabond sells small rattraps made from wire scraps. He survives by begging. He reflects on life as a rattrap: the world sets baits — riches, joys, food — and men are caught in it as rats are.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Crofter's Hospitality</div><p>The peddler is welcomed by a lonely old crofter (tenant farmer) who offers him porridge, tobacco, and warmth. The crofter shows him 30 kronor hidden in a leather pouch — his payment for selling cream. The next morning the peddler steals the money and leaves.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Lost in the Forest</div><p>The peddler enters the forest to avoid the main road and becomes completely lost. He walks in circles. He feels he has fallen into a rattrap himself — caught by his own greed. In a state of despair and exhaustion he stumbles upon an iron foundry.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Ironmaster's Mistake</div><p>The ironmaster, Edla Willmansson's father, mistakes the peddler in the dim light for an old regimental comrade named Nils Olof. He insists on bringing him home for Christmas. The peddler, cold and hungry, agrees — but is terrified of being discovered.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Edla's Kindness</div><p>Edla Willmansson, the ironmaster's daughter, shows the peddler genuine, unconditional hospitality — a Christmas gift and a letter asking him to return the following year "as welcome as a valued guest." Even after he is exposed as a thief and a vagabond by the ironmaster, Edla insists he be allowed to stay for Christmas.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Redemption</div><p>The next morning, Edla finds a small rattrap left as a Christmas gift. Inside are the stolen 30 kronor and a note from "Captain von Stahle" — the peddler's assumed identity — asking her to return the money to the crofter. He signs off as Captain von Stahle, adopting the dignified identity she had offered him. He has been redeemed by her trust.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Characters</div>
+        <div class="cg">
+          <div class="cc"><div class="cc-n">The Peddler</div><div class="cc-d">Nameless vagrant. Cynical philosopher of the rattrap. Steals, lies — yet retains a moral core that Edla's kindness activates. He transforms from a rat caught in his own trap to "Captain von Stahle."</div></div>
+          <div class="cc"><div class="cc-n">Edla Willmansson</div><div class="cc-d">The ironmaster's daughter. The story's moral anchor. Her empathy is unconditional — she treats the stranger with dignity regardless of his social position. Her kindness is the catalyst for his transformation.</div></div>
+          <div class="cc"><div class="cc-n">The Ironmaster</div><div class="cc-d">Well-meaning but driven by social assumptions. He offers hospitality only because he mistakes the peddler for a former officer. When the mistake is clear, he wants to throw the man out — only Edla's plea saves the evening.</div></div>
+          <div class="cc"><div class="cc-n">The Crofter</div><div class="cc-d">Lonely, generous, trusting — and robbed. His trust is exploited. He represents the vulnerability of simple goodness.</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>The rattrap as central metaphor.</strong> The world is a rattrap — baited with wealth, food, warmth. Greed traps people. The peddler falls into his own trap the moment he steals. The only escape is through virtue, not cunning.</li>
+          <li><strong>Redemption through human kindness.</strong> What laws, poverty, and hardship could not achieve — restoring the peddler's humanity — is accomplished by Edla's unconditional trust. This is the story's central moral proposition.</li>
+          <li><strong>The conditional vs. unconditional good deed.</strong> The ironmaster's generosity is conditional (he thinks the man is someone else). Edla's is unconditional. Only unconditional kindness transforms.</li>
+          <li><strong>Identity and dignity.</strong> The peddler signs his final note "Captain von Stahle" — claiming the dignity Edla offered him. The name is not a lie but an aspiration she made real.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Stolen amount: <strong>30 kronor</strong> (Swedish currency).</li>
+          <li>The crofter's income: payment for selling <strong>cream from his cow</strong>.</li>
+          <li>Mistaken identity: peddler mistaken for <strong>Nils Olof</strong>, old regimental comrade.</li>
+          <li>The ironmaster's profession: <strong>ironmaster at Ramsjo Ironworks</strong>.</li>
+          <li>Edla's Christmas gift to peddler: <strong>a suit of clothes</strong>.</li>
+          <li>Peddler's alias in his final note: <strong>Captain von Stahle</strong>.</li>
+          <li>Author: <strong>Selma Lagerlöf</strong> — first woman Nobel laureate in Literature, 1909.</li>
+          <li>Setting: <strong>Sweden</strong>, around Christmas.</li>
+        </ul>
+      </div>
+
+      <blockquote>"Please let him stay. He may be a thief or a vagabond, but he is a human being, and Christmas is a time of joy and kindness."<cite>— Edla Willmansson</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>Explain the rattrap as a central metaphor in the story. How does the peddler fall into his own trap?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>Compare the hospitality shown by the crofter, the ironmaster, and Edla. Whose kindness is most significant and why?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>What does the peddler's final note as "Captain von Stahle" signify about his transformation?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>How does Edla Willmansson bring out the best in the peddler? What qualities does she represent?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>The world is a rattrap — discuss how this philosophy plays out through different characters in the story.</span></div>
+      </div>
+    </div>
+
+    <div class="div">05</div>
+
+    <!-- P5 -->
+    <div class="chapter" id="p5">
+      <div class="ch-head">
+        <div class="ch-n">Prose · Chapter 05</div>
+        <div class="ch-t">Indigo</div>
+        <div class="ch-a">by Louis Fischer</div>
+        <div class="ch-tags"><span class="tag">Biography</span><span class="tag">Civil Disobedience</span><span class="tag">Gandhi</span><span class="tag">Colonialism</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Author</div>
+        <p>Louis Fischer (1896–1970) was an American journalist and Gandhi's biographer. This chapter is excerpted from his biography <em>The Life of Mahatma Gandhi</em> (1950). It narrates the <strong>Champaran Satyagraha of 1917</strong> — Gandhi's first major civil disobedience campaign in India. It deals with the exploitation of indigo farmers in the Champaran district of Bihar by British planters, and Gandhi's successful campaign for justice.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Background — The Indigo System</div>
+        <p>Under the <strong>tinkathia system</strong>, peasants were compelled to cultivate indigo on <strong>3/20ths</strong> (approximately 15%) of their land and surrender the entire crop as rent to British planters. When synthetic dye replaced natural indigo in the 20th century, the British wanted to cancel this arrangement — but only after making the peasants sign agreements indemnifying them. Many peasants had already paid; they wanted their money back.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Plot Summary</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Rajkumar Shukla's Invitation</div><p>At the 1916 Lucknow Congress session, Rajkumar Shukla — an illiterate, tenacious peasant from Champaran — follows Gandhi for weeks, pleading with him to visit Bihar. Gandhi eventually agrees.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Arrival in Champaran</div><p>Gandhi arrives in Champaran and is immediately served a notice to leave by the British authorities. He refuses, citing his duty to the people. He is summoned to court but the case is dropped — the first defeat of civil authority before satyagraha.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Investigation</div><p>Gandhi interviews thousands of peasants to document the injustice. He is assisted by lawyers from several provinces including J.B. Kripalani and Mahadev Desai. The planters have no answer to Gandhi's systematic documentation.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Enquiry Committee</div><p>The Lieutenant-Governor sets up an official enquiry commission and includes Gandhi. The commission recommends a 25% refund to the peasants. Gandhi accepts it — not because the amount is adequate, but because it <em>breaks</em> the planters' prestige. Within a few years, the planters abandon the estates entirely and the tinkathia system ends.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Social Work</div><p>Gandhi sets up primary schools, medical clinics, and promotes clean habits in the villages. He enlists volunteers from across India, including his wife Kasturba. He believes political freedom must be accompanied by social upliftment.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>Satyagraha — non-violent resistance.</strong> Gandhi's defiance of the British order to leave, without aggression, is the founding moment of civil disobedience in Indian nationalist politics. This episode became a template for the independence movement.</li>
+          <li><strong>Self-reliance.</strong> Gandhi refuses help from the local Congress organisation, insisting the movement must grow from within Champaran. He also tells lawyers they should be prepared to go to jail themselves — civil disobedience requires personal sacrifice.</li>
+          <li><strong>Dignity over quantity.</strong> Accepting 25% rather than 100% was a moral and strategic decision: the admission of wrongdoing mattered more than the money.</li>
+          <li><strong>Colonialism and exploitation.</strong> The tinkathia system is a clear example of colonial economic exploitation — forced cultivation, loss of choice, and systematic impoverishment.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Year of Champaran Satyagraha: <strong>1917</strong>.</li>
+          <li>Rajkumar Shukla's description: <strong>illiterate but resolute peasant</strong>.</li>
+          <li>Gandhi first met Shukla at: <strong>1916 Lucknow Congress session</strong>.</li>
+          <li>Tinkathia system: cultivation of indigo on <strong>3/20ths of land</strong>.</li>
+          <li>Refund amount accepted: <strong>25%</strong> (half the 50% demanded).</li>
+          <li>Key associates: <strong>J.B. Kripalani, Mahadev Desai, Kasturba Gandhi</strong>.</li>
+          <li>Fischer's biography: <em><strong>The Life of Mahatma Gandhi</strong></em>.</li>
+          <li>Gandhi's lesson to lawyers: be prepared to <strong>go to jail</strong> — civil disobedience cannot be outsourced.</li>
+        </ul>
+      </div>
+
+      <blockquote>"The battle of Champaran is won."<cite>— Gandhi, after the Government dropped the case</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>What was the tinkathia system? How did it exploit the peasants of Champaran?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>Why did Gandhi accept a 25% refund instead of demanding 100%? What was his reasoning?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>How does the Champaran episode demonstrate the power of satyagraha?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>What was the role of Rajkumar Shukla in bringing Gandhi to Champaran?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>What social reforms did Gandhi undertake alongside the political campaign in Champaran?</span></div>
+        <div class="eq"><span class="eq-n">Q6</span><span>What lesson did Gandhi teach the lawyers who came to assist him in Champaran?</span></div>
+      </div>
+    </div>
+
+    <div class="div">06</div>
+
+    <!-- P6 -->
+    <div class="chapter" id="p6">
+      <div class="ch-head">
+        <div class="ch-n">Prose · Chapter 06</div>
+        <div class="ch-t">Poets and Pancakes</div>
+        <div class="ch-a">by Asokamitran</div>
+        <div class="ch-tags"><span class="tag">Humorous Essay</span><span class="tag">Film Industry</span><span class="tag">Irony</span><span class="tag">Aspiration</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Author</div>
+        <p>Asokamitran (1931–2017) was a Tamil writer who worked for nearly three decades as a stenographer and clerk at <strong>Gemini Studios</strong>, one of India's most famous early film production companies in Chennai (Madras). His memoir <em>My Years with Boss</em> and associated essays offer a ground-level, wry view of the studio's glamour and its mundane realities. "Poets and Pancakes" is a collection of comic vignettes drawn from his Gemini days.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Key Vignettes</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">The Makeup Department</div><p>Gemini Studios had a large, well-supplied makeup department. Pancake makeup (Pancake was the brand name) was applied liberally to transform actors — often hilariously, since the cameras did not always notice. The brand name becomes the title's comic pivot.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Office Boy's Grievance</div><p>A young office boy — with literary ambitions — resents being assigned only to bring tea, run errands, and be perpetually ignored. He believes he is wasted talent and blames Subbu (S. D. Burman's associate) for his obscurity. His complaint is a comic study in misplaced envy.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Subbu — The Story Department</div><p>Kothamangalam Subbu (S. S. Vasan's right-hand man) is celebrated as a genius fixer — a man who could solve any script problem, please the boss in any mood, and write Tamil verse as easily as breathing. Yet his genius breeds resentment. The author describes him with admiring irony: "No one can think of Gemini Studios without thinking of Subbu."</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Legal Adviser</div><p>A lawyer who joined as a legal adviser finds himself acting in films — against his will, playing comedic villain roles. He is embittered, feeling his legal talents are wasted. Another ironic portrait of misaligned ambition and utility.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The English Poet's Visit</div><p>The Moral Rearmament Army (MRA), a international movement, visits Gemini Studios with a play. Later an English poet — whose name and work remain mysterious to Asokamitran — visits and delivers a speech. The author and his colleagues could not understand him. It is only much later that the author discovers through a magazine that the visitor was <strong>Frank Buchman's MRA</strong> and the poet was likely <strong>Stephen Spender or one of the famous poets of that era</strong>. The irony: a world-famous poet had visited, and no one at the studio understood a word he said.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Characters</div>
+        <div class="cg">
+          <div class="cc"><div class="cc-n">Subbu (Kothamangalam Subbu)</div><div class="cc-d">Gemini's genius — multitalented, loyal, a prolific writer of scripts and Tamil verse. Represents how talent becomes threatening to those around it. He is the "boss's man" but also a genuinely gifted artist.</div></div>
+          <div class="cc"><div class="cc-n">The Office Boy</div><div class="cc-d">An unnamed, embittered young man who believes his literary talent is unrecognised. His resentment of Subbu is comic — and poignant — since his actual talent is never demonstrated.</div></div>
+          <div class="cc"><div class="cc-n">The Legal Adviser</div><div class="cc-d">A lawyer turned unwilling actor. Represents those whom circumstance has miscast. His bitterness is understandable; his role is comedic.</div></div>
+          <div class="cc"><div class="cc-n">S.S. Vasan ("The Boss")</div><div class="cc-d">Proprietor of Gemini Studios. A powerful, inscrutable figure whose whims ruled the studio. Never fully characterised — known only through his effect on others.</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>Irony and misplaced ambition.</strong> Each character believes they are wasted — the office boy, the lawyer, even Asokamitran himself. The essay gently mocks the gap between self-perception and reality.</li>
+          <li><strong>Art in a commercial environment.</strong> Gemini Studios is a dream factory, but it is also a workplace with hierarchies, jealousies, and absurdities. Art is produced in deeply unromantic conditions.</li>
+          <li><strong>The insignificance of individuals in large systems.</strong> No individual at the studio truly matters — not the makeup artists, not the office boy, not even the visiting English poet who nobody could identify or understand.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Studio: <strong>Gemini Studios, Madras (Chennai)</strong>.</li>
+          <li>Proprietor: <strong>S.S. Vasan</strong>.</li>
+          <li>Subbu's full name: <strong>Kothamangalam Subbu</strong>.</li>
+          <li>"Pancake": brand name of <strong>theatrical makeup</strong>, not a food item.</li>
+          <li>Visiting group: <strong>Moral Rearmament Army (MRA)</strong>.</li>
+          <li>The unidentified English poet: possibly <strong>Stephen Spender</strong> (later discovered through an article).</li>
+          <li>Asokamitran's role at Gemini: <strong>stenographer/clerk</strong>.</li>
+          <li>Subbu's special talent: he could produce Tamil verse and solutions to script problems with equal ease.</li>
+        </ul>
+      </div>
+
+      <blockquote>"No one can think of Gemini Studios without thinking of Subbu."<cite>— Asokamitran</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>Who was Subbu and why was he envied at Gemini Studios?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>What is the significance of the title "Poets and Pancakes"?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>Why is the office boy bitter? What does his character represent?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>What was the moral of the English poet's visit to Gemini Studios?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>How does Asokamitran use irony and humour to portray life at Gemini Studios?</span></div>
+      </div>
+    </div>
+
+    <div class="div">07</div>
+
+    <!-- P7 -->
+    <div class="chapter" id="p7">
+      <div class="ch-head">
+        <div class="ch-n">Prose · Chapter 07</div>
+        <div class="ch-t">The Interview</div>
+        <div class="ch-a">Christopher Silvester (Part I) &amp; Umberto Eco (Part II)</div>
+        <div class="ch-tags"><span class="tag">Non-Fiction</span><span class="tag">Media</span><span class="tag">Celebrity &amp; Privacy</span><span class="tag">Interview as Art Form</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Chapter</div>
+        <p>This chapter has two parts. <strong>Part I</strong> is an extract from Christopher Silvester's introduction to <em>The Penguin Book of Interviews</em> (1993), which provides a brief history of the interview as a journalistic and literary form. <strong>Part II</strong> is an extract from a 1995 interview with Umberto Eco — Italian novelist, philosopher, and semiotician — conducted by Mukund Padmanabhan for <em>The Hindu</em>. Eco discusses how his academic writing and his famous novels coexist, and how he uses the "interstices of busy-ness."</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Part I — A History of the Interview</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Origin</div><p>The interview as a journalistic form emerged in the mid-19th century. It became widespread in the 1860s, especially in the United States.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Reactions</div><p>Silvester notes that great figures have viewed interviews with hostility: <strong>Rudyard Kipling</strong> called the interview "an assault." <strong>Lewis Carroll</strong> refused to be interviewed. <strong>H.G. Wells</strong> called it "the most tremendous bore." Others saw it as an intrusion into privacy.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Interview's Power</div><p>Yet interviews have also become a democratic art form — they democratise access to the famous, bring out aspects of personality that no biography can, and shape public opinion. Silvester argues the interview has become the primary mode of mass communication.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Part II — Umberto Eco</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Academic vs. Novelist</div><p>Eco is a scholar (his academic work includes semiotics, medieval aesthetics, linguistics) who also wrote bestselling novels (<em>The Name of the Rose</em>, <em>Foucault's Pendulum</em>). Critics were puzzled that a serious academic wrote popular fiction. Eco dismisses the contradiction — both are ways of asking the same questions.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Interstices</div><p>Eco explains that he writes in the "interstices" — the small spaces between other activities: waiting for someone, riding the metro. He has a horror of wasted time and trains himself to use every gap.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Name of the Rose</div><p>Eco says he wrote the novel at 50 because he felt like writing a novel. He began with an image of a monk being poisoned. It became a medieval mystery that also functions as a philosophical inquiry into interpretation, truth, and the power of books.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>The interview as power and intrusion.</strong> The chapter explores the tension between public interest and private life that the interview embodies. It can be invasive, reductive, or distorting — yet also illuminating.</li>
+          <li><strong>Blurring of high and popular culture.</strong> Eco's career challenges the hierarchy between "serious" academic work and "popular" fiction. He treats both with the same intellectual rigour.</li>
+          <li><strong>Productivity and time.</strong> Eco's philosophy of the "interstices" is a meditation on creative discipline — how great productivity comes not from huge blocks of free time but from disciplined use of small pockets.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Silvester's book: <em><strong>The Penguin Book of Interviews</strong></em> (1993).</li>
+          <li>Rudyard Kipling on interviews: <strong>"an assault"</strong>.</li>
+          <li>Lewis Carroll: <strong>refused all interviews</strong>.</li>
+          <li>H.G. Wells: called interviews <strong>"the most tremendous bore."</strong></li>
+          <li>Eco's most famous novel: <em><strong>The Name of the Rose</strong></em>.</li>
+          <li>Eco's concept: <strong>"interstices of busy-ness"</strong> — gaps between activities used for writing.</li>
+          <li>Eco began writing the novel at: <strong>age 50</strong>.</li>
+          <li>Interviewer of Eco: <strong>Mukund Padmanabhan</strong> for <em>The Hindu</em>.</li>
+          <li>Eco's academic field: <strong>semiotics, medieval philosophy, linguistics</strong>.</li>
+        </ul>
+      </div>
+
+      <blockquote>"I belong to a generation that believes in work, even when working means playing."<cite>— Umberto Eco</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>How does Christopher Silvester trace the history and development of the interview as a form?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>What views have famous writers held about interviews? Do you think these views are justified?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>What does Umberto Eco mean by "the interstices of busy-ness"? How does he use them?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>How did Eco reconcile being an academic scholar and a popular novelist?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>What are the advantages and disadvantages of the interview as a form of communication?</span></div>
+      </div>
+    </div>
+
+    <div class="div">08</div>
+
+    <!-- P8 -->
+    <div class="chapter" id="p8">
+      <div class="ch-head">
+        <div class="ch-n">Prose · Chapter 08</div>
+        <div class="ch-t">Going Places</div>
+        <div class="ch-a">by A.R. Barton</div>
+        <div class="ch-tags"><span class="tag">Short Story</span><span class="tag">Fantasy &amp; Reality</span><span class="tag">Adolescence</span><span class="tag">Hero Worship</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Author</div>
+        <p>A.R. Barton is a contemporary writer whose story "Going Places" explores the inner world of adolescence — its fantasies, hero-worship, and the painful boundary between dream and reality. The story is set in a working-class neighbourhood and follows Sophie, a teenage girl, through a few days of private fantasy and its quiet collapse.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Plot Summary</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Sophie's Dreams</div><p>Sophie, a student from a modest working-class family, fantasises about becoming a boutique owner, actress, or fashion designer. She tells her friend Jansie — both are likely to end up in a biscuit factory — about her grand plans. Jansie is realistic; Sophie is not.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Hero</div><p>Sophie is infatuated with Danny Casey, a young Irish football player who is a local hero. She tells her brother Geoff that she met Danny Casey and that he promised to meet her by the canal the following week. Geoff is sceptical but secretly believes her.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Fantasy Meeting</div><p>Sophie waits by the canal at the appointed time. Danny Casey does not come. It becomes clear to the reader that the "meeting" she told Geoff about was a fantasy — perhaps she saw him briefly, or perhaps she invented it entirely. In her imagination, the meeting had been warm and intimate.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Disappointment and Reality</div><p>Geoff had told their father about Sophie's claim, and when Casey does not appear, the family is implicitly embarrassed. Sophie walks home in the dark, alone with her feelings. The story ends quietly — her dream is not dramatically crushed but simply unrealised.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Characters</div>
+        <div class="cg">
+          <div class="cc"><div class="cc-n">Sophie</div><div class="cc-d">The protagonist. A dreamer from a working-class family who uses fantasy as escape from limited prospects. Her hero-worship of Danny Casey is partly about freedom, stardom, and a life larger than her own.</div></div>
+          <div class="cc"><div class="cc-n">Geoff</div><div class="cc-d">Sophie's older brother. Quiet, mechanical (he is an apprentice mechanic). He is Sophie's main confidant. He travels widely in imagination if not in reality — Sophie envies his freedom.</div></div>
+          <div class="cc"><div class="cc-n">Jansie</div><div class="cc-d">Sophie's practical, grounded friend. She gently cautions Sophie that their futures are likely to be modest. She is a foil to Sophie's romanticism.</div></div>
+          <div class="cc"><div class="cc-n">Danny Casey</div><div class="cc-d">A young Irish football star. He exists mostly as a projection of Sophie's imagination. Whether he actually met her or not is deliberately left ambiguous.</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>Fantasy vs. reality / adolescent escapism.</strong> Sophie's imagination is a refuge from the claustrophobia of her actual life — cramped house, limited options, predictable future. Fantasy is necessary but also dangerous.</li>
+          <li><strong>Hero worship.</strong> Danny Casey is the object of Sophie's projection of all the freedom, glamour, and possibility she lacks. Hero worship is a form of displaced self-longing.</li>
+          <li><strong>Class and limited aspiration.</strong> The story subtly critiques how class constrains imagination. Jansie's realism is shaped by acceptance; Sophie's fantasy is a silent protest.</li>
+          <li><strong>Isolation.</strong> Despite having family, Sophie is emotionally alone — her father doesn't listen, her mother is absent, Geoff is emotionally unavailable. Fantasy fills the void.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Sophie's aspirations: <strong>boutique owner, actress, fashion designer</strong>.</li>
+          <li>Likely reality for Sophie and Jansie: <strong>biscuit factory</strong>.</li>
+          <li>Danny Casey's nationality: <strong>Irish</strong>.</li>
+          <li>Danny Casey's profession: <strong>young football player</strong>.</li>
+          <li>Geoff's job: <strong>apprentice mechanic</strong>.</li>
+          <li>Meeting place (in Sophie's story): <strong>the canal</strong>.</li>
+          <li>Jansie's role: <strong>Sophie's friend and realistic foil</strong>.</li>
+          <li>Central ambiguity: whether Sophie <strong>actually met Danny Casey</strong> or invented the meeting.</li>
+        </ul>
+      </div>
+
+      <blockquote>"She saw herself in a boutique of her own in the High Street, not just selling things but going abroad for the clothes she sold."<cite>— narrative voice, on Sophie's fantasies</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>What are Sophie's dreams and how do they contrast with her actual circumstances?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>Did Sophie actually meet Danny Casey? Give reasons to support your answer.</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>Compare the characters of Sophie and Jansie as two different types of adolescent personalities.</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>What is the significance of Geoff's character in the story? How does he relate to Sophie's inner world?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>How does the story explore the theme of escapism and its consequences?</span></div>
+        <div class="eq"><span class="eq-n">Q6</span><span>What does the title "Going Places" suggest in the context of the story?</span></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════ POETRY ══════════════════════════════ -->
+    <div class="div">Poetry</div>
+
+    <!-- PO1 -->
+    <div class="chapter" id="po1">
+      <div class="ch-head">
+        <div class="ch-n">Poem · 01</div>
+        <div class="ch-t">My Mother at Sixty-six</div>
+        <div class="ch-a">by Kamala Das</div>
+        <div class="ch-tags"><span class="tag">Lyric Poetry</span><span class="tag">Fear of Loss</span><span class="tag">Mother-Daughter Bond</span><span class="tag">Ageing &amp; Death</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Poet</div>
+        <p>Kamala Das (1934–2009), also known as Madhavikutty in Malayalam, was one of India's most celebrated and controversial poets writing in English. Her work is confessional, intimate, and boldly feminine — exploring love, loss, identity, and the body. "My Mother at Sixty-six" is one of her most anthologised poems, written with characteristic restraint and emotional precision.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Summary and Stanza-by-Stanza Analysis</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Lines 1–5 (The Drive)</div><p>The speaker is driving to Cochin airport with her mother. She glances at her mother — who is sleeping — and notices her ashen face resembles a <strong>"corpse"</strong>. She realises her mother is old and growing frail. The poem begins in the middle of an action, giving it an intimate, diary-like quality.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Lines 6–11 (The Familiar Pain)</div><p>The speaker looks away through the car window and sees young trees sprinting past and merry children playing. This contrast between youthful vitality outside and her mother's fading life inside is the poem's central visual metaphor. The speaker feels <strong>"that old familiar ache"</strong> — a childhood fear of losing her mother that she has carried for decades.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Lines 12–17 (The Airport Farewell)</div><p>At the airport, she smiles and waves goodbye. The smile is a mask — it hides her anguish. Her parting words are deliberately ordinary: "see you soon, Amma." The poem ends on these words, which simultaneously express love, denial of the fear, and the human need to maintain normalcy in the face of mortality.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Literary Devices</div>
+        <ul class="nl">
+          <li><strong>Simile</strong> — "her face ashen like that of a corpse" — the most striking comparison, linking the mother's appearance directly to death.</li>
+          <li><strong>Contrast / juxtaposition</strong> — the mother's pallor vs. the "young trees sprinting" and "merry children." Life and death placed side by side.</li>
+          <li><strong>Personification</strong> — trees "sprinting," children "spilling out" — they are full of the life the mother is losing.</li>
+          <li><strong>Stream of consciousness</strong> — the poem moves between present observation, interjected memory, and emotional undercurrent without clear transitions.</li>
+          <li><strong>Enjambment</strong> — the poem runs on continuously without full stops until the very end, enacting the unbroken, anxious flow of the speaker's thoughts.</li>
+          <li><strong>Imagery</strong> — "late winter's moon" — cold, dim, peripheral. The moon at late winter suggests fading rather than full radiance.</li>
+          <li><strong>Irony</strong> — the cheerful "smile and smile and smile" and "see you soon, Amma" mask the speaker's terror that she may not.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Setting: driving from <strong>Pune to Cochin airport</strong>.</li>
+          <li>Mother's age: <strong>sixty-six</strong>.</li>
+          <li>Key simile: mother's face <strong>"ashen like that of a corpse."</strong></li>
+          <li>Second simile: mother compared to <strong>"late winter's moon."</strong></li>
+          <li>The "old familiar ache": the speaker's childhood fear of losing her mother — it has never gone away.</li>
+          <li>Parting words: <strong>"See you soon, Amma."</strong></li>
+          <li>Tone: <strong>restrained grief, suppressed fear, quiet love</strong>.</li>
+          <li>The poem is written as a <strong>single unbroken sentence</strong> — stream of consciousness.</li>
+        </ul>
+      </div>
+
+      <blockquote>"And felt that old familiar ache, my childhood's fear."<cite>— Kamala Das</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>What is the "familiar ache" the speaker feels? Why does she call it "familiar"?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>Analyse the contrast between the speaker's mother and the images outside the car window.</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>Why does the speaker smile and say "see you soon, Amma"? What emotion lies beneath this?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>Discuss the similes used in the poem and their emotional impact.</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>How does Kamala Das use imagery and contrast to convey the theme of ageing and loss?</span></div>
+      </div>
+    </div>
+
+    <div class="div">Poem 02</div>
+
+    <!-- PO2 -->
+    <div class="chapter" id="po2">
+      <div class="ch-head">
+        <div class="ch-n">Poem · 02</div>
+        <div class="ch-t">An Elementary School Classroom in a Slum</div>
+        <div class="ch-a">by Stephen Spender</div>
+        <div class="ch-tags"><span class="tag">Social Protest Poetry</span><span class="tag">Poverty &amp; Education</span><span class="tag">Class Inequality</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Poet</div>
+        <p>Stephen Spender (1909–1995) was a British poet and essayist associated with the 1930s generation of left-wing, socially engaged poets (alongside W.H. Auden and C. Day Lewis). His poetry is marked by compassion for the poor and a conviction that art has a social responsibility. This poem is a passionate plea for genuine education as liberation for slum children.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Stanza-by-Stanza Analysis</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Stanza 1 — The Children</div><p>The children are described with stark, physical detail: <strong>pale faces like rootless weeds</strong>. Their eyes are recessed ("rat-grey"). One child has a "paper-seeming" bone-thin body. A sweet and young girl inherits her father's "disease." These descriptions emphasise poverty's bodily mark — it deforms and diminishes children before they can begin.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Stanza 2 — The Classroom</div><p>The classroom walls display maps and pictures of a world inaccessible to these children — Shakespeare, capes of hope, domed buildings, and cloudless skies. The contrast between what is on the walls (the world of privilege and beauty) and what lies outside the window (slag heaps, narrow lanes) is savage. The "civilised dome" of wealth rides over these children's lives.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Stanza 3 — Trapped Futures</div><p>The speaker observes that these maps and texts are a lie — the world they depict is not theirs. The children's "future is painted with fog." The world offers them nothing. The "map" on the wall becomes a symbol of exclusion — it charts a geography from which they are banned.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Stanza 4 — The Plea</div><p>The final stanza is a direct address to "governor, inspector, visitor" — those in power. Spender urges them to break open the windows, let the children out into fields and rivers, let them truly learn the world that was made for all. Education must be liberation, not decoration. Only then will history be "let out" — only then will the children's maps match the real world they deserve to inherit.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Literary Devices</div>
+        <ul class="nl">
+          <li><strong>Metaphor</strong> — children as "rootless weeds" — displaced, unwanted, growing without nourishment.</li>
+          <li><strong>Contrast / irony</strong> — rich maps and paintings of beautiful places on the walls of a classroom that overlooks slag heaps.</li>
+          <li><strong>Imagery</strong> — "fog," "slag heap," "narrow street sealed in with fog" — industrial bleakness as a condition of poverty.</li>
+          <li><strong>Symbolism</strong> — the map and Shakespeare both symbolise a privileged cultural world from which slum children are excluded.</li>
+          <li><strong>Direct address</strong> — the final stanza addresses the poem outward to the powerful, making it a social manifesto.</li>
+          <li><strong>Alliteration</strong> — "future is painted with fog," "slums as big as doom" — bleak sonic textures.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Children described as: <strong>"rootless weeds," "paper-seeming boy," "rat-grey"</strong>.</li>
+          <li>Classroom decorations: <strong>Shakespeare, maps, donated pictures</strong> of a beautiful outside world.</li>
+          <li>Outside the window: <strong>slag heaps, narrow street, foggy sky</strong>.</li>
+          <li>Addressed to: <strong>"governor, inspector, visitor"</strong> — those with power to change education.</li>
+          <li>Key symbol: the <strong>map</strong> — of a world the children can see but not access.</li>
+          <li>The poem's demand: break open the windows — let the children's world match the real world.</li>
+          <li>Tone: <strong>protest, compassion, urgency</strong>.</li>
+        </ul>
+      </div>
+
+      <blockquote>"Unless, governor, inspector, visitor, / This map becomes their window and these windows / That shut upon their lives like catacombs, / Break O break open till they break the town."<cite>— Stephen Spender</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>How does Spender describe the children in the first stanza? What impression does this create?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>What is the irony of the classroom decorations in the context of slum children?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>What does the map symbolise in this poem? How does it function differently for rich and poor children?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>What is Spender's plea in the final stanza? What does he want the "governor, inspector, visitor" to do?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>Discuss the theme of class inequality in the poem with reference to specific imagery.</span></div>
+      </div>
+    </div>
+
+    <div class="div">Poem 03</div>
+
+    <!-- PO3 -->
+    <div class="chapter" id="po3">
+      <div class="ch-head">
+        <div class="ch-n">Poem · 03</div>
+        <div class="ch-t">Keeping Quiet</div>
+        <div class="ch-a">by Pablo Neruda (translated from Spanish)</div>
+        <div class="ch-tags"><span class="tag">Philosophical Poetry</span><span class="tag">Silence &amp; Introspection</span><span class="tag">Pacifism</span><span class="tag">Nature &amp; Renewal</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Poet</div>
+        <p>Pablo Neruda (1904–1973) was a Chilean poet and diplomat who won the Nobel Prize in Literature in 1971. His poetry ranges from passionate love lyrics to politically charged social verse. "Keeping Quiet" is a meditation on stillness — not as passivity, but as conscious, shared pause — and on the earth's capacity for self-renewal. It is both a pacifist and an ecological manifesto.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Stanza-by-Stanza Analysis</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Stanza 1 — The Counting</div><p>The speaker asks everyone to count to twelve and keep still. The number twelve is significant — it echoes a clock's face, suggesting the suspension of time itself.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Stanza 2 — Stopping All Activity</div><p>He asks: for once, let no one speak a language. Let there be no movement of arms. A moment of total inaction. This is not laziness — it is deliberate, shared stillness. He envisions that if everyone stopped at the same moment, it would be a miraculous, unprecedented silence.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Stanza 3 — No War, No Engines</div><p>In this moment of quiet, wars would cease. Men who prepare chemical weapons would not know what to do with themselves; those who cut grass would have nowhere to advance. Even those who feel victorious or defeated would find those identities dissolved.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Stanza 4 — Not Death</div><p>Neruda explicitly clarifies: this is not death. He does not want permanent silence — that would be nihilism. He wants a <strong>living silence</strong>, not a dead one.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Stanza 5 — The Earth's Lesson</div><p>He draws the example of the earth, which seems to keep still in winter but is alive beneath — preparing roots, seeds, renewal. Life survives through apparent inactivity. The poem ends with a quiet urgency: perhaps if humanity paused, it too could prepare for something larger.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>Introspection and self-understanding.</strong> Stillness allows individuals to know themselves. The noise of modern life prevents genuine self-reflection.</li>
+          <li><strong>Pacifism.</strong> The poem imagines a world where weapons lie idle, aggression ceases, and human beings re-examine their capacity for destruction. It is a veiled anti-war statement.</li>
+          <li><strong>Ecological consciousness.</strong> The earth's winter stillness as a metaphor for regeneration — nature is Neruda's model for how pause and silence can produce renewal.</li>
+          <li><strong>Human brotherhood.</strong> In the moment of shared silence, all distinctions — victor, victim, aggressor, labourer — dissolve. Shared humanity re-emerges.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Literary Devices</div>
+        <ul class="nl">
+          <li><strong>Imagery</strong> — "fishermen in the cold sea would not harm whales"; the earth keeping still in winter — vivid, gentle images of suspended violence.</li>
+          <li><strong>Paradox</strong> — "a huge silence might interrupt this sadness" — silence interrupting, rather than being interrupted, is counterintuitive and powerful.</li>
+          <li><strong>Symbolism</strong> — counting to twelve (time suspended); the earth in winter (apparent death masking renewal).</li>
+          <li><strong>Tone</strong> — contemplative, gently urgent, never preachy. The poet says "perhaps" and "maybe," not "must."</li>
+          <li><strong>Anaphora</strong> — repeated constructions ("let's", "not", "I want") give the poem a meditative, incantatory rhythm.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Count to: <strong>twelve</strong> (suggestion of a clock — suspending time).</li>
+          <li>Neruda's clarification: this is <strong>not death</strong> — silence must be living, not lifeless.</li>
+          <li>Earth metaphor: earth is <strong>alive in winter</strong> beneath apparent stillness — seeds and roots wait.</li>
+          <li>Nobel Prize in Literature: <strong>1971</strong>.</li>
+          <li>The poem's central paradox: stillness as action; silence as communication.</li>
+          <li>Tone: <strong>philosophical, pacifist, ecological</strong>.</li>
+          <li>Original language: <strong>Spanish</strong>.</li>
+        </ul>
+      </div>
+
+      <blockquote>"What I want should not be confused with total inactivity. Life is what it is about."<cite>— Pablo Neruda, Keeping Quiet</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>What does the poet mean by "keeping quiet"? Is it the same as doing nothing? Explain.</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>Why does the poet ask everyone to count to twelve? What is the significance of this number?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>How does the image of the earth in winter reinforce the poem's central message?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>What is the pacifist message of the poem? How does Neruda convey it without being preachy?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>Discuss the themes of introspection and ecological consciousness in "Keeping Quiet."</span></div>
+      </div>
+    </div>
+
+    <div class="div">Poem 04</div>
+
+    <!-- PO4 -->
+    <div class="chapter" id="po4">
+      <div class="ch-head">
+        <div class="ch-n">Poem · 04</div>
+        <div class="ch-t">A Thing of Beauty</div>
+        <div class="ch-a">by John Keats</div>
+        <div class="ch-tags"><span class="tag">Romantic Poetry</span><span class="tag">Beauty as Solace</span><span class="tag">Endymion</span><span class="tag">Immortality of Beauty</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Poet</div>
+        <p>John Keats (1795–1821) was one of the greatest English Romantic poets. His work is characterised by sensuous imagery, a profound engagement with beauty and mortality, and what he called "negative capability" — the capacity to remain in uncertainty without irritably reaching after fact. "A Thing of Beauty" is the opening passage of <em>Endymion</em> (1818), a mythological narrative poem based on the Greek myth of Endymion, the shepherd beloved of Selene (the moon).</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Line-by-Line Analysis</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Lines 1–5 (The Opening Declaration)</div><p><strong>"A thing of beauty is a joy forever."</strong> This immortal opening declares that beauty is not temporary — it creates a "bower of quietness" in the mind. Its loveliness increases over time; it never passes into nothingness. Beauty is an inexhaustible source of psychic sustenance.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Lines 6–13 (The Burden of Life)</div><p>The poet acknowledges human suffering — the "despondence," "the unhealthy and over-darkened ways," the "gloomy days" — and says that beautiful things are our shelter, our "sleep full of sweet dreams" that helps us endure.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Lines 14–22 (Sources of Beauty)</div><p>Keats lists sources of beauty: the sun, the moon, trees, daffodils, clear streams, the heath, the musk-rose — nature's unceasing gifts. He also includes the "grandeur of dooms" (noble deaths in battle) and the tales of old poets as sources of beauty that transcend time.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Lines 23–33 (The Immortal Draught)</div><p>All beautiful things are a "moving image of eternity" — they are earthly manifestations of divine, eternal beauty. The poet calls them an "endless fountain" of "immortal drink" poured to us from heaven. The poem ends in transcendence: beauty connects the mortal to the immortal.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Literary Devices</div>
+        <ul class="nl">
+          <li><strong>Metaphor</strong> — beauty as a "bower of quietness," "sleep full of sweet dreams," "immortal drink" — consistently materialized as shelter, nourishment, rest.</li>
+          <li><strong>Imagery</strong> — richly sensuous: sun, moon, daffodils, musk-rose in bloom, clear rills. Keats piles beauty upon beauty.</li>
+          <li><strong>Alliteration</strong> — "bower of bliss," "sweet dreams, and health, and quiet breathing" — musical, smooth sounds enact the beauty being described.</li>
+          <li><strong>Personification</strong> — nature's elements are vitalised; trees "branchwards cast" shade specifically for us, as if on our behalf.</li>
+          <li><strong>Intertextuality</strong> — references to Greek myth (Endymion) and "old poets" connect this poem to a lineage of human beauty-making.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Opening line: <strong>"A thing of beauty is a joy forever."</strong></li>
+          <li>Source poem: opening lines of <em><strong>Endymion</strong></em> (1818).</li>
+          <li>Objects of beauty mentioned: <strong>sun, moon, trees, daffodils, clear rills, musk-rose, old tales of heroic men.</strong></li>
+          <li>Beauty described as: <strong>"endless fountain of immortal drink / Poured unto us from the heaven's brink."</strong></li>
+          <li>What beauty does: removes the "pall from our dark spirits" — it lifts despondence.</li>
+          <li>Key idea: beauty is not just pleasure — it is a <strong>spiritual and moral necessity</strong> that keeps humanity alive.</li>
+          <li>Tone: <strong>meditative, reverential, Romantic</strong>.</li>
+        </ul>
+      </div>
+
+      <blockquote>"A thing of beauty is a joy forever: / Its loveliness increases; it will never / Pass into nothingness."<cite>— John Keats, Endymion</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>What does Keats mean when he says "a thing of beauty is a joy forever"? How does beauty provide a shelter?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>List the sources of beauty mentioned in the poem. What do they have in common?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>How does Keats connect earthly beauty to the divine or immortal?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>What is the central theme of the poem? How does Keats use imagery to develop it?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>Write a critical appreciation of "A Thing of Beauty" focussing on its Romantic characteristics.</span></div>
+      </div>
+    </div>
+
+    <div class="div">Poem 05</div>
+
+    <!-- PO5 -->
+    <div class="chapter" id="po5">
+      <div class="ch-head">
+        <div class="ch-n">Poem · 05</div>
+        <div class="ch-t">A Roadside Stand</div>
+        <div class="ch-a">by Robert Frost</div>
+        <div class="ch-tags"><span class="tag">Social Critique</span><span class="tag">Rural Poverty</span><span class="tag">Modernisation</span><span class="tag">Irony</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Poet</div>
+        <p>Robert Frost (1874–1963) is one of America's most celebrated poets, known for poems set in rural New England that use plain speech and apparently simple observation to explore deep philosophical and social questions. "A Roadside Stand" combines Frost's characteristic pastoral setting with a biting commentary on the condescension of urban "progress" toward rural communities.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Summary and Analysis</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">The Stand</div><p>Rural people have set up a small roadside stall — selling berries, squash, or farm produce — hoping to intercept passing motorists. They have painted an unskilled sign offering "wild berries" and the stand's existence is a quiet, dignified appeal for a share of the city's money that "flows by" on the highway.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Cars' Indifference</div><p>The cars whiz by. Some stop — but only to ask trivial directions, not to buy. Others complain that the roadside stand spoils the beauty of the landscape. These responses are an ironic embodiment of urban indifference to rural need: the poor are judged as aesthetically inconvenient.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Dream of City Life</div><p>The rural folk have absorbed city images through movies and news — they dream of the "polished traffic" and comforts of city life. But these are hollow dreams deliberately manufactured by those who exploit rural labour without truly sharing city prosperity with them.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Poet's Anguish</div><p>Frost confesses he feels such compassion for these people that he could cry — yet he must restrain his "heart-sore" feelings. He questions the nature of progress: those who claim to help the rural poor (the "pitiful kin") often "take them in tow" to a life in "villages the folk would not have chosen for themselves."</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>Exploitation and exclusion of the rural poor.</strong> The motorists and the system they represent benefit from rural labour but share nothing. Progress bypasses the countryside.</li>
+          <li><strong>Irony of "help."</strong> Those who propose to help the poor — welfare planners, government schemes — often displace and disempower them rather than genuinely enriching their lives.</li>
+          <li><strong>The aestheticisation of poverty.</strong> City dwellers who complain that the roadside stand spoils the view are revealed as morally blind — they see landscape, not people.</li>
+          <li><strong>The poet's painful empathy.</strong> Frost himself is conflicted — he feels the injustice but is also part of the urban world that drives by. His "heart-sore" is a recognition of complicity.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>The stand sells: <strong>berries, squash, farm produce</strong>.</li>
+          <li>Motorists' reactions: <strong>drive past, complain the stand spoils the view, stop only to ask directions</strong>.</li>
+          <li>The rural people's dream: city comforts glimpsed through <strong>movies and news</strong>.</li>
+          <li>Frost's emotional state: <strong>"heart-sore"</strong> — compassion he must restrain.</li>
+          <li>Critique of "helpers": those who take rural people "in tow" to unsuitable city lives.</li>
+          <li>Key irony: the people who claim to want the beauty of the countryside are the ones indifferent to the people who live there.</li>
+          <li>Tone: <strong>sympathetic, ironic, quietly angry</strong>.</li>
+        </ul>
+      </div>
+
+      <blockquote>"It would not be fair to say for a dole of bread, / But for some of the money, the cash, whose flow supports / The flower of cities from sinking and withering faint."<cite>— Robert Frost, A Roadside Stand</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>What is the roadside stand a symbol of? What do the rural people hope for from the passing cars?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>How do the city-dwellers respond to the roadside stand? What does their response reveal about urban attitudes?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>What is Frost's critique of those who claim to "help" the rural poor?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>Discuss the theme of rural-urban divide in the poem.</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>What does the phrase "heart-sore" suggest about the poet's feelings?</span></div>
+      </div>
+    </div>
+
+    <div class="div">Poem 06</div>
+
+    <!-- PO6 -->
+    <div class="chapter" id="po6">
+      <div class="ch-head">
+        <div class="ch-n">Poem · 06</div>
+        <div class="ch-t">Aunt Jennifer's Tigers</div>
+        <div class="ch-a">by Adrienne Rich</div>
+        <div class="ch-tags"><span class="tag">Feminist Poetry</span><span class="tag">Oppression &amp; Freedom</span><span class="tag">Art as Resistance</span><span class="tag">Patriarchy</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Poet</div>
+        <p>Adrienne Rich (1929–2012) was one of America's most influential feminist poets and essayists. Her poetry charts the evolution from conventional, restrained verse to openly political, feminist writing. "Aunt Jennifer's Tigers" (1951) is an early poem that uses a quiet domestic image — a woman embroidering tigers — to explore the suppression of female identity within marriage and patriarchy.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Stanza-by-Stanza Analysis</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Stanza 1 — The Tigers</div><p>Aunt Jennifer's embroidered tigers "prance across a screen" — vivid, fearless, unimpeded. They are <strong>"chivalric certainty"</strong> — they do not fear men. The word "chivalric" is significant: these tigers occupy the world of confident, dignified strength that Aunt Jennifer herself cannot access.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Stanza 2 — The Needle</div><p>Aunt Jennifer's fingers tremble with difficulty as she works. The needle is described as heavy. The "massive weight of Uncle's wedding band" sits on her hand — an image of the oppressive institution of marriage. The ring is not merely a symbol of love but of constraint and obligation that weighs her down.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Stanza 3 — After Death</div><p>Even when Aunt Jennifer dies, "her terrified hands will lie / Still ringed with ordeals she was mastered by." She will not be free even in death — the constraints of patriarchy will mark her forever. But her tigers <strong>will go on prancing</strong>. The art outlasts its creator; the tigers achieve what Aunt Jennifer could not: immortal, fearless freedom.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>Patriarchal oppression.</strong> Aunt Jennifer is trapped in a marriage that diminishes her. The "Uncle's wedding band" is a symbol of the power men hold over women — not just physically but psychologically.</li>
+          <li><strong>Art as resistance and escape.</strong> The tigers are the unconscious expression of all that Aunt Jennifer cannot be in life — powerful, fearless, free. Her embroidery is an act of silent resistance even she may not fully understand.</li>
+          <li><strong>The gap between aspiration and reality.</strong> The tigers are everything she is not. This contrast — between the confident tigers and the trembling fingers that create them — is the poem's central tension.</li>
+          <li><strong>Immortality of art.</strong> Even after Aunt Jennifer's death, her tigers prance on. The artwork outlives the artist's suffering, carrying within it her suppressed desires.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Literary Devices</div>
+        <ul class="nl">
+          <li><strong>Symbolism</strong> — tigers = freedom, fearlessness, power; wedding ring = patriarchal constraint, oppression; needle = the domestic sphere that confines Aunt Jennifer.</li>
+          <li><strong>Contrast / juxtaposition</strong> — the prancing tigers vs. Aunt Jennifer's terrified, trembling hands. Art and life in direct opposition.</li>
+          <li><strong>Imagery</strong> — "fingers fluttering through her wool," "massive weight of Uncle's wedding band," tigers "bright topaz denizens of a world of green" — each image layers meaning.</li>
+          <li><strong>Alliteration</strong> — "prance proudly," "fingers fluttering" — both sonic and semantic: confidence vs. fragility.</li>
+          <li><strong>Irony</strong> — Aunt Jennifer creates images of power she herself cannot embody. The creator is enslaved; the creation is free.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Tigers' qualities: <strong>bright, fearless, chivalric, prancing</strong>.</li>
+          <li>Tigers' setting: <strong>"world of green"</strong> — vibrant, free.</li>
+          <li>Symbol of marriage: <strong>"Uncle's wedding band"</strong> — heavy, oppressive.</li>
+          <li>Aunt Jennifer's fingers: <strong>fluttering, trembling</strong> — contrast with tigers' confidence.</li>
+          <li>After death: hands will be <strong>"ringed with ordeals she was mastered by."</strong></li>
+          <li>Tigers after death: <strong>"will go on prancing, proud and unafraid."</strong></li>
+          <li>Poem written in: <strong>1951</strong> (Rich's early period).</li>
+          <li>Central tension: <strong>artist's oppression vs. artwork's freedom</strong>.</li>
+        </ul>
+      </div>
+
+      <blockquote>"When Aunt is dead, her terrified hands will lie / Still ringed with ordeals she was mastered by. / The tigers in the panel that she made / Will go on prancing, proud and unafraid."<cite>— Adrienne Rich</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>What do the tigers in the poem symbolise? How are they different from Aunt Jennifer?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>What does "Uncle's wedding band" represent? How does it function as a symbol of patriarchy?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>How does Adrienne Rich use contrast and juxtaposition to develop the poem's central theme?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>What is the significance of the fact that the tigers will continue to prance even after Aunt Jennifer dies?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>Discuss the theme of art as resistance in "Aunt Jennifer's Tigers."</span></div>
+        <div class="eq"><span class="eq-n">Q6</span><span>Write a critical appreciation of the poem, discussing how Rich explores female oppression within marriage.</span></div>
+      </div>
+    </div>
+
+    <div class="div">end</div>
+    <p style="font-size:10px;color:var(--dim);text-align:center;padding-bottom:24px;letter-spacing:.08em;">CBSE Class XII · English Core · Flamingo</p>
+
+  </div>
+</div>
+
+<script>
+// Progress
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+  document.getElementById('prog').style.transform = `scaleX(${pct})`;
+  updateNav();
+}, { passive: true });
+
+function go(id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+
+function updateNav() {
+  let cur = '';
+  document.querySelectorAll('.chapter').forEach(c => { if (c.getBoundingClientRect().top <= 80) cur = c.id; });
+  document.querySelectorAll('.nav-a[onclick]').forEach(a => {
+    a.classList.toggle('on', cur && a.getAttribute('onclick').includes(cur));
+  });
+}
+
+// Highlight bar
+let sel = null;
+const hlb = document.getElementById('hlb');
+
+document.getElementById('content').addEventListener('mouseup', () => {
+  const s = window.getSelection();
+  if (!s || s.isCollapsed || !s.rangeCount) return;
+  const r = s.getRangeAt(0);
+  if (r.toString().trim().length < 2) return;
+  sel = r.cloneRange();
+  const rect = r.getBoundingClientRect();
+  hlb.style.display = 'flex';
+  hlb.style.left = Math.max(8, rect.left + rect.width/2 - 88) + 'px';
+  hlb.style.top = (rect.top + window.scrollY - 44) + 'px';
+});
+
+document.addEventListener('mousedown', e => { if (!hlb.contains(e.target)) hlb.style.display = ''; });
+
+document.querySelectorAll('.hlb-btn[data-c]').forEach(b => b.addEventListener('click', () => applyHL()));
+
+function applyHL() {
+  if (!sel) return;
+  const span = document.createElement('span');
+  span.className = 'hl';
+  try { sel.surroundContents(span); }
+  catch { const f = sel.extractContents(); span.appendChild(f); sel.insertNode(span); }
+  window.getSelection().removeAllRanges();
+  hlb.style.display = ''; sel = null;
+}
+
+document.getElementById('hx').addEventListener('click', () => { hlb.style.display = ''; sel = null; window.getSelection().removeAllRanges(); });
+
+function clearHL() {
+  document.querySelectorAll('.hl').forEach(el => {
+    while (el.firstChild) el.parentNode.insertBefore(el.firstChild, el);
+    el.remove();
+  });
+}
+
+// Annotations
+let anns = JSON.parse(localStorage.getItem('fl_ann') || '[]');
+let apOpen = false;
+
+document.getElementById('hln').addEventListener('click', () => {
+  if (!sel) return;
+  const txt = sel.toString().trim().slice(0, 100);
+  const rect = sel.getBoundingClientRect();
+  hlb.style.display = ''; window.getSelection().removeAllRanges(); sel = null;
+  const d = document.createElement('div');
+  d.className = 'apop';
+  d.style.cssText = `top:${rect.bottom + window.scrollY + 10}px;left:${Math.max(8, Math.min(rect.left, window.innerWidth-240))}px`;
+  d.innerHTML = `<div style="font-size:10.5px;color:var(--dim);font-style:italic;margin-bottom:6px;line-height:1.4">"${txt.slice(0,80)}${txt.length>80?'…':''}"</div><textarea id="ann-ta" placeholder="Your note…"></textarea><div class="apop-btns"><button class="b-save" onclick="saveAnn('${CSS.escape(txt)}',this)">Save</button><button class="b-cancel" onclick="this.closest('.apop').remove()">Cancel</button></div>`;
+  document.body.appendChild(d);
+  d.querySelector('textarea').focus();
+});
+
+function saveAnn(txt, btn) {
+  const n = document.getElementById('ann-ta').value.trim();
+  if (!n) return;
+  anns.push({ id: Date.now(), txt: txt.slice(0,80), note: n, date: new Date().toLocaleDateString() });
+  localStorage.setItem('fl_ann', JSON.stringify(anns));
+  btn.closest('.apop').remove();
+  renderAnns();
+  if (!apOpen) toggleAP();
+}
+
+function renderAnns() {
+  const list = document.getElementById('a-list');
+  const empty = document.getElementById('a-empty');
+  empty.style.display = anns.length ? 'none' : '';
+  list.innerHTML = anns.map(a => `<div class="ai"><div class="ai-q">"${a.txt}…"</div><div class="ai-n">${a.note}</div><div class="ai-m"><span>${a.date}</span><button class="ai-d" onclick="delAnn(${a.id})">remove</button></div></div>`).join('');
+}
+
+function delAnn(id) {
+  anns = anns.filter(a => a.id !== id);
+  localStorage.setItem('fl_ann', JSON.stringify(anns));
+  renderAnns();
+}
+
+function toggleAP() {
+  apOpen = !apOpen;
+  const p = document.getElementById('ap');
+  p.classList.toggle('open', apOpen);
+  if (apOpen) renderAnns();
+}
+
+// Search
+let sr = [], si2 = 0;
+function doSearch(q) {
+  document.querySelectorAll('mark.sh').forEach(m => m.replaceWith(m.textContent));
+  sr = []; si2 = 0; document.getElementById('sc').textContent = '';
+  if (!q || q.length < 2) return;
+  const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi');
+  const nodes = [];
+  const walk = document.createTreeWalker(document.getElementById('content'), NodeFilter.SHOW_TEXT);
+  let n;
+  while (n = walk.nextNode()) {
+    if (['SCRIPT','STYLE'].includes(n.parentElement.tagName)) continue;
+    if (re.test(n.textContent)) nodes.push(n); re.lastIndex = 0;
+  }
+  nodes.forEach(node => {
+    const frag = document.createDocumentFragment(); let last = 0, m;
+    re.lastIndex = 0;
+    while ((m = re.exec(node.textContent)) !== null) {
+      frag.appendChild(document.createTextNode(node.textContent.slice(last, m.index)));
+      const mk = document.createElement('mark'); mk.className = 'sh'; mk.textContent = m[0];
+      frag.appendChild(mk); sr.push(mk); last = m.index + m[0].length;
+    }
+    frag.appendChild(document.createTextNode(node.textContent.slice(last)));
+    node.parentNode.replaceChild(frag, node);
+  });
+  document.getElementById('sc').textContent = sr.length || '';
+  if (sr.length) scrollToR();
+}
+document.getElementById('si').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && sr.length) { si2 = (si2+1)%sr.length; scrollToR(); }
+});
+function scrollToR() {
+  sr.forEach((m,i) => m.classList.toggle('cur', i===si2));
+  sr[si2]?.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+// Theme
+const DARKS = ['dark','gruvbox','nord','solarized-dark','dracula','one-dark'];
+const L2D = { 'default':'dark', 'gruvbox-light':'gruvbox', 'solarized':'solarized-dark' };
+const D2L = { 'dark':'default', 'gruvbox':'gruvbox-light', 'solarized-dark':'solarized' };
+let scheme = localStorage.getItem('fl_scheme') || 'default';
+
+function applyS(s) {
+  scheme = s;
+  document.documentElement.setAttribute('data-theme', s === 'default' ? '' : s);
+  if (s === 'default') document.documentElement.removeAttribute('data-theme');
+  const dk = DARKS.includes(s);
+  document.getElementById('ld').classList.toggle('on', dk);
+  document.querySelectorAll('.sc-btn').forEach(b => b.classList.toggle('on', b.dataset.s === s));
+  localStorage.setItem('fl_scheme', s);
+}
+
+function setS(s) { applyS(s); }
+function toggleDark() { applyS(DARKS.includes(scheme) ? (D2L[scheme] || 'default') : (L2D[scheme] || 'dark')); }
+
+// Init
+applyS(scheme);
+renderAnns();
+updateNav();
+</script>
+</body>
+</html>

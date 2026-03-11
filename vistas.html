@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBSE Class 12 — Vistas Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Themes ─────────────────────────────────── */
+:root {
+  --bg:    #fafafa;
+  --fg:    #1c1c1c;
+  --mid:   #525252;
+  --dim:   #9a9a9a;
+  --line:  #e2e2e2;
+  --surf:  #f2f2f2;
+  --sw:    220px;
+}
+[data-theme="dark"] {
+  --bg:    #141414;
+  --fg:    #d6d6d6;
+  --mid:   #8a8a8a;
+  --dim:   #4a4a4a;
+  --line:  #282828;
+  --surf:  #1d1d1d;
+}
+[data-theme="gruvbox"] {
+  --bg:    #282828;
+  --fg:    #ebdbb2;
+  --mid:   #a89984;
+  --dim:   #665c54;
+  --line:  #3c3836;
+  --surf:  #32302f;
+}
+[data-theme="gruvbox-light"] {
+  --bg:    #f9f5d7;
+  --fg:    #3c3836;
+  --mid:   #7c6f64;
+  --dim:   #b8a99a;
+  --line:  #d5c4a1;
+  --surf:  #f0e8c2;
+}
+[data-theme="nord"] {
+  --bg:    #2e3440;
+  --fg:    #d8dee9;
+  --mid:   #7b88a1;
+  --dim:   #4c566a;
+  --line:  #3b4252;
+  --surf:  #353c4a;
+}
+[data-theme="solarized"] {
+  --bg:    #fdf6e3;
+  --fg:    #586e75;
+  --mid:   #839496;
+  --dim:   #b8c2bd;
+  --line:  #e8e2cc;
+  --surf:  #eee8d5;
+}
+[data-theme="solarized-dark"] {
+  --bg:    #002b36;
+  --fg:    #93a1a1;
+  --mid:   #657b83;
+  --dim:   #284e59;
+  --line:  #0d3c47;
+  --surf:  #073642;
+}
+[data-theme="dracula"] {
+  --bg:    #282a36;
+  --fg:    #f8f8f2;
+  --mid:   #9299b8;
+  --dim:   #44475a;
+  --line:  #383a4a;
+  --surf:  #313341;
+}
+[data-theme="one-dark"] {
+  --bg:    #1e2127;
+  --fg:    #abb2bf;
+  --mid:   #7a8194;
+  --dim:   #3e4451;
+  --line:  #292d35;
+  --surf:  #252930;
+}
+
+/* ── Base ───────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--bg); color: var(--fg);
+  display: flex; min-height: 100vh;
+  font-size: 15px; line-height: 1.7;
+  transition: background .2s, color .2s;
+}
+
+/* ── Sidebar ─────────────────────────────────── */
+#sidebar {
+  position: fixed; top: 0; left: 0;
+  width: var(--sw); height: 100vh;
+  background: var(--bg); border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; overflow-y: auto;
+  z-index: 100; transition: transform .22s ease;
+}
+.sb-head { padding: 22px 16px 16px; border-bottom: 1px solid var(--line); }
+.sb-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 7px;
+}
+.sb-head h2 { font-size: 13px; font-weight: 400; color: var(--fg); line-height: 1.4; }
+.sb-sec { padding: 8px 0 6px; border-bottom: 1px solid var(--line); }
+.sb-sec-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--dim); padding: 0 16px 5px; display: block;
+}
+.nav-a {
+  display: block; padding: 4px 16px;
+  font-size: 12px; color: var(--mid); cursor: pointer;
+  border-left: 1.5px solid transparent;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: color .1s, background .1s, border-color .1s;
+}
+.nav-a small { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); display: block; margin-top: 1px; white-space: normal; }
+.nav-a:hover { color: var(--fg); background: var(--surf); }
+.nav-a.on  { color: var(--fg); border-left-color: var(--fg); }
+
+/* Appearance panel */
+.theme-panel { padding: 12px 16px 20px; margin-top: auto; border-top: 1px solid var(--line); }
+.ld-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.ld-row span { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); }
+.tog {
+  width: 28px; height: 15px; border-radius: 15px;
+  background: var(--line); cursor: pointer; position: relative;
+  border: none; padding: 0; flex-shrink: 0; transition: background .18s;
+}
+.tog.on { background: var(--mid); }
+.tog::after {
+  content: ''; position: absolute; top: 2px; left: 2px;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--bg); transition: transform .18s;
+}
+.tog.on::after { transform: translateX(13px); }
+.sc-list { display: flex; flex-direction: column; }
+.sc-btn {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 3px 5px; border: none; background: none; border-radius: 2px;
+  cursor: pointer; font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; color: var(--dim); transition: color .1s, background .1s;
+}
+.sc-btn:hover { color: var(--mid); background: var(--surf); }
+.sc-btn.on { color: var(--fg); background: var(--surf); }
+.sc-check { opacity: 0; font-size: 9px; }
+.sc-btn.on .sc-check { opacity: 1; }
+
+/* ── Progress ─────────────────────────────────── */
+#prog {
+  position: fixed; top: 0; left: var(--sw); right: 0; height: 1px;
+  background: var(--dim); transform-origin: left; transform: scaleX(0);
+  z-index: 300; transition: transform .07s linear;
+}
+
+/* ── Topbar ───────────────────────────────────── */
+#topbar {
+  position: sticky; top: 0; background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  padding: 0 40px; height: 42px;
+  display: flex; align-items: center; justify-content: space-between;
+  z-index: 50; transition: background .2s;
+}
+.tb-l { display: flex; align-items: center; gap: 10px; }
+.breadcrumb { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--dim); }
+#menu-btn {
+  display: none; flex-direction: column; align-items: center;
+  justify-content: center; gap: 3px; width: 26px; height: 26px;
+  cursor: pointer; background: none; border: none;
+}
+#menu-btn span { display: block; width: 14px; height: 1px; background: var(--dim); }
+#si {
+  width: 130px; padding: 3px 8px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  background: var(--surf); border: 1px solid var(--line);
+  border-radius: 2px; color: var(--fg); outline: none;
+  transition: width .15s, border-color .1s;
+}
+#si:focus { width: 170px; border-color: var(--dim); }
+#si::placeholder { color: var(--dim); }
+#sc { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--dim); margin-left: 4px; }
+
+/* ── Layout ───────────────────────────────────── */
+#main { margin-left: var(--sw); flex: 1; min-width: 0; }
+#content { padding: 52px 56px 110px; max-width: 700px; }
+
+/* ── Hero ─────────────────────────────────────── */
+.hero { margin-bottom: 52px; padding-bottom: 36px; border-bottom: 1px solid var(--line); }
+.hero-eye { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--dim); margin-bottom: 14px; }
+.hero h1 { font-size: 28px; font-weight: 300; line-height: 1.2; color: var(--fg); margin-bottom: 10px; }
+.hero h1 em { font-style: italic; font-weight: 300; }
+.hero .deck { font-size: 14px; color: var(--mid); line-height: 1.75; font-weight: 300; }
+.toc { margin-top: 24px; }
+.toc-row { display: flex; align-items: baseline; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.toc-row:last-child { border-bottom: none; }
+.toc-row:hover .toc-t { color: var(--fg); }
+.toc-n { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); min-width: 18px; }
+.toc-t { font-size: 13px; color: var(--mid); flex: 1; transition: color .1s; }
+.toc-a { font-size: 11px; color: var(--dim); font-style: italic; }
+
+/* ── Chapter ──────────────────────────────────── */
+.chapter { margin-bottom: 80px; scroll-margin-top: 52px; }
+.ch-head { margin-bottom: 24px; }
+.ch-n { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--dim); margin-bottom: 5px; }
+.ch-t { font-size: 22px; font-weight: 400; color: var(--fg); line-height: 1.25; margin-bottom: 2px; }
+.ch-a { font-size: 12px; color: var(--dim); font-style: italic; margin-bottom: 12px; }
+.ch-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.tag { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; padding: 1px 6px; border: 1px solid var(--line); color: var(--dim); }
+hr.rule { border: none; border-top: 1px solid var(--line); margin: 22px 0; }
+
+/* ── Sections ─────────────────────────────────── */
+.sec { margin-bottom: 28px; }
+.sec-t {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 14px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--line);
+}
+p { font-size: 14px; color: var(--mid); line-height: 1.85; margin-bottom: 10px; font-weight: 300; }
+p strong { color: var(--fg); font-weight: 500; }
+p em { font-style: italic; }
+
+/* ── Blockquote ───────────────────────────────── */
+blockquote {
+  margin: 20px 0; padding: 0 0 0 16px;
+  border-left: 1px solid var(--line);
+  font-style: italic; font-size: 14px; font-weight: 300;
+  color: var(--mid); line-height: 1.8;
+}
+blockquote cite {
+  display: block; margin-top: 8px;
+  font-family: 'JetBrains Mono', monospace; font-style: normal;
+  font-size: 9px; color: var(--dim);
+}
+
+/* ── Lists ────────────────────────────────────── */
+ul.nl, ol.nl { padding: 0; list-style: none; }
+ul.nl li, ol.nl li {
+  font-size: 14px; color: var(--mid); line-height: 1.8; font-weight: 300;
+  padding: 6px 0 6px 16px; position: relative;
+  border-bottom: 1px solid var(--line);
+}
+ul.nl li:last-child, ol.nl li:last-child { border-bottom: none; }
+ul.nl li::before { content: '–'; position: absolute; left: 0; color: var(--line); }
+ol.nl { counter-reset: c; }
+ol.nl li { counter-increment: c; }
+ol.nl li::before { content: counter(c); position: absolute; left: 0; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); top: 8px; }
+ul.nl li strong, ol.nl li strong { color: var(--fg); font-weight: 500; }
+
+/* ── Timeline ─────────────────────────────────── */
+.tl { border-left: 1px solid var(--line); padding-left: 18px; }
+.tl-i { position: relative; margin-bottom: 18px; }
+.tl-i::before { content: ''; position: absolute; left: -22px; top: 6px; width: 5px; height: 5px; background: var(--bg); border: 1px solid var(--line); }
+.tl-lbl { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-bottom: 3px; }
+.tl-i p { margin-bottom: 0; }
+
+/* ── Character grid ───────────────────────────── */
+.cg { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); gap: 1px; background: var(--line); overflow: hidden; }
+.cc { padding: 12px 14px; background: var(--bg); }
+.cc-n { font-size: 13px; font-weight: 500; color: var(--fg); margin-bottom: 3px; }
+.cc-d { font-size: 12px; color: var(--mid); line-height: 1.6; font-weight: 300; }
+
+/* ── Fact box ─────────────────────────────────── */
+.fb { margin: 18px 0; border: 1px solid var(--line); overflow: hidden; }
+.fb-h { padding: 5px 12px; background: var(--surf); font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); border-bottom: 1px solid var(--line); }
+.fb-b li { font-size: 13px; color: var(--mid); line-height: 1.7; padding: 5px 12px; border-bottom: 1px solid var(--line); list-style: none; font-weight: 300; }
+.fb-b li:last-child { border-bottom: none; }
+.fb-b li strong { color: var(--fg); font-weight: 500; }
+
+/* ── Exam questions ───────────────────────────── */
+.eq-block { margin: 22px 0; }
+.eq { display: flex; gap: 12px; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--mid); line-height: 1.65; font-weight: 300; }
+.eq:last-child { border-bottom: none; }
+.eq-n { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); flex-shrink: 0; min-width: 18px; }
+
+/* ── Compare table ────────────────────────────── */
+.ct { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 12px 0; }
+.ct th { padding: 6px 10px; text-align: left; background: var(--surf); font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); border: 1px solid var(--line); }
+.ct td { padding: 8px 10px; border: 1px solid var(--line); color: var(--mid); line-height: 1.55; vertical-align: top; font-weight: 300; }
+.ct td strong { color: var(--fg); font-weight: 500; }
+
+/* ── Divider ──────────────────────────────────── */
+.div { margin: 56px 0; display: flex; align-items: center; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 8.5px; color: var(--line); letter-spacing: .08em; text-transform: uppercase; }
+.div::before, .div::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+/* ── Search ───────────────────────────────────── */
+mark { background: none; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; color: inherit; }
+mark.cur { background: var(--surf); }
+
+/* ── Highlight ────────────────────────────────── */
+.hl { background: var(--surf); }
+
+/* ── Highlight bar ────────────────────────────── */
+#hlb {
+  display: none; position: fixed; z-index: 600;
+  background: var(--fg); padding: 5px 8px; gap: 6px; align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,.2);
+}
+.hlb-btn {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: rgba(255,255,255,.5); background: none;
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 2px 7px; cursor: pointer; transition: color .1s;
+}
+.hlb-btn:hover { color: rgba(255,255,255,.9); border-color: rgba(255,255,255,.3); }
+.hsep { width: 1px; height: 12px; background: rgba(255,255,255,.1); }
+
+/* ── Annotation panel ─────────────────────────── */
+#ap {
+  position: fixed; right: 0; top: 0; bottom: 0; width: 252px;
+  background: var(--bg); border-left: 1px solid var(--line);
+  padding: 20px 16px; overflow-y: auto; z-index: 90;
+  transform: translateX(100%); display: flex; flex-direction: column; gap: 8px;
+  transition: transform .2s ease;
+}
+#ap.open { transform: translateX(0); }
+#ap h3 { font-size: 14px; font-weight: 400; color: var(--fg); padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.ai { padding: 9px 11px; border: 1px solid var(--line); font-size: 12px; }
+.ai-q { font-style: italic; color: var(--dim); font-size: 10.5px; margin-bottom: 4px; }
+.ai-n { color: var(--mid); line-height: 1.55; font-weight: 300; }
+.ai-m { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--dim); margin-top: 4px; display: flex; justify-content: space-between; }
+.ai-d { background: none; border: none; color: var(--dim); cursor: pointer; }
+.ai-d:hover { color: var(--fg); }
+#a-empty { font-size: 12px; color: var(--dim); font-style: italic; }
+
+/* Annotation popup */
+.apop { position: fixed; z-index: 700; background: var(--bg); border: 1px solid var(--line); padding: 9px 11px; width: 210px; box-shadow: 0 3px 14px rgba(0,0,0,.12); }
+.apop textarea { width: 100%; min-height: 60px; padding: 4px 6px; background: var(--surf); border: 1px solid var(--line); color: var(--fg); font-family: 'Source Serif 4', serif; font-size: 12px; resize: vertical; outline: none; }
+.apop-btns { display: flex; gap: 4px; margin-top: 5px; }
+.apop-btns button { padding: 3px 9px; font-size: 10px; cursor: pointer; font-family: 'JetBrains Mono', monospace; border-radius: 1px; }
+.b-save { background: var(--fg); color: var(--bg); border: 1px solid var(--fg); }
+.b-cancel { background: none; color: var(--dim); border: 1px solid var(--line); }
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width: 680px) {
+  :root { --sw: 0px; }
+  #sidebar { width: 220px; transform: translateX(-220px); }
+  #sidebar.open { transform: translateX(0); }
+  #main { margin-left: 0; }
+  #content { padding: 32px 18px 80px; }
+  #topbar { padding: 0 14px 0 8px; }
+  #menu-btn { display: flex; }
+  .cg { grid-template-columns: 1fr; }
+}
+@media print {
+  #sidebar, #topbar, #hlb, #ap, #prog { display: none !important; }
+  #main { margin-left: 0; }
+  #content { padding: 12px; max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- Highlight bar -->
+<div id="hlb">
+  <button class="hlb-btn" data-c="hl">highlight</button>
+  <div class="hsep"></div>
+  <button class="hlb-btn" id="hln">+ note</button>
+  <div class="hsep"></div>
+  <button class="hlb-btn" id="hx">clear</button>
+</div>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <div class="sb-head">
+    <div class="sb-label">CBSE · Class XII · Vistas</div>
+    <h2>English Core<br>Study Notes</h2>
+  </div>
+
+  <div class="sb-sec">
+    <span class="sb-sec-lbl">Chapters</span>
+    <a class="nav-a" onclick="go('ch1')">The Third Level <small>Jack Finney</small></a>
+    <a class="nav-a" onclick="go('ch2')">The Tiger King <small>Kalki</small></a>
+    <a class="nav-a" onclick="go('ch3')">Journey to the End of the Earth <small>Tishani Doshi</small></a>
+    <a class="nav-a" onclick="go('ch4')">The Enemy <small>Pearl S. Buck</small></a>
+    <a class="nav-a" onclick="go('ch5')">On the Face of It <small>Susan Hill</small></a>
+    <a class="nav-a" onclick="go('ch6')">Memories of Childhood <small>Zitkala-Sa &amp; Bama</small></a>
+  </div>
+
+  <div class="sb-sec">
+    <span class="sb-sec-lbl">Tools</span>
+    <a class="nav-a" onclick="toggleAP()">Annotations</a>
+    <a class="nav-a" onclick="clearHL()">Clear highlights</a>
+    <a class="nav-a" onclick="window.print()">Print / PDF</a>
+  </div>
+
+  <div class="theme-panel">
+    <div class="sb-label">Appearance</div>
+    <div class="ld-row">
+      <span>Light / Dark</span>
+      <button class="tog" id="ld" onclick="toggleDark()"></button>
+    </div>
+    <div class="sc-list">
+      <button class="sc-btn on" data-s="default"       onclick="setS('default')">Default <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="gruvbox"       onclick="setS('gruvbox')">Gruvbox <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="gruvbox-light" onclick="setS('gruvbox-light')">Gruvbox Light <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="nord"          onclick="setS('nord')">Nord <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="solarized"     onclick="setS('solarized')">Solarized <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="solarized-dark" onclick="setS('solarized-dark')">Solarized Dark <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="dracula"       onclick="setS('dracula')">Dracula <span class="sc-check">✓</span></button>
+      <button class="sc-btn"    data-s="one-dark"      onclick="setS('one-dark')">One Dark <span class="sc-check">✓</span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- Annotations panel -->
+<div id="ap">
+  <h3>Annotations</h3>
+  <div id="a-empty">Select text and click "+ note" to add an annotation.</div>
+  <div id="a-list"></div>
+</div>
+
+<!-- Main -->
+<div id="main">
+  <div id="topbar">
+    <div class="tb-l">
+      <button id="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+      <span class="breadcrumb">Vistas · Prose · All Chapters</span>
+    </div>
+    <div class="tb-r">
+      <input id="si" type="text" placeholder="Search…" oninput="doSearch(this.value)">
+      <span id="sc"></span>
+    </div>
+  </div>
+
+  <div id="content">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-eye">CBSE Class XII · English Core</div>
+      <h1>Complete Study Notes<br><em>Vistas — Prose</em></h1>
+      <p class="deck">All six chapters. In-depth analysis, characters, themes, literary devices, and exam questions.</p>
+      <div class="toc">
+        <div class="toc-row" onclick="go('ch1')"><span class="toc-n">01</span><span class="toc-t">The Third Level</span><span class="toc-a">Jack Finney</span></div>
+        <div class="toc-row" onclick="go('ch2')"><span class="toc-n">02</span><span class="toc-t">The Tiger King</span><span class="toc-a">Kalki</span></div>
+        <div class="toc-row" onclick="go('ch3')"><span class="toc-n">03</span><span class="toc-t">Journey to the End of the Earth</span><span class="toc-a">Tishani Doshi</span></div>
+        <div class="toc-row" onclick="go('ch4')"><span class="toc-n">04</span><span class="toc-t">The Enemy</span><span class="toc-a">Pearl S. Buck</span></div>
+        <div class="toc-row" onclick="go('ch5')"><span class="toc-n">05</span><span class="toc-t">On the Face of It</span><span class="toc-a">Susan Hill</span></div>
+        <div class="toc-row" onclick="go('ch6')"><span class="toc-n">06</span><span class="toc-t">Memories of Childhood</span><span class="toc-a">Zitkala-Sa &amp; Bama</span></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════ CH 1 ══════════════════════════════ -->
+    <div class="chapter" id="ch1">
+      <div class="ch-head">
+        <div class="ch-n">Chapter 01</div>
+        <div class="ch-t">The Third Level</div>
+        <div class="ch-a">by Jack Finney</div>
+        <div class="ch-tags"><span class="tag">Short Story</span><span class="tag">Escapism</span><span class="tag">Fantasy</span><span class="tag">Nostalgia</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Author</div>
+        <p>Jack Finney (1911–1995) was an American author celebrated for science fiction and thrillers. His novel <em>The Body Snatchers</em> (1955) was adapted into several films. Finney was fascinated by time travel and nostalgia — the desire to retreat from an anxious present into an idealised past. "The Third Level" appeared in his 1957 collection and distils this preoccupation into a compact, haunting story.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Plot Summary</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Opening</div><p>Charley, 31, a New Yorker, claims to have found a Third Level at Grand Central Station — which actually has only two underground levels. He says he wandered down a corridor and emerged somewhere else entirely.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Discovery</div><p>Everything on the Third Level is different: gas-lit, lower ceilings, people in 19th-century clothes. A newspaper is dated <strong>June 11, 1894</strong>. The locomotive is a small steam engine.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Ticket</div><p>Charley tries to buy two tickets to Galesburg, Illinois. The ticket agent rejects his modern currency as counterfeit. Frightened, Charley flees back to the present.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Search</div><p>Charley cannot find the Third Level again. He collects old currency (pre-1894 bills). His psychiatrist friend Sam Weiner dismisses the experience as <em>waking-dream wish fulfillment</em>. Louisa is concerned.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Resolution</div><p>Sorting through his grandfather's first-day-cover collection, Charley finds an envelope from Sam Weiner, postmarked <strong>July 18, 1894</strong>, Galesburg. Sam writes that he found the Third Level, acquired old currency, made it there, and bought a hay, feed and grain business. He urges Charley to keep searching.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Characters</div>
+        <div class="cg">
+          <div class="cc"><div class="cc-n">Charley</div><div class="cc-d">Narrator and protagonist. 31-year-old New Yorker, married, stamp-collector. Represents the modern individual crushed by anxiety, longing for simpler times.</div></div>
+          <div class="cc"><div class="cc-n">Louisa</div><div class="cc-d">Charley's wife. Concerned about his mental state. Represents grounded, rational reality.</div></div>
+          <div class="cc"><div class="cc-n">Sam Weiner</div><div class="cc-d">Charley's psychiatrist friend. Dismisses the Third Level as wish fulfillment — yet ironically escapes to 1894 himself, vindicating Charley and undercutting professional scepticism.</div></div>
+          <div class="cc"><div class="cc-n">Grandfather</div><div class="cc-d">Never directly appears. His first-day-cover collection is the mechanism by which Sam's letter from 1894 survives to reach Charley — the story's crucial twist.</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>Escapism.</strong> The Third Level is a metaphor for any form of escape — hobbies, daydreams, nostalgia — from a world of wars, taxes, and anxiety. Galesburg 1894 is an idealised refuge, not a real destination.</li>
+          <li><strong>Nostalgia &amp; selective memory.</strong> Charley romanticises 1894: shady trees, quiet citizens, no Cold War. Nostalgia is always a curated, rosy past that never quite existed.</li>
+          <li><strong>Modern anxiety.</strong> Written in the 1950s Cold War era, the story reflects the psychological weight of post-WWII civilization — bomb scares, political instability, existential insecurity.</li>
+          <li><strong>Fantasy vs. reality / ambiguity.</strong> The story never resolves whether the Third Level is real or imagined. Sam's letter could be a forgery. This deliberate ambiguity is central to the story's effect.</li>
+          <li><strong>Wish fulfillment.</strong> The psychiatric concept Sam diagnoses in Charley is exactly what the story dramatises — and then seemingly fulfils. The irony of Sam naming it and then living it is the story's sharpest point.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Literary Devices</div>
+        <ul class="nl">
+          <li><strong>First-person narration</strong> — intimate, subjective, and potentially unreliable. We only have Charley's word for events.</li>
+          <li><strong>Irony</strong> — Sam, the psychiatrist who pathologises Charley's escape fantasy, is the one who successfully escapes.</li>
+          <li><strong>Symbolism</strong> — Grand Central = modern hectic life. Galesburg 1894 = peaceful idealised past. Stamp-collecting = a hobby as miniature escape.</li>
+          <li><strong>Foreshadowing</strong> — the stamp collection motif sets up the first-day-cover collection and Sam's letter.</li>
+          <li><strong>Ambiguity</strong> — the open ending resists resolution, forcing the reader to decide.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Grand Central actually has <strong>two</strong> underground levels; the story invents a third.</li>
+          <li>Newspaper date on the Third Level: <strong>June 11, 1894</strong>.</li>
+          <li>Destination: <strong>Galesburg, Illinois</strong>.</li>
+          <li>Sam's letter: dated <strong>July 18, 1894</strong>, found in <strong>grandfather's first-day-cover collection</strong>.</li>
+          <li>Sam's business in 1894: <strong>hay, feed and grain</strong>.</li>
+          <li>Charley's hobby: <strong>stamp collecting</strong> — itself an acknowledged form of escape.</li>
+          <li>Sam's term: <strong>"waking-dream wish fulfillment."</strong></li>
+          <li>Charley's bills are called <strong>"phony"</strong> by the ticket agent.</li>
+        </ul>
+      </div>
+
+      <blockquote>"The psychiatrist I see, who is a friend of mine, has suggested that maybe I'm unhappy. That this is my way of escaping from life."<cite>— Charley, the narrator</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>What does the Third Level symbolise? How does it reflect the anxieties of modern life?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>Discuss the irony in "The Third Level" with special reference to Sam Weiner.</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>Is the Third Level real or imagined? Support your answer with evidence from the text.</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>"Stamp collecting is a mild form of escaping from the present." Explain in context.</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>How does Jack Finney use escapism as a central theme? What message does the story carry?</span></div>
+      </div>
+    </div>
+
+    <div class="div">02</div>
+
+    <!-- ══════════════════════════════ CH 2 ══════════════════════════════ -->
+    <div class="chapter" id="ch2">
+      <div class="ch-head">
+        <div class="ch-n">Chapter 02</div>
+        <div class="ch-t">The Tiger King</div>
+        <div class="ch-a">by Kalki (R. Krishnamurthy)</div>
+        <div class="ch-tags"><span class="tag">Satirical Fiction</span><span class="tag">Hubris</span><span class="tag">Fate vs Free Will</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Author</div>
+        <p>Kalki (1899–1954) was a celebrated Tamil writer, journalist, and freedom fighter. His pen name refers to the tenth avatar of Vishnu, symbolising the end of an era. He wrote sharp satirical fiction targeting colonial-era Indian royalty and its absurdities. "The Tiger King" skewers royal vanity, blind obstinacy, and the colonial mindset through dark comedy.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Plot Summary</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">The Prophecy</div><p>The Maharaja of Pratibandapuram is born under an inauspicious star. Astrologers prophesy death from a tiger. The ten-day-old infant declares: "Let tigers beware!" He becomes known as the Tiger King.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Vow</div><p>The Maharaja bans all tiger hunting in his kingdom, reserving the right solely for himself. He aims to kill one hundred tigers to nullify the prophecy.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The British Officer</div><p>A British officer visits, demanding to hunt a tiger for a photograph. The Maharaja refuses, averting the political crisis by sending the officer's wife fifty diamond rings.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Marriage</div><p>After killing 70 tigers in his own state, the supply runs out. He strategically marries a princess from a tiger-rich state and eventually approaches a tally of 99.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The 100th Tiger</div><p>An old, frail tiger is brought before the Maharaja. He fires and misses. The tiger faints from shock. Hunters secretly kill it themselves — it is counted as number 100. The Maharaja believes the prophecy is defeated.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Ironic Death</div><p>The Maharaja buys his son a cheap wooden toy tiger. While playing with it, a sharp splinter pierces his hand. The wound becomes gangrenous, three surgeons operate, and the Maharaja dies — killed at last by a tiger: a toy one.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Characters</div>
+        <div class="cg">
+          <div class="cc"><div class="cc-n">The Tiger King</div><div class="cc-d">Protagonist. His entire life is a futile struggle against destiny. Arrogant, obsessive — represents royal hubris and the absurdity of trying to outwit fate.</div></div>
+          <div class="cc"><div class="cc-n">The Dewan</div><div class="cc-d">The Chief Minister. Pragmatic, clever — arranges the strategic marriage and helps manage the British crisis. Pragmatism in service of absurdity.</div></div>
+          <div class="cc"><div class="cc-n">Von Meck</div><div class="cc-d">British officer who wants to hunt a tiger for a photograph. Represents colonial arrogance. His easy appeasement via diamond rings satirises colonial transactions.</div></div>
+          <div class="cc"><div class="cc-n">The Astrologers</div><div class="cc-d">Deliver the prophecy. Their prediction proves irresistibly, cruelly accurate — just not in the way anyone expected.</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>Fate vs free will.</strong> The Maharaja's every action to defeat destiny actually leads him toward it. His scheme is hollow — he didn't kill the 100th tiger himself. Fate operates with merciless irony.</li>
+          <li><strong>Hubris leads to nemesis.</strong> Classic tragic structure: excessive pride and confidence in defeating prophecy trigger downfall. Greek tragedy in a satirical Indian frame.</li>
+          <li><strong>Satire on colonial-era royalty.</strong> The obsession with power, cynical marriage, manipulation of courtiers — all mock the vanity and absurdity of the Indian aristocracy.</li>
+          <li><strong>Satire on colonialism.</strong> Von Meck's easy appeasement deflates colonial power, showing it as manageable when handled with sufficient resources.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Literary Devices</div>
+        <ul class="nl">
+          <li><strong>Satire</strong> — the dominant mode. Every element is arranged for satirical effect.</li>
+          <li><strong>Dramatic irony</strong> — the reader knows throughout that the prophecy will be fulfilled.</li>
+          <li><strong>Hyperbole</strong> — the king's obsessive measures are exaggerated to comic effect.</li>
+          <li><strong>Symbolism</strong> — the real tigers symbolise destiny. The toy tiger shows how fate strikes through the most mundane instrument.</li>
+          <li><strong>Black humour</strong> — a king dying from a toy tiger splinter is inherently darkly comic.</li>
+          <li><strong>Foreshadowing</strong> — the prophecy frames the entire narrative.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Kingdom: <strong>Pratibandapuram</strong>. King's name: <strong>Jilani Jung Jung Bahadur</strong>.</li>
+          <li>Prophecy: born in the <strong>hour of the bull</strong>; death from a tiger.</li>
+          <li>Kills <strong>70 tigers</strong> in his own state before running out.</li>
+          <li><strong>100th tiger is not killed by the king</strong> — hunters secretly kill it.</li>
+          <li>Fatal instrument: a <strong>wooden toy tiger</strong> bought for his son's birthday.</li>
+          <li>Cause of death: splinter causes <strong>gangrene</strong>; three surgeons fail.</li>
+          <li>Diamond rings sent to British officer's wife: <strong>fifty</strong>.</li>
+        </ul>
+      </div>
+
+      <blockquote>"In the matter of tigers the Maharaja was infallible. Ninety-nine tigers had fallen to his gun. One more — and the prophecy would be null and void."<cite>— Narrator</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>What is the central irony of "The Tiger King"? How does the ending reinforce the theme of fate?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>How does Kalki use satire in this story? Who or what is the primary target?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>Describe the obstacles the Maharaja faces in his quest to kill 100 tigers.</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>"The Tiger King is a study in hubris." Discuss with examples.</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>Can the Maharaja's death be seen as inevitable? Discuss the role of fate and destiny.</span></div>
+      </div>
+    </div>
+
+    <div class="div">03</div>
+
+    <!-- ══════════════════════════════ CH 3 ══════════════════════════════ -->
+    <div class="chapter" id="ch3">
+      <div class="ch-head">
+        <div class="ch-n">Chapter 03</div>
+        <div class="ch-t">Journey to the End of the Earth</div>
+        <div class="ch-a">by Tishani Doshi</div>
+        <div class="ch-tags"><span class="tag">Travel Essay</span><span class="tag">Non-Fiction</span><span class="tag">Environment</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Author</div>
+        <p>Tishani Doshi is a contemporary Indian poet, dancer, and writer. She travelled to Antarctica as part of the <em>Students on Ice</em> programme. Her essay blends personal travel narrative with scientific concern for the environment, tracing both the deep geological history of Antarctica and the urgent threats it now faces from human activity.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Summary of Key Ideas</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">The Voyage</div><p>Doshi travels aboard the Russian research vessel <em>Akademik Shokalskiy</em>, crossing the <strong>Drake Passage</strong> — one of the stormiest stretches of ocean — to reach Antarctica after two days at sea.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Antarctica as Time Capsule</div><p>Antarctica holds <strong>90% of the world's ice</strong> and <strong>70% of its fresh water</strong>. Ice cores from glaciers trap atmospheric data from up to <strong>650,000 years ago</strong> — an irreplaceable climate record.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Gondwana</div><p>Antarctica was once part of the super-continent <strong>Gondwana</strong>, which began breaking up <strong>650 million years ago</strong>. Present-day India, South America, Africa, and Antarctica were all attached. Deep geological time frames human civilisation as very recent and fragile.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Ozone &amp; Phytoplankton</div><p>The ozone layer above Antarctica is thinning, allowing excess UV radiation to reach the surface. This threatens <strong>phytoplankton</strong> — the microscopic organisms at the base of the entire marine food chain. Their collapse would cascade through all oceanic life and reduce global oxygen production.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Students on Ice</div><p>The programme, founded by <strong>Geoff Green</strong>, takes students and researchers to Antarctica to cultivate environmentally aware global citizens. Young people — those who will make future policy — are the right audience for Antarctica's lessons.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Why Antarctica Matters</div>
+        <ul class="nl">
+          <li>The only continent with <strong>no country, no permanent human population, no trees</strong> — one of Earth's last true wildernesses.</li>
+          <li>A <strong>barometer for planetary health</strong> — changes here signal global-scale shifts.</li>
+          <li>Ice cores provide <strong>650,000 years of climate data</strong>, irreplaceable for science.</li>
+          <li>The <strong>ozone hole</strong> here is the most visible sign of human atmospheric damage.</li>
+          <li>Antarctica has <strong>no time zone</strong> — it exists outside ordinary modern frameworks.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>Environmental responsibility.</strong> Thinning ozone, endangered phytoplankton, and melting glaciers signal a planet under stress from human activity.</li>
+          <li><strong>Deep time vs. human time.</strong> Geological epochs dwarf human history. The Earth's 650-million-year past makes civilisation look very recent and precarious.</li>
+          <li><strong>Youth as change-makers.</strong> The Students on Ice premise reflects the belief that young people have both the motivation and the time to act on climate change.</li>
+          <li><strong>The sublime.</strong> Antarctica's whiteness, silence, and scale evoke awe and terror. Doshi uses this aesthetic to make the environmental argument emotionally compelling.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Literary Devices</div>
+        <ul class="nl">
+          <li><strong>Metaphor</strong> — Antarctica as "a giant time capsule" — scientific and poetic simultaneously.</li>
+          <li><strong>Imagery</strong> — "blue-tinged glaciers," "the howl of the Drake Passage," "the white silence."</li>
+          <li><strong>Contrast</strong> — the pristine Antarctic wilderness set against the degraded modern world.</li>
+          <li><strong>Statistics woven into prose</strong> — hard data (90% of ice, 650,000-year cores) integrated into lyrical writing.</li>
+          <li><strong>Allusion to geological history</strong> — references to Gondwana and deep time give vast temporal scope.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Ship: <strong>Akademik Shokalskiy</strong> (Russian research vessel).</li>
+          <li>Crossing: <strong>Drake Passage</strong> — notorious for rough seas.</li>
+          <li>Antarctica holds <strong>90% of world's ice</strong> and <strong>70% of world's fresh water</strong>.</li>
+          <li>Ice cores reveal up to <strong>650,000 years</strong> of climate history.</li>
+          <li>Gondwana began breaking up <strong>650 million years ago</strong>.</li>
+          <li><strong>Phytoplankton</strong>: base of ocean food chain, threatened by UV increase from ozone depletion.</li>
+          <li>Programme: <strong>Students on Ice</strong>, founded by <strong>Geoff Green</strong>.</li>
+          <li>Antarctica has <strong>no time zone, no native human population, no trees</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>Why does the author call Antarctica a "giant time capsule"? What scientific information does it preserve?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>What is the significance of the Students on Ice programme?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>Discuss the environmental concerns highlighted in the essay.</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>How does the author connect Antarctica's geological past to the present environmental crisis?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>What role does phytoplankton play, and why is its decline alarming?</span></div>
+      </div>
+    </div>
+
+    <div class="div">04</div>
+
+    <!-- ══════════════════════════════ CH 4 ══════════════════════════════ -->
+    <div class="chapter" id="ch4">
+      <div class="ch-head">
+        <div class="ch-n">Chapter 04</div>
+        <div class="ch-t">The Enemy</div>
+        <div class="ch-a">by Pearl S. Buck</div>
+        <div class="ch-tags"><span class="tag">Short Story</span><span class="tag">Humanism</span><span class="tag">War &amp; Ethics</span><span class="tag">Duty vs Conscience</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Author</div>
+        <p>Pearl S. Buck (1892–1973) was an American author who spent much of her life in China. She won the <strong>Nobel Prize for Literature in 1938</strong>, the first American woman to do so. Her works are characterised by cross-cultural empathy. "The Enemy" is set in wartime Japan and explores what happens when a doctor's medical ethics and national loyalty collide.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Plot Summary</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Discovery</div><p>Dr. Sadao Hoki, a Japanese surgeon, and his wife Hana find a wounded young American POW — escaped from captivity — washed ashore on their beach near Kyushu, Japan, during World War II.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Dilemma</div><p>Sadao faces a conflict: as a Japanese patriot, he should hand the soldier to the police. As a surgeon, his oath demands he save life. Sheltering an American enemy risks arrest for both of them.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Decision to Heal</div><p>Medical ethics prevails. Sadao operates and nurses the soldier. Most servants, unwilling to serve an American, leave. Hana washes the soldier herself after the maid Yumi refuses.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The General</div><p>Sadao tells his powerful patient, the elderly General, about the American. The General promises to send private assassins on successive nights. Night after night passes — no one comes. Preoccupied with his own health, the General keeps forgetting.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Escape</div><p>Sadao himself arranges the soldier's escape: a boat, food, a flashlight signal system. Tom — the soldier's name — escapes safely.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Resolution</div><p>The General laughs off his forgetfulness. Sadao keeps the episode secret. He reflects on Tom, concluding he could not have killed him even as an enemy.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Characters</div>
+        <div class="cg">
+          <div class="cc"><div class="cc-n">Dr. Sadao Hoki</div><div class="cc-d">Japanese surgeon educated in America. His medical ethics override national allegiance. Represents the tension between patriotic duty and universal human values.</div></div>
+          <div class="cc"><div class="cc-n">Hana</div><div class="cc-d">Sadao's wife. Initially repulsed but participates in Tom's care. Her private moral choice, made at personal risk, is as significant as Sadao's.</div></div>
+          <div class="cc"><div class="cc-n">Tom (the soldier)</div><div class="cc-d">A young American POW. His broken Japanese, fear, and vulnerability strip the "enemy" label of its dehumanising abstraction.</div></div>
+          <div class="cc"><div class="cc-n">The General</div><div class="cc-d">Sadao's powerful patient. Promises assassins but "forgets" — possibly deliberately, since killing Sadao's patient might cost him his own surgeon. Ambiguous moral figure.</div></div>
+          <div class="cc"><div class="cc-n">Yumi</div><div class="cc-d">The servant who refuses to wash Tom. Represents prevailing nationalist sentiment — unable to see past wartime enmity.</div></div>
+          <div class="cc"><div class="cc-n">Sadao's Father (in memory)</div><div class="cc-d">Sent Sadao to America for education, believing knowledge transcends borders. The intellectual foundation for Sadao's cross-cultural empathy.</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>Humanism over nationalism.</strong> The obligation to save human life transcends political, racial, and national boundaries. Sadao's act is the story's moral thesis.</li>
+          <li><strong>The doctor's dilemma.</strong> Medical ethics (do no harm) vs. patriotic duty (hand over the enemy). The story dramatises which imperative is deeper.</li>
+          <li><strong>War dehumanises; humanity persists.</strong> Face-to-face with a suffering individual, the abstraction of "enemy" dissolves. Tom is a wounded, frightened young man far from home.</li>
+          <li><strong>Moral courage.</strong> Sadao and Hana's choice is secretive and frightened, not publicly heroic — which makes it more realistic and compelling.</li>
+          <li><strong>Ambiguity of the General.</strong> His "forgetting" raises the question: can complicity and self-interest produce the same outcome as kindness?</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Literary Devices</div>
+        <ul class="nl">
+          <li><strong>Moral conflict as plot engine</strong> — tension is entirely internal (Sadao's conscience), not physical action.</li>
+          <li><strong>Setting as symbol</strong> — the isolated beach house is a liminal space between Japan and America, war and peace.</li>
+          <li><strong>Irony</strong> — a Japanese doctor saves an American soldier his nation is trying to kill. The General who authorises murder "forgets" to carry it out.</li>
+          <li><strong>Flashback</strong> — Sadao recalls his American education and his father's influence, contextualising his current decisions.</li>
+          <li><strong>Characterisation through action</strong> — Hana washing Tom, Yumi refusing, Sadao operating. What characters do, not say, defines them.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Setting: <strong>Kyushu, Japan</strong>, during <strong>World War II</strong>.</li>
+          <li>Sadao studied medicine in America from age <strong>22</strong>; met Hana there.</li>
+          <li>The American's name: <strong>Tom</strong>. Bullet lodged <strong>near his stomach</strong>.</li>
+          <li><strong>Yumi</strong> refuses to wash Tom; <strong>Hana</strong> does it herself.</li>
+          <li>Sadao gives Tom a <strong>boat, food, a flashlight</strong>, and escape instructions.</li>
+          <li>The General's condition: <strong>abdominal pain</strong> — trusts only Sadao to operate.</li>
+          <li>Most servants <strong>leave</strong> rather than serve an American enemy.</li>
+          <li>The General promises <strong>private assassins</strong> — they never come.</li>
+        </ul>
+      </div>
+
+      <blockquote>"The man was wounded. He had to be operated on. But he was the enemy — what right had he to live?"<cite>— Hana, reflecting wartime logic she ultimately refuses to follow</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>What is the central dilemma faced by Dr. Sadao? How does he resolve it?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>Why is the story titled "The Enemy"? Who is the real enemy in the story?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>Analyse the character of Hana. How does she exemplify moral courage?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>Do you think the General deliberately forgot to send the assassins? Give reasons.</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>How does Pearl S. Buck convey that humanity transcends national boundaries?</span></div>
+        <div class="eq"><span class="eq-n">Q6</span><span>Discuss the role of Sadao's American education in shaping his response to the wounded soldier.</span></div>
+      </div>
+    </div>
+
+    <div class="div">05</div>
+
+    <!-- ══════════════════════════════ CH 5 ══════════════════════════════ -->
+    <div class="chapter" id="ch5">
+      <div class="ch-head">
+        <div class="ch-n">Chapter 05</div>
+        <div class="ch-t">On the Face of It</div>
+        <div class="ch-a">by Susan Hill</div>
+        <div class="ch-tags"><span class="tag">Play</span><span class="tag">Disability</span><span class="tag">Isolation</span><span class="tag">Friendship</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">About the Author</div>
+        <p>Susan Hill (b. 1942) is a British author and playwright known for psychological depth and explorations of loneliness. "On the Face of It" is a one-act play examining how physical disability breeds social rejection — and how friendship can begin to heal that wound. The title is deliberately ironic: idiomatically it means "at first appearance," while the play is literally about faces.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Plot Summary</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">The Meeting</div><p>Derry, 14, with one side of his face severely burnt by acid, sneaks into what he thinks is an abandoned garden. He is found by Mr. Lamb, an elderly man with a tin leg — lost in a wartime explosion — who tends the garden and welcomes him.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Derry's Bitterness</div><p>Derry is deeply withdrawn and angry. People stare, whisper, avoid touching him. A woman said his face was "like the devil's." His mother kisses only the undamaged side. He has convinced himself the world hates him.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Mr. Lamb's Philosophy</div><p>Mr. Lamb is open, gentle, contemplative. His gate is always unlocked. He tends both weeds and flowers — "both are alive." He tells Derry that people can be "crippled inside" without visible damage, and that shutting yourself away is the worst you can do.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Bond</div><p>An unlikely friendship forms. Derry feels genuinely heard rather than pitied, for the first time. He decides to return the next day, against his mother's wishes.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Ending</div><p>Derry rushes back — only to find Mr. Lamb has fallen from a ladder while picking crab apples. Mr. Lamb is dead. Derry kneels beside him and weeps. It is the first time he has cried not from self-pity but from grief for another — a sign of his transformation.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Characters</div>
+        <div class="cg">
+          <div class="cc"><div class="cc-n">Derry</div><div class="cc-d">14-year-old with acid-burnt face. Angry, isolated, convinced of his unlovability. His arc from bitterness to grief for another person is the play's emotional journey.</div></div>
+          <div class="cc"><div class="cc-n">Mr. Lamb</div><div class="cc-d">Old man with a tin leg. Wise, open, self-sufficient. Refuses to let disability define him. His open gate, garden of weeds and flowers, and patient attention to Derry are acts of radical generosity.</div></div>
+          <div class="cc"><div class="cc-n">Derry's Mother</div><div class="cc-d">Overprotective, fearful. Represents well-meaning but harmful shelter — keeping the disabled safe from the world by keeping them from it.</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes</div>
+        <ul class="nl">
+          <li><strong>Inner vs. outer disability.</strong> Mr. Lamb's central insight: people can be "crippled inside" without visible damage. The real prison is emotional withdrawal, not physical difference.</li>
+          <li><strong>Social prejudice against disability.</strong> The play catalogues cruelty — staring, flinching, pity. Even Derry's mother's protective kiss reinforces his sense of being defined by his disfigurement.</li>
+          <li><strong>The healing power of friendship.</strong> Derry's transformation is made possible only through his relationship with Mr. Lamb. Genuine connection is what heals.</li>
+          <li><strong>Openness vs. closure.</strong> Mr. Lamb's always-open gate is the governing symbol. He lives open to the world. Derry must learn to do the same.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Literary Devices</div>
+        <ul class="nl">
+          <li><strong>Symbolism — the garden.</strong> Unlocked, containing weeds and flowers tended equally. Represents Mr. Lamb's philosophy that all life is worthy of attention. The crab apple tree from which he falls symbolises the danger of attempting things alone.</li>
+          <li><strong>Irony in the title.</strong> "On the Face of It" idiomatically means "at first appearance." What appears on the surface (ugliness, disability, pity) conceals a deeper truth about resilience and connection.</li>
+          <li><strong>Dialogue-driven drama.</strong> Character is revealed entirely through speech — how Derry resists and gradually opens; how Mr. Lamb responds with patience.</li>
+          <li><strong>Contrast / foil.</strong> Both are disabled; one is closed and bitter, one is open and wise. Their contrast is the engine of the play's meaning.</li>
+          <li><strong>Foreshadowing.</strong> Mr. Lamb's mention of picking crab apples anticipates his fatal fall.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Derry's disability: <strong>acid burn</strong> on one side of his face.</li>
+          <li>Mr. Lamb's disability: <strong>tin leg</strong> — lost in a wartime explosion.</li>
+          <li>Garden has a <strong>crab apple tree</strong>; Mr. Lamb makes <strong>jelly</strong> from the apples.</li>
+          <li>Mr. Lamb's gate is <strong>always open</strong>.</li>
+          <li>Cruel woman's words Derry recalls: <strong>"a face like that — the devil's face."</strong></li>
+          <li>Mother kisses him on <strong>the undamaged side</strong> only.</li>
+          <li>Mother forbids return, saying <strong>"that old man doesn't care about you."</strong></li>
+          <li>Mr. Lamb dies falling from a <strong>ladder</strong> picking crab apples. Derry <strong>weeps for the first time for someone else</strong>.</li>
+        </ul>
+      </div>
+
+      <blockquote>"You can shut yourself away — and things still go on. Sun rises and sets. Seasons change. People are born and die. You can shut yourself away — but you can't stop any of that."<cite>— Mr. Lamb to Derry</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>How does Mr. Lamb help Derry overcome his sense of alienation and bitterness?</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>What does the title "On the Face of It" signify? Explain the irony embedded in it.</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>Compare and contrast Derry and Mr. Lamb. What does their relationship teach us?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>How does Susan Hill use the garden as a symbol?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>"People can be crippled inside without any visible damage." Discuss in context.</span></div>
+        <div class="eq"><span class="eq-n">Q6</span><span>What is the significance of Derry weeping at the end?</span></div>
+      </div>
+    </div>
+
+    <div class="div">06</div>
+
+    <!-- ══════════════════════════════ CH 6 ══════════════════════════════ -->
+    <div class="chapter" id="ch6">
+      <div class="ch-head">
+        <div class="ch-n">Chapter 06</div>
+        <div class="ch-t">Memories of Childhood</div>
+        <div class="ch-a">Zitkala-Sa &amp; Bama</div>
+        <div class="ch-tags"><span class="tag">Autobiographical</span><span class="tag">Racial Discrimination</span><span class="tag">Caste Oppression</span><span class="tag">Identity &amp; Resistance</span></div>
+      </div>
+      <hr class="rule">
+
+      <div class="sec">
+        <div class="sec-t">Overview</div>
+        <p>Two autobiographical accounts from women of marginalised communities in different parts of the world — a Native American from 19th-century USA, and a Dalit woman from Tamil Nadu. Both narratives share a common thread: discrimination based on identity, the pain of suppressed dignity, and the use of education and self-awareness as tools of resistance.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Part I — "The Cutting of My Long Hair" · Zitkala-Sa</div>
+        <p><strong>About the Author.</strong> Zitkala-Sa (1876–1938), also known as Gertrude Simmons Bonnin, was a Sioux (Yankton Dakota) writer, musician, and activist. Her pen name means "Red Bird." Her autobiographical essays (published in <em>Atlantic Monthly</em>, 1900) document the violence of cultural assimilation imposed on Native Americans. Her life was dedicated to fighting for Native American rights and cultural preservation.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Plot — Zitkala-Sa</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">Arrival</div><p>A young Native American girl arrives at a government boarding school. Everything is alien: pinching shoes, metal forks, rigid schedules, a language she doesn't speak.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Breakfast</div><p>The narrator, unfamiliar with the school's customs, stands awkwardly at her chair at breakfast. A "paleface woman" points sharply to her seat. Everyday humiliation: cultural ignorance treated as defiance.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Hair Cutting</div><p>She learns her long hair is to be cut. In her culture, <strong>hair is cut only in mourning or to mark a coward</strong>. She hides under a bed in a dark room; is found, dragged out, and despite weeping and struggling, her braids are cut. <em>"Then I lost my spirit."</em></p></div>
+          <div class="tl-i"><div class="tl-lbl">Resistance</div><p>Her friend Judewin warns that resistance is futile — "we are many, but we cannot help you." The narrator resists anyway. Her refusal to submit mentally, even while physically coerced, is the seed of her later activism.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Part II — "We Too Are Human Beings" · Bama</div>
+        <p><strong>About the Author.</strong> Bama (b. 1958) is a Tamil Dalit writer, activist, and teacher. Her autobiography <em>Karukku</em> (1992) — "double-edged," like a palm leaf and a sword — is a landmark of Dalit literature. This excerpt documents her childhood awakening to the reality of caste untouchability, and her brother Annan's advice: education as liberation.</p>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Plot — Bama</div>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-lbl">The Walk</div><p>Young Bama takes an hour to walk home from school each day — she dawdles, delighting in street food, performers, and small village spectacles. These passages are affectionate and vivid.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Incident</div><p>She sees an elderly Dalit man carrying a packet of <strong>vadai</strong> to the landlord, holding the string with two fingers — not touching it directly. She finds it funny and laughs.</p></div>
+          <div class="tl-i"><div class="tl-lbl">The Revelation</div><p>She tells her elder brother Annan. He does not laugh. He explains: the man holds it at a distance because if a Dalit person's hand directly touched the food, it would be considered polluted and the upper-caste landlord would refuse to eat it. This is <strong>untouchability</strong> — a person's touch declared contaminating. Bama is shattered.</p></div>
+          <div class="tl-i"><div class="tl-lbl">Annan's Advice</div><p>Annan tells Bama: the only way their community can earn dignity is through <strong>education</strong>. "Study and make progress — people will come to you. You won't have to seek their approval."</p></div>
+          <div class="tl-i"><div class="tl-lbl">Resolution</div><p>Bama studies hard, comes first in her class. Genuine friendships form across caste lines. Education, as Annan promised, creates a space where dignity is possible.</p></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Themes — Both Narratives</div>
+        <ul class="nl">
+          <li><strong>Forced assimilation / cultural genocide (Zitkala-Sa).</strong> The school's mission was to destroy Native American culture by erasing visible markers — language, dress, hair. Hair-cutting is the most intimate symbol of this violence.</li>
+          <li><strong>Caste untouchability (Bama).</strong> The vadai packet episode makes the abstract brutality of caste viscerally concrete. A person's touch declared polluting — the most fundamental denial of humanity.</li>
+          <li><strong>The body as a site of oppression.</strong> Zitkala-Sa: the body is physically coerced. Bama: the body is socially contaminating by decree. Both show how oppressive systems operate through the body.</li>
+          <li><strong>Loss of innocence / childhood awakening.</strong> Both narrators encounter their communities' oppression as children, in a specific, dateable moment. The injustice is intimate and unavoidable.</li>
+          <li><strong>Resistance.</strong> Zitkala-Sa resists physically. Bama resists through education. Different expressions of the same refusal to be diminished.</li>
+          <li><strong>Education as liberation.</strong> Annan's advice is explicitly Ambedkarite: education is the most powerful tool for Dalit emancipation.</li>
+        </ul>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Comparative Analysis</div>
+        <table class="ct">
+          <thead><tr><th>Aspect</th><th>Zitkala-Sa</th><th>Bama</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Context</strong></td><td>Native American, 19th-c. USA; racial assimilation</td><td>Dalit, 20th-c. Tamil Nadu; caste oppression</td></tr>
+            <tr><td><strong>Form of oppression</strong></td><td>Forced cultural erasure; hair-cutting</td><td>Untouchability; social dehumanisation</td></tr>
+            <tr><td><strong>Trigger moment</strong></td><td>The physical act of hair-cutting</td><td>The old man's two-fingered grip on the vadai</td></tr>
+            <tr><td><strong>Response</strong></td><td>Immediate physical resistance — hiding, crying, struggling</td><td>Shock; follows Annan's advice to study hard</td></tr>
+            <tr><td><strong>Role of education</strong></td><td>The school is the site of oppression itself</td><td>Education is explicitly the path to liberation</td></tr>
+            <tr><td><strong>Key symbol</strong></td><td>The scissors / cut braids</td><td>The vadai packet / the two-finger grip</td></tr>
+            <tr><td><strong>Tone</strong></td><td>Anguished, defiant, raw</td><td>Initially playful, then quietly determined</td></tr>
+            <tr><td><strong>Resolution</strong></td><td>Physical coercion succeeds; spiritual resistance continues</td><td>Academic achievement; hopeful</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sec">
+        <div class="sec-t">Literary Devices</div>
+        <ul class="nl">
+          <li><strong>Autobiographical narration</strong> — first-person accounts give lived experience an immediacy that fiction cannot replicate.</li>
+          <li><strong>Symbolism</strong> — the cut braids and the vadai packet both make abstract systems of oppression personal and concrete.</li>
+          <li><strong>Tonal contrast</strong> — Zitkala-Sa's consistent anguish vs. Bama's initial playfulness; the shift in Bama's tone mirrors the loss of innocence.</li>
+          <li><strong>Retrospective narration</strong> — adults looking back with political clarity added to personal memory.</li>
+          <li><strong>Imagery</strong> — "cold blades of scissors against my neck," "the two-fingered grasp on the string" — precise, tactile, immediate.</li>
+        </ul>
+      </div>
+
+      <div class="fb">
+        <div class="fb-h">Exam-Critical Facts</div>
+        <ul class="fb-b">
+          <li>Zitkala-Sa's friend: <strong>Judewin</strong>.</li>
+          <li>Hair is cut in Sioux culture only in <strong>mourning or to mark a coward</strong>.</li>
+          <li>Zitkala-Sa hides <strong>under a bed</strong> in a dark room.</li>
+          <li>After the cutting: <strong>"Then I lost my spirit."</strong></li>
+          <li>Bama's food item: <strong>vadai</strong> carried to the <strong>landlord</strong>.</li>
+          <li>Bama's elder brother: <strong>Annan</strong> (Tamil for "elder brother").</li>
+          <li>Bama's autobiography: <strong>Karukku</strong> — "double-edged" (palm leaf / sword).</li>
+          <li>Annan's advice: <strong>"Study and make progress — people will come to you."</strong></li>
+          <li>Bama finishes <strong>first in her class</strong>.</li>
+        </ul>
+      </div>
+
+      <blockquote>"Then I lost my spirit."<cite>— Zitkala-Sa, after the forced cutting of her braids</cite></blockquote>
+      <blockquote>"If we study and make progress, we can throw away these indignities. People will come to us."<cite>— Annan, to Bama</cite></blockquote>
+
+      <div class="eq-block">
+        <div class="sec-t">Likely Exam Questions</div>
+        <div class="eq"><span class="eq-n">Q1</span><span>Compare the experiences of marginalisation described by Zitkala-Sa and Bama.</span></div>
+        <div class="eq"><span class="eq-n">Q2</span><span>Why was the cutting of her hair so traumatic for Zitkala-Sa? What does it symbolise?</span></div>
+        <div class="eq"><span class="eq-n">Q3</span><span>What did the vadai incident reveal to Bama? How did it change her?</span></div>
+        <div class="eq"><span class="eq-n">Q4</span><span>How does education become a form of resistance and empowerment for Bama?</span></div>
+        <div class="eq"><span class="eq-n">Q5</span><span>Both narratives show childhood as a period of painful social awakening. Discuss.</span></div>
+        <div class="eq"><span class="eq-n">Q6</span><span>Write a critical appreciation of either excerpt, highlighting literary devices used.</span></div>
+      </div>
+    </div>
+
+    <div class="div">end</div>
+    <p style="font-size:10px;color:var(--dim);text-align:center;padding-bottom:24px;letter-spacing:.08em;">CBSE Class XII · English Core · Vistas</p>
+
+  </div>
+</div>
+
+<script>
+// Progress
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+  document.getElementById('prog').style.transform = `scaleX(${pct})`;
+  updateNav();
+}, { passive: true });
+
+function go(id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+
+function updateNav() {
+  let cur = '';
+  document.querySelectorAll('.chapter').forEach(c => { if (c.getBoundingClientRect().top <= 80) cur = c.id; });
+  document.querySelectorAll('.nav-a[onclick]').forEach(a => {
+    a.classList.toggle('on', cur && a.getAttribute('onclick').includes(cur));
+  });
+}
+
+// Highlight bar
+let sel = null;
+const hlb = document.getElementById('hlb');
+
+document.getElementById('content').addEventListener('mouseup', () => {
+  const s = window.getSelection();
+  if (!s || s.isCollapsed || !s.rangeCount) return;
+  const r = s.getRangeAt(0);
+  if (r.toString().trim().length < 2) return;
+  sel = r.cloneRange();
+  const rect = r.getBoundingClientRect();
+  hlb.style.display = 'flex';
+  hlb.style.left = Math.max(8, rect.left + rect.width/2 - 88) + 'px';
+  hlb.style.top = (rect.top + window.scrollY - 44) + 'px';
+});
+
+document.addEventListener('mousedown', e => { if (!hlb.contains(e.target)) hlb.style.display = ''; });
+
+  document.querySelectorAll('.hlb-btn[data-c]').forEach(b => b.addEventListener('click', () => applyHL()));
+
+function applyHL() {
+  if (!sel) return;
+  const span = document.createElement('span');
+  span.className = 'hl';
+  try { sel.surroundContents(span); }
+  catch { const f = sel.extractContents(); span.appendChild(f); sel.insertNode(span); }
+  window.getSelection().removeAllRanges();
+  hlb.style.display = ''; sel = null;
+}
+
+document.getElementById('hx').addEventListener('click', () => { hlb.style.display = ''; sel = null; window.getSelection().removeAllRanges(); });
+
+function clearHL() {
+  document.querySelectorAll('.hl').forEach(el => {
+    while (el.firstChild) el.parentNode.insertBefore(el.firstChild, el);
+    el.remove();
+  });
+}
+
+// Annotations
+let anns = JSON.parse(localStorage.getItem('v2_ann') || '[]');
+let apOpen = false;
+
+document.getElementById('hln').addEventListener('click', () => {
+  if (!sel) return;
+  const txt = sel.toString().trim().slice(0, 100);
+  const rect = sel.getBoundingClientRect();
+  hlb.style.display = ''; window.getSelection().removeAllRanges(); sel = null;
+  const d = document.createElement('div');
+  d.className = 'apop';
+  d.style.cssText = `top:${rect.bottom + window.scrollY + 10}px;left:${Math.max(8, Math.min(rect.left, window.innerWidth-240))}px`;
+  d.innerHTML = `<div style="font-size:10.5px;color:var(--dim);font-style:italic;margin-bottom:6px;line-height:1.4">"${txt.slice(0,80)}${txt.length>80?'…':''}"</div><textarea id="ann-ta" placeholder="Your note…"></textarea><div class="apop-btns"><button class="b-save" onclick="saveAnn('${CSS.escape(txt)}',this)">Save</button><button class="b-cancel" onclick="this.closest('.apop').remove()">Cancel</button></div>`;
+  document.body.appendChild(d);
+  d.querySelector('textarea').focus();
+});
+
+function saveAnn(txt, btn) {
+  const n = document.getElementById('ann-ta').value.trim();
+  if (!n) return;
+  anns.push({ id: Date.now(), txt: txt.slice(0,80), note: n, date: new Date().toLocaleDateString() });
+  localStorage.setItem('v2_ann', JSON.stringify(anns));
+  btn.closest('.apop').remove();
+  renderAnns();
+  if (!apOpen) toggleAP();
+}
+
+function renderAnns() {
+  const list = document.getElementById('a-list');
+  const empty = document.getElementById('a-empty');
+  empty.style.display = anns.length ? 'none' : '';
+  list.innerHTML = anns.map(a => `<div class="ai"><div class="ai-q">"${a.txt}…"</div><div class="ai-n">${a.note}</div><div class="ai-m"><span>${a.date}</span><button class="ai-d" onclick="delAnn(${a.id})">remove</button></div></div>`).join('');
+}
+
+function delAnn(id) {
+  anns = anns.filter(a => a.id !== id);
+  localStorage.setItem('v2_ann', JSON.stringify(anns));
+  renderAnns();
+}
+
+function toggleAP() {
+  apOpen = !apOpen;
+  const p = document.getElementById('ap');
+  p.classList.toggle('open', apOpen);
+  if (apOpen) renderAnns();
+}
+
+// Search
+let sr = [], si2 = 0;
+function doSearch(q) {
+  document.querySelectorAll('mark.sh').forEach(m => m.replaceWith(m.textContent));
+  sr = []; si2 = 0; document.getElementById('sc').textContent = '';
+  if (!q || q.length < 2) return;
+  const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi');
+  const nodes = [];
+  const walk = document.createTreeWalker(document.getElementById('content'), NodeFilter.SHOW_TEXT);
+  let n;
+  while (n = walk.nextNode()) {
+    if (['SCRIPT','STYLE'].includes(n.parentElement.tagName)) continue;
+    if (re.test(n.textContent)) nodes.push(n); re.lastIndex = 0;
+  }
+  nodes.forEach(node => {
+    const frag = document.createDocumentFragment(); let last = 0, m;
+    re.lastIndex = 0;
+    while ((m = re.exec(node.textContent)) !== null) {
+      frag.appendChild(document.createTextNode(node.textContent.slice(last, m.index)));
+      const mk = document.createElement('mark'); mk.className = 'sh'; mk.textContent = m[0];
+      frag.appendChild(mk); sr.push(mk); last = m.index + m[0].length;
+    }
+    frag.appendChild(document.createTextNode(node.textContent.slice(last)));
+    node.parentNode.replaceChild(frag, node);
+  });
+  document.getElementById('sc').textContent = sr.length || '';
+  if (sr.length) scrollToR();
+}
+document.getElementById('si').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && sr.length) { si2 = (si2+1)%sr.length; scrollToR(); }
+});
+function scrollToR() {
+  sr.forEach((m,i) => m.classList.toggle('cur', i===si2));
+  sr[si2]?.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+// Theme
+const DARKS = ['dark','gruvbox','nord','solarized-dark','dracula','one-dark'];
+const L2D = { 'default':'dark', 'gruvbox-light':'gruvbox', 'solarized':'solarized-dark' };
+const D2L = { 'dark':'default', 'gruvbox':'gruvbox-light', 'solarized-dark':'solarized' };
+let scheme = localStorage.getItem('v2_scheme') || 'default';
+
+function applyS(s) {
+  scheme = s;
+  document.documentElement.setAttribute('data-theme', s === 'default' ? '' : s);
+  if (s === 'default') document.documentElement.removeAttribute('data-theme');
+  const dk = DARKS.includes(s);
+  document.getElementById('ld').classList.toggle('on', dk);
+  document.querySelectorAll('.sc-btn').forEach(b => b.classList.toggle('on', b.dataset.s === s));
+  localStorage.setItem('v2_scheme', s);
+}
+
+function setS(s) { applyS(s); }
+function toggleDark() { applyS(DARKS.includes(scheme) ? (D2L[scheme] || 'default') : (L2D[scheme] || 'dark')); }
+
+// Init
+applyS(scheme);
+renderAnns();
+updateNav();
+</script>
+</body>
+</html>
